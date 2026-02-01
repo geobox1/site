@@ -1,13 +1,639 @@
 <!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Benim İlk Web Sitem</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GeoBox | Saha-Ofis Senkronizasyonu ve WebGIS</title>
+  <meta name="description" content="GeoBox: QGIS + QField ekosistemiyle saha verisini anlık toplayın, ofisle senkronize edin ve web üzerinde harita ile yayınlayın. Belediyeler, OSB'ler ve mühendislik firmaları için." />
+  <meta name="keywords" content="GeoBox, QGIS, QField, CBS, WebGIS, saha veri toplama, senkronizasyon, belediye cbs, harita mühendisliği" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0b1220" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="GeoBox | Saha-Ofis Senkronizasyonu ve WebGIS" />
+  <meta property="og:description" content="Saha verisini anlık toplayın, ofisle senkronize edin ve web üzerinde harita ile yayınlayın." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="tr_TR" />
+  <!-- og:image eklemek istersen: <meta property="og:image" content="https://geobox1.com/og.jpg" /> -->
+
+  <style>
+    :root{
+      --bg: #070b12;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --soft: rgba(255,255,255,.12);
+      --border: rgba(255,255,255,.10);
+      --brand: #4aa3ff;
+      --brand2:#7c5cff;
+      --ok:#41d19a;
+      --warn:#ffd166;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(1000px 700px at 10% 10%, rgba(74,163,255,.28), transparent 55%),
+        radial-gradient(900px 600px at 60% 120%, rgba(65,209,154,.18), transparent 55%),
+        var(--bg);
+      line-height:1.55;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px; border-radius:14px; border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      font-weight:600;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.22)}
+    .btn.primary{
+      border-color: rgba(74,163,255,.45);
+      background: linear-gradient(135deg, rgba(74,163,255,.30), rgba(124,92,255,.26));
+    }
+    .btn.ghost{box-shadow:none; background:transparent}
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border:1px solid var(--border);
+      border-radius:999px; background: rgba(255,255,255,.04);
+      color:var(--muted); font-size:13px;
+    }
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,11,18,.82), rgba(7,11,18,.35));
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: conic-gradient(from 180deg, var(--brand), var(--brand2), var(--ok), var(--brand));
+      box-shadow: 0 10px 25px rgba(74,163,255,.18);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    nav ul{list-style:none; display:flex; gap:14px; padding:0; margin:0}
+    nav a{
+      color:var(--muted); font-weight:600; font-size:14px;
+      padding:8px 10px; border-radius:12px; border:1px solid transparent;
+    }
+    nav a:hover{color:var(--text); border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.04)}
+    .nav-right{display:flex; gap:10px; align-items:center}
+    .mobile-toggle{display:none}
+    .hero{
+      padding:54px 0 24px;
+    }
+    .hero-grid{
+      display:grid; grid-template-columns: 1.2fr .8fr; gap:22px;
+      align-items:stretch;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-card{padding:26px}
+    h1{
+      margin:14px 0 12px;
+      font-size: clamp(28px, 3.4vw, 46px);
+      line-height:1.08;
+      letter-spacing:-.5px;
+    }
+    .lead{
+      color:var(--muted);
+      font-size: 16px;
+      max-width: 62ch;
+      margin: 0 0 18px;
+    }
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .mini{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;
+      color:var(--muted); font-size:13px;
+    }
+    .mini span{display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--border); border-radius:14px; background: rgba(255,255,255,.03)}
+    .hero-side{padding:22px; display:flex; flex-direction:column; gap:14px}
+    .kpi{
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+    }
+    .kpi .box{padding:14px; border-radius:16px; border:1px solid var(--border); background: rgba(255,255,255,.03)}
+    .kpi .n{font-size:20px; font-weight:800}
+    .kpi .t{color:var(--muted); font-size:12px; margin-top:4px}
+    .diagram{
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(255,255,255,.03);
+    }
+    .diagram .row{display:flex; gap:10px; align-items:center; margin:10px 0}
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      font-weight:700; font-size:13px;
+      white-space:nowrap;
+    }
+    .arrow{color:rgba(255,255,255,.55)}
+    section{padding:26px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+      margin-bottom:14px;
+    }
+    h2{margin:0; font-size:22px; letter-spacing:-.2px}
+    .sub{margin:0; color:var(--muted); max-width:70ch}
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    .feat{padding:16px}
+    .feat h3{margin:0 0 8px; font-size:16px}
+    .feat p{margin:0; color:var(--muted); font-size:14px}
+    .icon{
+      width:38px; height:38px; border-radius:14px; display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(74,163,255,.20), rgba(124,92,255,.18));
+      margin-bottom:10px;
+      font-size:18px;
+    }
+    .split{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
+    }
+    .steps{padding:18px}
+    .step{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:12px; border:1px solid var(--border); border-radius:16px;
+      background: rgba(255,255,255,.03);
+      margin-bottom:10px;
+    }
+    .badge{
+      width:30px; height:30px; border-radius:12px;
+      display:grid; place-items:center; font-weight:800;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
+      flex: 0 0 auto;
+    }
+    .step b{display:block; margin-bottom:2px}
+    .step span{color:var(--muted); font-size:14px}
+    .usecases{padding:18px}
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+    .chip{padding:10px 12px; border-radius:999px; border:1px solid var(--border); background: rgba(255,255,255,.03); color:var(--muted); font-weight:650; font-size:13px}
+    .pricing{padding:18px}
+    .price-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+    .plan{padding:18px; position:relative; overflow:hidden}
+    .plan .top{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .plan h3{margin:0; font-size:16px}
+    .plan .p{color:var(--muted); margin:8px 0 14px; font-size:14px}
+    .money{font-size:26px; font-weight:900}
+    .list{margin:0; padding-left:18px; color:var(--muted)}
+    .list li{margin:8px 0}
+    .ribbon{
+      position:absolute; top:12px; right:-42px;
+      transform: rotate(35deg);
+      background: linear-gradient(135deg, rgba(74,163,255,.32), rgba(124,92,255,.28));
+      border:1px solid rgba(255,255,255,.18);
+      padding:6px 56px;
+      font-weight:800; font-size:12px;
+      color:rgba(255,255,255,.92);
+    }
+    details{
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(255,255,255,.03);
+      padding:12px 14px;
+    }
+    details + details{margin-top:10px}
+    summary{cursor:pointer; font-weight:800}
+    .faq p{margin:8px 0 0; color:var(--muted)}
+    .contact{padding:22px}
+    form{display:grid; gap:10px}
+    input, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus{border-color: rgba(74,163,255,.45)}
+    textarea{min-height:120px; resize:vertical}
+    footer{
+      padding:24px 0 34px;
+      color: var(--muted);
+      border-top:1px solid var(--border);
+      margin-top:18px;
+    }
+    .foot{
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .small{font-size:13px}
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      .price-grid{grid-template-columns:1fr}
+      nav ul{display:none}
+      .mobile-toggle{display:inline-flex}
+    }
+  </style>
 </head>
+
 <body>
+<header>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="GeoBox ana sayfa">
+        <span class="logo" aria-hidden="true"></span>
+        <span>GeoBox</span>
+      </a>
 
-<h1>Merhaba 👋</h1>
-<p>Bu benim ilk web sitem.</p>
+      <nav aria-label="Ana menü">
+        <ul>
+          <li><a href="#ozellikler">Özellikler</a></li>
+          <li><a href="#nasil-calisir">Nasıl Çalışır?</a></li>
+          <li><a href="#kullanim">Kullanım Alanları</a></li>
+          <li><a href="#paketler">Paketler</a></li>
+          <li><a href="#sss">SSS</a></li>
+          <li><a href="#iletisim">İletişim</a></li>
+        </ul>
+      </nav>
 
+      <div class="nav-right">
+        <a class="btn ghost" href="#iletisim">Teklif Al</a>
+        <a class="btn primary" href="#demo">Demo İstiyorum</a>
+        <a class="btn mobile-toggle" href="#iletisim" aria-label="Menü (mobil)">☰</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="card hero-card">
+          <span class="tag">📍 Saha → Ofis → Web | Tek Akış</span>
+          <h1>Saha verinizi <span style="color:var(--brand)">anlık</span> toplayın,<br/>ofiste doğrulayın, web’de harita ile yayınlayın.</h1>
+          <p class="lead">
+            GeoBox; QGIS + QField ekosistemiyle uyumlu, kurumların saha operasyonlarını hızlandıran
+            <b>saha-ofis senkronizasyon</b> ve <b>WebGIS yayın</b> yaklaşımıdır.
+            Belediyeler, OSB’ler ve mühendislik firmaları için düşük maliyetli, ölçeklenebilir bir çözüm sunar.
+          </p>
+
+          <div class="cta" id="demo">
+            <a class="btn primary" href="#iletisim">🚀 Demo / Teklif Talebi</a>
+            <a class="btn" href="#nasil-calisir">🧭 Nasıl Çalışır?</a>
+            <a class="btn" href="#paketler">💼 Paketlere Bak</a>
+          </div>
+
+          <div class="mini">
+            <span>✅ Mobil veri toplama</span>
+            <span>✅ Yetkili paylaşım</span>
+            <span>✅ Web harita yayını</span>
+            <span>✅ Kurum içi / bulut seçenekleri</span>
+          </div>
+        </div>
+
+        <aside class="card hero-side" aria-label="Özet panel">
+          <div class="kpi">
+            <div class="box">
+              <div class="n">Daha Hızlı</div>
+              <div class="t">Sahadan ofise gecikmesiz akış</div>
+            </div>
+            <div class="box">
+              <div class="n">Daha Güvenli</div>
+              <div class="t">Yetkili erişim ve kontrollü paylaşım</div>
+            </div>
+            <div class="box">
+              <div class="n">Daha Net</div>
+              <div class="t">Standart veri modeli ve doğrulama</div>
+            </div>
+            <div class="box">
+              <div class="n">Daha Ekonomik</div>
+              <div class="t">Açık kaynak uyumlu mimari</div>
+            </div>
+          </div>
+
+          <div class="diagram" aria-label="Akış diyagramı">
+            <div class="row">
+              <span class="pill">📱 Saha</span>
+              <span class="arrow">→</span>
+              <span class="pill">🗂️ Senkron</span>
+              <span class="arrow">→</span>
+              <span class="pill">🧠 Ofis</span>
+            </div>
+            <div class="row">
+              <span class="pill">🗺️ WebGIS</span>
+              <span class="arrow">←</span>
+              <span class="pill">🧾 Rapor</span>
+              <span class="arrow">←</span>
+              <span class="pill">✅ Onay</span>
+            </div>
+            <p style="margin:10px 0 0; color:var(--muted); font-size:13px">
+              Aynı veri, tek kaynak: sahada üret, ofiste doğrula, web’de yayınla.
+            </p>
+          </div>
+
+          <a class="btn" href="#iletisim">📞 15 dk tanıtım görüşmesi planla</a>
+        </aside>
+      </div>
+    </section>
+
+    <section id="ozellikler">
+      <div class="section-title">
+        <div>
+          <h2>Özellikler</h2>
+          <p class="sub">Kurumsal ihtiyaçları karşılayan, sahaya inen ve web’de değer üreten bir CBS iş akışı.</p>
+        </div>
+        <span class="tag">⚡ Hız • 🔐 Güvenlik • 🧩 Entegrasyon</span>
+      </div>
+
+      <div class="grid3">
+        <div class="card feat">
+          <div class="icon">📡</div>
+          <h3>Anlık Saha-Ofis Senkronizasyonu</h3>
+          <p>Saha ekibinin topladığı veriler ofiste görünür olur. Kontrol, düzeltme ve geri bildirim hızlanır.</p>
+        </div>
+        <div class="card feat">
+          <div class="icon">🗺️</div>
+          <h3>WebGIS Yayın</h3>
+          <p>Katmanlarınızı web harita arayüzünde yayınlayın. Filtreleme, sorgulama ve görselleştirme ile karar desteği sağlayın.</p>
+        </div>
+        <div class="card feat">
+          <div class="icon">🔐</div>
+          <h3>Yetkilendirme ve Kontrollü Paylaşım</h3>
+          <p>Kullanıcı/rol bazlı erişim ile birimler arası paylaşımı güvenle yönetin. Kurum içi veya bulut seçenekleri.</p>
+        </div>
+
+        <div class="card feat">
+          <div class="icon">📷</div>
+          <h3>Fotoğraf ve Ek Dosya Yönetimi</h3>
+          <p>Saha fotoğrafları, tutanaklar ve ekleri konuma bağlı olarak kayıt altına alın. Arşiv ve izlenebilirlik artar.</p>
+        </div>
+        <div class="card feat">
+          <div class="icon">🧱</div>
+          <h3>Standart Veri Modeli</h3>
+          <p>Projeler arasında tutarlı şema, zorunlu alanlar ve doğrulama kurallarıyla veri kalitesini koruyun.</p>
+        </div>
+        <div class="card feat">
+          <div class="icon">🔌</div>
+          <h3>Entegrasyonlara Uygun Mimari</h3>
+          <p>İhtiyaca göre servis (WMS/WMTS/Vector Tile/API) ve kurumsal sistemlerle (ERP/e-belediye) entegrasyon için hazır yapı.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="nasil-calisir">
+      <div class="section-title">
+        <div>
+          <h2>Nasıl Çalışır?</h2>
+          <p class="sub">GeoBox, mevcut CBS yatırımını çöpe atmaz; üzerine “operasyon” ve “yayın” katmanı ekler.</p>
+        </div>
+        <span class="tag">🧭 4 adımda kurulum</span>
+      </div>
+
+      <div class="split">
+        <div class="card steps">
+          <div class="step">
+            <div class="badge">1</div>
+            <div>
+              <b>Proje & veri modeli hazırlanır</b>
+              <span>Katmanlar, alanlar, form düzeni ve doğrulama kuralları belirlenir (QGIS tabanlı).</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="badge">2</div>
+            <div>
+              <b>Saha ekipleri veri toplar</b>
+              <span>Mobil cihaz/harici GNSS ile konumlu veri + fotoğraf/ek dosya üretimi yapılır.</span>
+            </div>
+          </div>
+          <div class="step">
+            <div class="badge">3</div>
+            <div>
+              <b>Ofiste kontrol & onay</b>
+              <span>Veri kalite kontrol, düzeltme ve standartlaştırma adımlarıyla “tek kaynak” haline getirilir.</span>
+            </div>
+          </div>
+          <div class="step" style="margin-bottom:0">
+            <div class="badge">4</div>
+            <div>
+              <b>WebGIS yayın & paylaşım</b>
+              <span>İç kullanıcılar veya kamuya açık yayın için katmanlar web harita arayüzünde sunulur.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card usecases">
+          <h3 style="margin:0 0 8px">Neyi iyileştirir?</h3>
+          <p style="margin:0; color:var(--muted)">
+            Aynı işi tekrar tekrar yapmayı azaltır. Saha ekibi “topladığı verinin doğru olduğunu” görür,
+            ofis “sahaya geri bildirimini” anında verir.
+          </p>
+
+          <div class="chips" aria-label="Kazanımlar">
+            <span class="chip">⏱️ Ölçüm → teslim süresi kısalır</span>
+            <span class="chip">🧾 Veri kalitesi artar</span>
+            <span class="chip">🧑‍🤝‍🧑 Birimler arası koordinasyon</span>
+            <span class="chip">📍 Konumsal karar desteği</span>
+            <span class="chip">🧯 Hata/eksik yakalama</span>
+            <span class="chip">📊 Raporlama & izlenebilirlik</span>
+          </div>
+
+          <div style="margin-top:14px; padding:14px; border:1px solid var(--border); border-radius:16px; background: rgba(255,255,255,.03)">
+            <b>Örnek:</b> Park/bakım ekipleri sahada arıza kaydeder → fotoğraf ekler → ofis aynı gün planlama yapar → web haritada “iş emri durumu” görülür.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kullanim">
+      <div class="section-title">
+        <div>
+          <h2>Kullanım Alanları</h2>
+          <p class="sub">GeoBox, “konumlu veri üreten” her operasyona uyarlanabilir.</p>
+        </div>
+        <span class="tag">🏛️ Belediyeler • 🏭 OSB • 🧑‍🔧 Mühendislik</span>
+      </div>
+
+      <div class="grid3">
+        <div class="card feat">
+          <div class="icon">🏛️</div>
+          <h3>Belediyeler</h3>
+          <p>Altyapı, numarataj, envanter, imar uygulamaları, saha denetimleri ve vatandaş odaklı harita yayınları.</p>
+        </div>
+        <div class="card feat">
+          <div class="icon">🏭</div>
+          <h3>OSB / Büyük Tesisler</h3>
+          <p>Tesis envanteri, bakım/denetim kayıtları, arıza yönetimi, güvenlik ve operasyon katmanları.</p>
+        </div>
+        <div class="card feat">
+          <div class="icon">📐</div>
+          <h3>Mühendislik & Harita Ofisleri</h3>
+          <p>Saha ölçüleri, kontrol noktaları, aplikasyon işaretlemeleri, proje teslim süreçlerinde hız ve şeffaflık.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="paketler">
+      <div class="section-title">
+        <div>
+          <h2>Paketler</h2>
+          <p class="sub">İhtiyaca göre başlayın, büyüdükçe geliştirin. (Fiyatlar örnektir — kurum ihtiyaç analizi ile netleşir.)</p>
+        </div>
+        <span class="tag">💡 Başlangıç → Kurumsal</span>
+      </div>
+
+      <div class="card pricing">
+        <div class="price-grid">
+          <div class="card plan">
+            <div class="top">
+              <h3>Viewer</h3>
+              <span class="tag">Görüntüleme</span>
+            </div>
+            <div class="p">Web harita arayüzü + katman yayın (statik/veri servisi üzerinden).</div>
+            <div class="money">Başlangıç</div>
+            <ul class="list">
+              <li>WebGIS arayüz (Map tabanlı)</li>
+              <li>Katman filtreleme/sorgu</li>
+              <li>Temel kurulum + eğitim</li>
+            </ul>
+            <div class="cta" style="margin-top:14px">
+              <a class="btn primary" href="#iletisim">Bu paketle başla</a>
+            </div>
+          </div>
+
+          <div class="card plan">
+            <div class="ribbon">En Popüler</div>
+            <div class="top">
+              <h3>Sync</h3>
+              <span class="tag">Saha-Ofis</span>
+            </div>
+            <div class="p">Senkronizasyon + yetkilendirme + saha ekip akışı.</div>
+            <div class="money">Kurumsal</div>
+            <ul class="list">
+              <li>Saha veri toplama + ek dosyalar</li>
+              <li>Rol bazlı erişim</li>
+              <li>Kalite kontrol & onay akışı</li>
+              <li>WebGIS görüntüleme</li>
+            </ul>
+            <div class="cta" style="margin-top:14px">
+              <a class="btn primary" href="#iletisim">Görüşme iste</a>
+            </div>
+          </div>
+
+          <div class="card plan">
+            <div class="top">
+              <h3>Enterprise</h3>
+              <span class="tag">Entegrasyon</span>
+            </div>
+            <div class="p">PostGIS + servisler + entegrasyonlar + kurumsal güvenlik.</div>
+            <div class="money">Ölçekli</div>
+            <ul class="list">
+              <li>PostGIS/servis mimarisi</li>
+              <li>Log/audit & yedekleme</li>
+              <li>Kurumsal SSO/LDAP (opsiyon)</li>
+              <li>e-Belediye/ERP entegrasyon</li>
+            </ul>
+            <div class="cta" style="margin-top:14px">
+              <a class="btn primary" href="#iletisim">İhtiyaç analizi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sss" class="faq">
+      <div class="section-title">
+        <div>
+          <h2>SSS</h2>
+          <p class="sub">En sık gelen soruların kısa yanıtları.</p>
+        </div>
+        <span class="tag">🧠 Teknik • 💼 Ticari</span>
+      </div>
+
+      <details>
+        <summary>Cloudflare Pages ile “canlı” CBS verisi yayınlanır mı?</summary>
+        <p>Evet, arayüz statik olarak Pages’te durur; canlı CBS verisi ise bir servis (WMS/WMTS/Vector Tile/API) üzerinden çekilir. Pages veri üretmez, veri gösterir.</p>
+      </details>
+      <details>
+        <summary>Belediye içinde (intranet) çalışabilir mi?</summary>
+        <p>Evet. Kurum içi yayın ve erişim senaryolarında ağ kuralları ve yetkilendirme modeline göre tasarlanır.</p>
+      </details>
+      <details>
+        <summary>Veriler indirilebilir mi? Güvenlik nasıl sağlanır?</summary>
+        <p>Yayın senaryosuna göre farklı yöntemler vardır: rol bazlı erişim, servis katmanında token/kimlik doğrulama, gerekirse yalnız kurum içi ağda çalışma.</p>
+      </details>
+      <details>
+        <summary>Kurulum süresi ne kadar?</summary>
+        <p>Hazır bir veri modeli varsa demo hızlı çıkar. Kurumsal kurulumda analiz + modelleme + pilot + yaygınlaştırma adımları izlenir.</p>
+      </details>
+    </section>
+
+    <section id="iletisim">
+      <div class="section-title">
+        <div>
+          <h2>İletişim</h2>
+          <p class="sub">Demo, teklif veya kurumunuza uygun mimari önerisi için mesaj bırakın.</p>
+        </div>
+        <span class="tag">📨 24 saat içinde dönüş</span>
+      </div>
+
+      <div class="card contact">
+        <!-- Basit form: mailto ile çalışır (sunucusuz). İstersen daha sonra Formspark/Google Forms/CF Forms'a bağlarız. -->
+        <form action="mailto:info@geobox1.com" method="post" enctype="text/plain">
+          <input name="Kurum" placeholder="Kurum / Firma adı" required />
+          <input name="AdSoyad" placeholder="Ad Soyad" required />
+          <input name="Eposta" type="email" placeholder="E-posta" required />
+          <input name="Telefon" placeholder="Telefon (opsiyonel)" />
+          <textarea name="Mesaj" placeholder="Kısaca ihtiyacınızı yazın (ör: altyapı envanteri, saha denetim, WebGIS yayın vb.)" required></textarea>
+          <div class="cta">
+            <button class="btn primary" type="submit">📩 Gönder</button>
+            <a class="btn" href="#top">Yukarı</a>
+          </div>
+          <p class="small" style="margin:10px 0 0; color:var(--muted)">
+            Form mail istemcisi açar. Tam “web form” istersen sunucusuz form hizmetine bağlayabiliriz.
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="foot">
+          <div class="brand">
+            <span class="logo" aria-hidden="true"></span>
+            <span>GeoBox</span>
+          </div>
+          <div class="small">© <span id="y"></span> GeoBox. Tüm hakları saklıdır.</div>
+          <div class="small">
+            <a href="#ozellikler">Özellikler</a> · <a href="#paketler">Paketler</a> · <a href="#iletisim">İletişim</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
