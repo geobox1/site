@@ -3,68 +3,88 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GeoBox | Saha-Ofis Senkronizasyonu + WebGIS</title>
-
-  <meta name="description" content="GeoBox: Saha verinizi anlık toplayın, ofiste doğrulayın, web üzerinde harita ile yayınlayın. QGIS + QField ekosistemiyle uyumlu kurumsal saha-ofis senkronizasyonu ve WebGIS yaklaşımı." />
-  <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#0A2A34" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="GeoBox | Saha-Ofis Senkronizasyonu + WebGIS" />
-  <meta property="og:description" content="Saha verinizi anlık toplayın, ofiste doğrulayın, web üzerinde harita ile yayınlayın." />
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="tr_TR" />
+  <title>GeoBox — Saha • Ofis • Web | Ultra Demo</title>
+  <meta name="description" content="GeoBox: Saha verisini anlık topla, ofiste doğrula, WebGIS ile yayınla. Etkileyici ürün tanıtım sayfası." />
+  <meta name="theme-color" content="#07151b" />
 
   <style>
-    /* --- Brand palette (logo’dan) ---
-      primary: #0988BA
-      secondary: #6DA2B5
-      dark: #0A2A34
-      charcoal: #2A2C2D / #3E4042
-    */
+    /* =========================
+       GeoBox — Ultra (single file)
+       ========================= */
 
     :root{
-      --bg: #06171E;
-      --bg2:#041116;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.09);
-      --border: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
+      --bg0:#02080a;
+      --bg1:#061419;
+      --ink:#07151b;
 
-      --brand: #0988BA;
-      --brand2:#6DA2B5;
-      --ink:#0A2A34;
-      --char:#2A2C2D;
+      /* Logo-ish palette */
+      --c1:#08a6d6;   /* neon cyan */
+      --c2:#1ad3ff;   /* bright cyan */
+      --c3:#6ec0d3;   /* soft teal */
+      --c4:#7a8cff;   /* violet hint */
 
-      --ok:#41d19a;
-      --shadow: 0 16px 40px rgba(0,0,0,.45);
-      --radius: 18px;
-      --max: 1120px;
+      --w: rgba(255,255,255,.92);
+      --m: rgba(255,255,255,.70);
+      --s: rgba(255,255,255,.10);
+      --s2: rgba(255,255,255,.16);
+
+      --shadow: 0 30px 80px rgba(0,0,0,.55);
+      --radius: 22px;
+      --max: 1180px;
     }
 
-    *{ box-sizing:border-box }
-    html{ scroll-behavior:smooth }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text);
-      background:
-        radial-gradient(1100px 700px at 80% -10%, rgba(9,136,186,.35), transparent 60%),
-        radial-gradient(900px 650px at 10% 10%, rgba(109,162,181,.25), transparent 55%),
-        radial-gradient(900px 650px at 50% 120%, rgba(65,209,154,.16), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--w);
+      background: radial-gradient(1200px 700px at 20% 10%, rgba(26,211,255,.18), transparent 55%),
+                  radial-gradient(900px 600px at 80% 20%, rgba(122,140,255,.16), transparent 60%),
+                  radial-gradient(900px 700px at 55% 120%, rgba(110,192,211,.14), transparent 60%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
       line-height:1.55;
     }
-    a{ color:inherit; text-decoration:none }
-    .container{ max-width:var(--max); margin:0 auto; padding:0 18px }
+    a{ color:inherit; text-decoration:none; }
+    .container{ max-width:var(--max); margin:0 auto; padding:0 18px; }
 
-    /* Top bar */
+    /* ====== Ambient layers ====== */
+    .noise{
+      pointer-events:none;
+      position:fixed; inset:0;
+      opacity:.08;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    }
+    .glow{
+      pointer-events:none;
+      position:fixed; inset:-240px;
+      background: radial-gradient(closest-side, rgba(26,211,255,.22), transparent 60%),
+                  radial-gradient(closest-side, rgba(122,140,255,.16), transparent 60%);
+      filter: blur(30px);
+      opacity:.8;
+      transform: translate3d(var(--mx, 50vw), var(--my, 50vh), 0);
+      transition: transform .05s linear;
+      mix-blend-mode: screen;
+    }
+    .grid{
+      pointer-events:none;
+      position:fixed; inset:-2px;
+      opacity:.10;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.10) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.10) 1px, transparent 1px);
+      background-size: 68px 68px;
+      mask-image: radial-gradient(circle at 50% 20%, black 0%, transparent 60%);
+    }
+
+    /* ====== Header ====== */
     header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(6,23,30,.88), rgba(6,23,30,.45));
-      border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:60;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(180deg, rgba(2,8,10,.80), rgba(2,8,10,.30));
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
@@ -73,167 +93,209 @@
     }
     .brand{
       display:flex; align-items:center; gap:12px;
-      font-weight:900; letter-spacing:.2px;
-      min-width: 220px;
+      font-weight:950;
+      letter-spacing:.2px;
+      min-width: 210px;
     }
     .brand img{
-      height:36px; width:auto; display:block;
-      border-radius: 12px;
-      box-shadow: 0 10px 26px rgba(9,136,186,.18);
+      height:38px; width:auto; display:block;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(8,166,214,.18);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
     }
     nav ul{
       list-style:none; display:flex; gap:10px; padding:0; margin:0;
     }
     nav a{
       display:inline-flex;
-      color:var(--muted); font-weight:700; font-size:14px;
-      padding:8px 10px; border-radius:12px;
+      padding:9px 11px;
+      border-radius: 14px;
       border:1px solid transparent;
+      color: var(--m);
+      font-weight:850;
+      font-size:14px;
+      transition: all .15s ease;
     }
     nav a:hover{
-      color:var(--text);
-      border-color: rgba(9,136,186,.28);
-      background: rgba(9,136,186,.10);
+      color: var(--w);
+      border-color: rgba(26,211,255,.28);
+      background: rgba(26,211,255,.08);
+      transform: translateY(-1px);
     }
 
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding:12px 16px; border-radius:14px;
+      padding:12px 16px;
+      border-radius: 16px;
       border:1px solid rgba(255,255,255,.12);
       background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
-      font-weight:800;
+      font-weight:950;
       transition: transform .15s ease, border-color .15s ease, background .15s ease;
       cursor:pointer;
     }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(9,136,186,.40) }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(26,211,255,.40); }
     .btn.primary{
-      border-color: rgba(9,136,186,.55);
-      background: linear-gradient(135deg, rgba(9,136,186,.38), rgba(109,162,181,.22));
+      border-color: rgba(26,211,255,.55);
+      background: linear-gradient(135deg, rgba(26,211,255,.30), rgba(122,140,255,.20));
+      position:relative;
+      overflow:hidden;
+    }
+    .btn.primary:before{
+      content:"";
+      position:absolute; inset:-80px -120px auto auto;
+      width:220px; height:220px;
+      background: radial-gradient(circle at 30% 30%, rgba(26,211,255,.55), transparent 65%);
+      opacity:.8;
+      transform: rotate(20deg);
+      pointer-events:none;
     }
     .btn.ghost{
       box-shadow:none;
       background: transparent;
-      border-color: rgba(9,136,186,.28);
+      border-color: rgba(26,211,255,.22);
     }
-
     .mobile-toggle{ display:none; }
 
-    /* Hero */
-    .hero{ padding:58px 0 18px; }
-    .hero-grid{
-      display:grid; grid-template-columns: 1.15fr .85fr; gap:16px;
-      align-items:stretch;
+    /* ====== Hero ====== */
+    .hero{
+      padding: 68px 0 22px;
+      position:relative;
     }
-
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+      align-items: stretch;
+    }
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border:1px solid var(--border);
       border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      transform-style: preserve-3d;
     }
-
+    .shine:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(800px 280px at var(--sx,20%) var(--sy,10%), rgba(26,211,255,.18), transparent 60%),
+        radial-gradient(700px 260px at 80% 30%, rgba(122,140,255,.14), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
     .tag{
       display:inline-flex; align-items:center; gap:8px;
-      padding:7px 10px; border-radius:999px;
-      border:1px solid rgba(9,136,186,.28);
-      background: rgba(9,136,186,.08);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(26,211,255,.24);
+      background: rgba(26,211,255,.08);
       color: rgba(255,255,255,.80);
-      font-size:13px; font-weight:800;
+      font-weight:950;
+      font-size:13px;
     }
-
     h1{
       margin:14px 0 10px;
-      font-size: clamp(28px, 3.3vw, 46px);
-      line-height:1.08;
-      letter-spacing:-.6px;
+      font-size: clamp(30px, 3.6vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.9px;
+    }
+    .gradientText{
+      background: linear-gradient(90deg, var(--c2), var(--c3), var(--c4));
+      -webkit-background-clip: text;
+      background-clip:text;
+      color:transparent;
+      filter: drop-shadow(0 16px 32px rgba(26,211,255,.10));
     }
     .lead{
       margin:0 0 18px;
-      color:var(--muted);
-      max-width: 65ch;
+      color: var(--m);
       font-size: 16px;
-    }
-    .hero-card{ padding:26px; position:relative; overflow:hidden; }
-    .hero-card:before{
-      content:"";
-      position:absolute; inset:-120px -120px auto auto;
-      width:340px; height:340px;
-      background: radial-gradient(circle at 30% 30%, rgba(9,136,186,.55), transparent 60%);
-      filter: blur(0px);
-      opacity:.7;
-      pointer-events:none;
-      transform: rotate(18deg);
+      max-width: 72ch;
     }
 
-    .cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
-    .mini{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:16px;
+    /* Typewriter-like highlight */
+    .pulseLine{
+      display:inline-flex;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      color: rgba(255,255,255,.82);
+      font-weight:900;
+      font-size:13px;
+      margin-top: 10px;
     }
-    .mini span{
+    .cta{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 16px; }
+    .chip{
       display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px;
-      border-radius:14px;
+      padding:9px 11px;
+      border-radius: 999px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.12);
       color: rgba(255,255,255,.78);
+      font-weight:900;
       font-size:13px;
-      font-weight:700;
     }
 
-    /* Side */
-    .hero-side{ padding:22px; display:flex; flex-direction:column; gap:12px; }
-    .kpi{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    .kpi .box{
-      padding:14px; border-radius:16px;
-      border:1px solid rgba(9,136,186,.22);
-      background: rgba(9,136,186,.06);
+    .heroLeft{ padding: 28px; }
+    .heroLeft:after{
+      content:"";
+      position:absolute; inset:auto -120px -120px auto;
+      width:380px; height:380px;
+      background: radial-gradient(circle at 30% 30%, rgba(26,211,255,.35), transparent 60%);
+      opacity:.7;
+      transform: rotate(-12deg);
+      pointer-events:none;
     }
-    .kpi .n{ font-size:18px; font-weight:950; letter-spacing:-.2px; }
-    .kpi .t{ margin-top:4px; color:var(--muted); font-size:12px; }
 
-    .flow{
+    .heroRight{ padding: 22px; display:flex; flex-direction:column; gap:12px; }
+    .kpis{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .kpi{
       padding:14px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
-      background: rgba(0,0,0,.10);
+      border-radius:18px;
+      border:1px solid rgba(26,211,255,.18);
+      background: rgba(26,211,255,.06);
     }
-    .flow .row{
-      display:flex; align-items:center; gap:10px;
-      flex-wrap:wrap;
-      margin:10px 0;
-    }
-    .pill{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(9,136,186,.25);
-      background: rgba(9,136,186,.07);
-      font-weight:900; font-size:13px;
-      white-space:nowrap;
-    }
-    .arrow{ color: rgba(255,255,255,.55); font-weight:900; }
+    .kpi .n{ font-size: 20px; font-weight:1000; letter-spacing:-.2px; }
+    .kpi .t{ margin-top:4px; color:var(--m); font-size:12px; font-weight:800; }
 
-    section{ padding:26px 0; }
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:14px; margin-bottom:14px;
+    .miniMap{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+      position:relative;
+      overflow:hidden;
     }
-    h2{ margin:0; font-size:22px; letter-spacing:-.2px; }
-    .sub{ margin:6px 0 0; color:var(--muted); max-width: 78ch; }
+    .miniMap svg{ width:100%; height:150px; display:block; opacity:.95; }
+    .miniMap .caption{ color:var(--m); font-size:13px; margin-top:10px; }
+
+    /* ====== Sections ====== */
+    section{ padding: 30px 0; }
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:14px; margin-bottom: 14px;
+    }
+    h2{ margin:0; font-size: 22px; letter-spacing:-.2px; }
+    .sub{ margin:6px 0 0; color:var(--m); max-width: 78ch; }
 
     .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
-    .feat{ padding:16px; border-radius: var(--radius); }
-    .feat .icon{
-      width:40px; height:40px; border-radius:14px;
+    .feat{ padding:16px; }
+    .icon{
+      width:42px; height:42px; border-radius:16px;
       display:grid; place-items:center;
-      background: linear-gradient(135deg, rgba(9,136,186,.26), rgba(109,162,181,.16));
-      border:1px solid rgba(9,136,186,.28);
+      background: linear-gradient(135deg, rgba(26,211,255,.22), rgba(122,140,255,.15));
+      border:1px solid rgba(26,211,255,.24);
       margin-bottom:10px;
       font-size:18px;
     }
     .feat h3{ margin:0 0 8px; font-size:16px; letter-spacing:-.2px; }
-    .feat p{ margin:0; color:var(--muted); font-size:14px; }
+    .feat p{ margin:0; color:var(--m); font-size:14px; }
 
     .split{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
 
@@ -241,509 +303,708 @@
     .step{
       display:flex; gap:12px; align-items:flex-start;
       padding:12px;
-      border-radius:16px;
+      border-radius:18px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.10);
       margin-bottom:10px;
     }
     .badge{
-      width:30px; height:30px; border-radius:12px;
+      width:32px; height:32px; border-radius:14px;
       display:grid; place-items:center;
-      font-weight:950;
-      color: rgba(255,255,255,.92);
-      border:1px solid rgba(9,136,186,.35);
-      background: rgba(9,136,186,.12);
+      font-weight:1000;
+      border:1px solid rgba(26,211,255,.30);
+      background: rgba(26,211,255,.10);
       flex:0 0 auto;
     }
     .step b{ display:block; margin-bottom:2px; }
-    .step span{ color:var(--muted); font-size:14px; }
+    .step span{ color:var(--m); font-size:14px; font-weight:750; }
 
-    .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .chip{
-      padding:10px 12px; border-radius:999px;
-      border:1px solid rgba(9,136,186,.22);
-      background: rgba(9,136,186,.06);
-      color: rgba(255,255,255,.78);
-      font-weight:850; font-size:13px;
-    }
-
+    /* ====== Pricing ====== */
     .pricing{ padding:18px; }
-    .price-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
-    .plan{ padding:18px; position:relative; overflow:hidden; }
-    .plan:before{
-      content:"";
-      position:absolute; inset:auto -120px -140px auto;
-      width:280px; height:280px;
-      background: radial-gradient(circle at 30% 30%, rgba(9,136,186,.35), transparent 60%);
-      opacity:.7; pointer-events:none;
-      transform: rotate(-10deg);
-    }
+    .priceGrid{ display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+    .plan{ padding:18px; }
     .plan .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .plan h3{ margin:0; font-size:16px; letter-spacing:-.2px; }
-    .plan .p{ margin:8px 0 14px; color:var(--muted); font-size:14px; }
-    .money{ font-size:26px; font-weight:1000; letter-spacing:-.4px; }
-    .list{ margin:0; padding-left:18px; color:var(--muted); }
+    .plan .p{ margin:8px 0 14px; color:var(--m); font-size:14px; }
+    .money{ font-size:28px; font-weight:1000; letter-spacing:-.4px; }
+    .list{ margin:0; padding-left:18px; color:var(--m); font-weight:750; }
     .list li{ margin:8px 0; }
+
     .ribbon{
       position:absolute; top:12px; right:-42px;
       transform: rotate(35deg);
-      background: linear-gradient(135deg, rgba(9,136,186,.40), rgba(109,162,181,.20));
-      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(135deg, rgba(26,211,255,.38), rgba(122,140,255,.22));
+      border:1px solid rgba(255,255,255,.16);
       padding:6px 56px;
-      font-weight:950; font-size:12px;
+      font-weight:1000; font-size:12px;
       color: rgba(255,255,255,.92);
     }
 
+    /* ====== FAQ ====== */
     details{
       border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;
+      border-radius:18px;
       background: rgba(0,0,0,.10);
       padding:12px 14px;
     }
     details + details{ margin-top:10px; }
     summary{ cursor:pointer; font-weight:950; }
-    .faq p{ margin:8px 0 0; color:var(--muted); }
+    .faq p{ margin:8px 0 0; color:var(--m); font-weight:750; }
 
+    /* ====== Contact ====== */
     .contact{ padding:22px; }
-    .contact-grid{
-      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
-      align-items:stretch;
-    }
-    .contact .box{
+    .contactGrid{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+    .box{
       padding:16px;
-      border:1px solid rgba(9,136,186,.22);
-      background: rgba(9,136,186,.06);
-      border-radius:16px;
+      border-radius: 18px;
+      border:1px solid rgba(26,211,255,.18);
+      background: rgba(26,211,255,.06);
     }
-    .contact .box b{ display:block; margin-bottom:6px; }
-    .small{ font-size:13px; color: var(--muted); margin:10px 0 0; }
+    .small{ margin:10px 0 0; color:var(--m); font-size:13px; font-weight:750; }
 
+    /* ====== Footer ====== */
     footer{
-      padding:24px 0 34px;
-      color: var(--muted);
+      padding:26px 0 38px;
+      color: var(--m);
       border-top:1px solid rgba(255,255,255,.10);
       margin-top:18px;
     }
     .foot{
       display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
       align-items:center;
+      font-size:13px;
+      font-weight:800;
     }
-    .foot .left{ display:flex; align-items:center; gap:10px; font-weight:900; color: rgba(255,255,255,.85); }
-    .foot img{ height:26px; width:auto; border-radius:10px; }
+    .foot .left{ display:flex; align-items:center; gap:10px; }
+    .foot img{ height:26px; border-radius:10px; border:1px solid rgba(255,255,255,.10); }
 
-    /* Responsive */
-    @media (max-width: 920px){
-      .hero-grid{ grid-template-columns:1fr; }
+    /* ====== Modal ====== */
+    .modalBackdrop{
+      position:fixed; inset:0; z-index:99;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(14px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .modal{
+      width:min(880px, 100%);
+      border-radius: 24px;
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHeader{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .modalHeader b{ font-weight:1000; }
+    .close{
+      width:38px; height:38px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.12);
+      color: var(--w);
+      font-weight:1000;
+      cursor:pointer;
+    }
+    .modalBody{
+      padding:16px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    .demoBox{
+      border-radius: 20px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      padding:14px;
+    }
+    .fakeMap{
+      height:240px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(900px 300px at 50% 0%, rgba(26,211,255,.20), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, transparent 1px 28px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.07) 0 1px, transparent 1px 28px);
+      position:relative;
+      overflow:hidden;
+    }
+    .pin{
+      position:absolute; left: var(--px, 48%); top: var(--py, 44%);
+      width:18px; height:18px;
+      background: rgba(26,211,255,.95);
+      border-radius:999px;
+      box-shadow: 0 0 0 10px rgba(26,211,255,.14), 0 0 30px rgba(26,211,255,.28);
+      transform: translate(-50%,-50%);
+    }
+    .pin:after{
+      content:"";
+      position:absolute; inset:-18px;
+      border-radius:999px;
+      border:1px solid rgba(26,211,255,.30);
+      animation: ping 1.6s ease-out infinite;
+    }
+    @keyframes ping{
+      0%{ transform: scale(.35); opacity:.9; }
+      100%{ transform: scale(1.1); opacity:0; }
+    }
+
+    /* ====== Reveal on scroll ====== */
+    .reveal{ opacity:0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show{ opacity:1; transform: translateY(0); }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 980px){
+      .heroGrid{ grid-template-columns:1fr; }
       .grid3{ grid-template-columns:1fr; }
       .split{ grid-template-columns:1fr; }
-      .price-grid{ grid-template-columns:1fr; }
+      .priceGrid{ grid-template-columns:1fr; }
       nav ul{ display:none; }
       .mobile-toggle{ display:inline-flex; }
-      .brand{ min-width:auto; }
-      .contact-grid{ grid-template-columns:1fr; }
+      .contactGrid{ grid-template-columns:1fr; }
+      .modalBody{ grid-template-columns:1fr; }
+    }
+
+    /* Accessibility: reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+      .glow{ display:none; }
     }
   </style>
 </head>
 
 <body>
-<header>
-  <div class="container">
-    <div class="nav">
-      <a class="brand" href="#top" aria-label="GeoBox ana sayfa">
-        <!-- Logo dosyan: index.html ile aynı klasörde "geobox-logo.png" -->
-        <img src="geobox-logo.png" alt="GeoBox Logo" />
-      </a>
+  <div class="noise"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
 
-      <nav aria-label="Ana menü">
-        <ul>
-          <li><a href="#ozellikler">Özellikler</a></li>
-          <li><a href="#nasil">Nasıl Çalışır?</a></li>
-          <li><a href="#kullanim">Kullanım</a></li>
-          <li><a href="#paketler">Paketler</a></li>
-          <li><a href="#sss">SSS</a></li>
-          <li><a href="#iletisim">İletişim</a></li>
-        </ul>
-      </nav>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="GeoBox ana sayfa">
+          <!-- Logo dosyan: index.html ile aynı klasörde "geobox-logo.png" -->
+          <img src="geobox-logo.png" alt="GeoBox Logo">
+        </a>
 
-      <div style="display:flex; gap:10px; align-items:center;">
-        <a class="btn ghost" href="#iletisim">Teklif Al</a>
-        <a class="btn primary" href="#demo">Demo İstiyorum</a>
-        <a class="btn mobile-toggle" href="#iletisim" aria-label="Menü (mobil)">☰</a>
+        <nav aria-label="Ana menü">
+          <ul>
+            <li><a href="#ozellikler">Özellikler</a></li>
+            <li><a href="#nasil">Nasıl Çalışır?</a></li>
+            <li><a href="#paketler">Paketler</a></li>
+            <li><a href="#sss">SSS</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+          </ul>
+        </nav>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn ghost" href="#iletisim">Teklif Al</a>
+          <button class="btn primary" id="openDemo" type="button">⚡ Live Demo</button>
+          <a class="btn mobile-toggle" href="#iletisim" aria-label="Menü (mobil)">☰</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="container">
+
+      <section class="hero">
+        <div class="heroGrid">
+          <div class="card shine heroLeft tilt reveal" data-tilt>
+            <span class="tag">📍 Saha → Ofis → Web | “tek kaynak veri”</span>
+
+            <h1>
+              GeoBox ile
+              <span class="gradientText">saha verisini</span><br/>
+              anlık üret, doğrula,<br/>
+              <span class="gradientText">WebGIS</span> olarak yayınla.
+            </h1>
+
+            <p class="lead">
+              GeoBox, QGIS + QField ekosistemiyle uyumlu bir saha-ofis senkronizasyon yaklaşımıdır.
+              <b>Veri kalitesini artırır</b>, <b>teslim süresini düşürür</b> ve katmanları web’de etkileyici biçimde sunar.
+            </p>
+
+            <div class="pulseLine">⚡ “İlk bakışta fark edilir” — modern, hızlı, ölçeklenebilir</div>
+
+            <div class="cta">
+              <button class="btn primary" id="openDemo2" type="button">🚀 Demo’yu Aç</button>
+              <a class="btn" href="#ozellikler">✨ Özelliklere in</a>
+              <a class="btn ghost" href="#iletisim">📩 İletişim</a>
+            </div>
+
+            <div class="chips">
+              <span class="chip">✅ Mobil veri toplama</span>
+              <span class="chip">✅ Fotoğraf/ek dosya</span>
+              <span class="chip">✅ Onay akışı</span>
+              <span class="chip">✅ WebGIS yayın</span>
+            </div>
+          </div>
+
+          <aside class="card shine heroRight tilt reveal" data-tilt>
+            <div class="kpis">
+              <div class="kpi">
+                <div class="n"><span data-count="65">0</span>%</div>
+                <div class="t">Daha hızlı saha→teslim</div>
+              </div>
+              <div class="kpi">
+                <div class="n"><span data-count="45">0</span>%</div>
+                <div class="t">Daha az tekrar iş</div>
+              </div>
+              <div class="kpi">
+                <div class="n"><span data-count="30">0</span>%</div>
+                <div class="t">Daha yüksek veri kalitesi</div>
+              </div>
+              <div class="kpi">
+                <div class="n"><span data-count="10">0</span>x</div>
+                <div class="t">Daha net karar desteği</div>
+              </div>
+            </div>
+
+            <div class="miniMap">
+              <svg viewBox="0 0 640 220" role="img" aria-label="Saha-ofis-web akış animasyonu">
+                <defs>
+                  <linearGradient id="g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#1ad3ff" stop-opacity=".9"/>
+                    <stop offset="1" stop-color="#7a8cff" stop-opacity=".8"/>
+                  </linearGradient>
+                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="6" result="b"/>
+                    <feMerge>
+                      <feMergeNode in="b"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <rect x="20" y="35" width="170" height="150" rx="24" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.16)"/>
+                <rect x="235" y="35" width="170" height="150" rx="24" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.16)"/>
+                <rect x="450" y="35" width="170" height="150" rx="24" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.16)"/>
+
+                <text x="105" y="122" text-anchor="middle" fill="rgba(255,255,255,.80)" font-weight="900" font-size="20">SAHA</text>
+                <text x="320" y="122" text-anchor="middle" fill="rgba(255,255,255,.80)" font-weight="900" font-size="20">OFİS</text>
+                <text x="535" y="122" text-anchor="middle" fill="rgba(255,255,255,.80)" font-weight="900" font-size="20">WEBGIS</text>
+
+                <path id="p1" d="M190 110 C225 110, 210 110, 235 110" stroke="url(#g)" stroke-width="6" fill="none" filter="url(#glow)" />
+                <path id="p2" d="M405 110 C440 110, 425 110, 450 110" stroke="url(#g)" stroke-width="6" fill="none" filter="url(#glow)" />
+
+                <circle r="7" fill="#1ad3ff" filter="url(#glow)">
+                  <animateMotion dur="1.4s" repeatCount="indefinite" path="M190 110 C225 110, 210 110, 235 110" />
+                </circle>
+                <circle r="7" fill="#7a8cff" filter="url(#glow)">
+                  <animateMotion dur="1.6s" repeatCount="indefinite" path="M405 110 C440 110, 425 110, 450 110" />
+                </circle>
+              </svg>
+
+              <div class="caption">
+                Aynı veri: sahada üretilir → ofiste doğrulanır → web’de anlık görünür.
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                <button class="btn primary" id="openDemo3" type="button">🧪 Etkileşimli Demo</button>
+                <a class="btn" href="#nasil">🧭 Nasıl çalışır?</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="ozellikler" class="reveal">
+        <div class="sectionTitle">
+          <div>
+            <h2>Özellikler</h2>
+            <p class="sub">Gösterişli görünür ama asıl güç: sahada üretim → ofiste kalite → web’de yayın.</p>
+          </div>
+          <span class="tag">⚡ Hız • 🔐 Yetki • 🗺️ WebGIS</span>
+        </div>
+
+        <div class="grid3">
+          <div class="card feat tilt" data-tilt>
+            <div class="icon">📡</div>
+            <h3>Anlık saha-ofis senkronu</h3>
+            <p>Veri sahada üretilir, ofiste anında görünür. Kontrol ve geri bildirim döngüsü hızlanır.</p>
+          </div>
+          <div class="card feat tilt" data-tilt>
+            <div class="icon">🧾</div>
+            <h3>Kalite kontrol & onay</h3>
+            <p>Standart alanlar, doğrulama kuralları ve “onay akışı” ile veri tek kaynağa dönüşür.</p>
+          </div>
+          <div class="card feat tilt" data-tilt>
+            <div class="icon">🗺️</div>
+            <h3>WebGIS yayın</h3>
+            <p>Katmanları web haritada yayınla: filtrele, sorgula, görselleştir ve paylaş.</p>
+          </div>
+
+          <div class="card feat tilt" data-tilt>
+            <div class="icon">📷</div>
+            <h3>Fotoğraf & ek dosya</h3>
+            <p>Sahada fotoğraf/tutanak ekle; konumla ilişkilendir; denetimi hızlandır.</p>
+          </div>
+          <div class="card feat tilt" data-tilt>
+            <div class="icon">🔐</div>
+            <h3>Rol bazlı yetki</h3>
+            <p>Kim neyi görür/düzenler? Kurum içi güvenlik politikalarına göre yönet.</p>
+          </div>
+          <div class="card feat tilt" data-tilt>
+            <div class="icon">🔌</div>
+            <h3>Servis & entegrasyon</h3>
+            <p>WMS/WMTS/Vector Tile/API senaryoları; gerektiğinde kurumsal sistemlere entegrasyon.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="nasil" class="reveal">
+        <div class="sectionTitle">
+          <div>
+            <h2>Nasıl çalışır?</h2>
+            <p class="sub">4 adım, tek hedef: “veriden anlam üretmek”.</p>
+          </div>
+          <span class="tag">🧭 Net iş akışı</span>
+        </div>
+
+        <div class="split">
+          <div class="card steps tilt" data-tilt>
+            <div class="step">
+              <div class="badge">1</div>
+              <div><b>Veri modeli</b><span>Katmanlar, alanlar, formlar ve doğrulama kuralları hazırlanır.</span></div>
+            </div>
+            <div class="step">
+              <div class="badge">2</div>
+              <div><b>Saha üretimi</b><span>Mobil cihaz/GNSS ile konumlu veri + fotoğraf/ek dosya toplanır.</span></div>
+            </div>
+            <div class="step">
+              <div class="badge">3</div>
+              <div><b>Ofis kontrolü</b><span>Hatalar yakalanır, veri standartlaştırılır, tek kaynağa bağlanır.</span></div>
+            </div>
+            <div class="step" style="margin-bottom:0">
+              <div class="badge">4</div>
+              <div><b>WebGIS yayın</b><span>İntranet/kamuya açık senaryoda web haritada sunulur.</span></div>
+            </div>
+          </div>
+
+          <div class="card steps tilt" data-tilt>
+            <h3 style="margin:0 0 10px; font-size:16px; font-weight:1000;">Neden “etki” yaratır?</h3>
+            <p style="margin:0; color:var(--m); font-weight:750;">
+              Çünkü gerçek faydayı gözle görülür hale getirir: sahadaki veri, dakikalar içinde web’de “durum”a dönüşür.
+            </p>
+            <div class="chips">
+              <span class="chip">⏱️ Süreç kısalır</span>
+              <span class="chip">🧯 Hata azalır</span>
+              <span class="chip">📍 Karar netleşir</span>
+              <span class="chip">📊 İzlenebilirlik artar</span>
+            </div>
+            <div style="margin-top:14px; padding:14px; border:1px solid rgba(255,255,255,.10); border-radius:18px; background: rgba(0,0,0,.10);">
+              <b>Örnek:</b> Altyapı arızası sahada kaydedilir → ofis iş emrini açar → web’de durum anlık izlenir.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="paketler" class="reveal">
+        <div class="sectionTitle">
+          <div>
+            <h2>Paketler</h2>
+            <p class="sub">Gösterişli sunum, sağlam altyapı. İhtiyaca göre ölçeklenir.</p>
+          </div>
+          <span class="tag">💼 Başlangıç → Kurumsal</span>
+        </div>
+
+        <div class="card pricing">
+          <div class="priceGrid">
+            <div class="card plan tilt" data-tilt>
+              <div class="top">
+                <h3>Viewer</h3>
+                <span class="tag">Görüntüleme</span>
+              </div>
+              <div class="p">Web harita arayüzü + katman yayın.</div>
+              <div class="money">Başlangıç</div>
+              <ul class="list">
+                <li>WebGIS arayüz</li>
+                <li>Filtreleme / sorgu</li>
+                <li>Kurulum + eğitim</li>
+              </ul>
+              <div class="cta" style="margin-top:14px;">
+                <a class="btn primary" href="#iletisim">Bu paketle başla</a>
+              </div>
+            </div>
+
+            <div class="card plan tilt" data-tilt style="position:relative;">
+              <div class="ribbon">En Popüler</div>
+              <div class="top">
+                <h3>Sync</h3>
+                <span class="tag">Saha-Ofis</span>
+              </div>
+              <div class="p">Senkron + yetki + onay + WebGIS.</div>
+              <div class="money">Kurumsal</div>
+              <ul class="list">
+                <li>Mobil veri + ek dosyalar</li>
+                <li>Rol bazlı erişim</li>
+                <li>Onay akışı</li>
+                <li>WebGIS görüntüleme</li>
+              </ul>
+              <div class="cta" style="margin-top:14px;">
+                <button class="btn primary" id="openDemo4" type="button">Demo ile göster</button>
+              </div>
+            </div>
+
+            <div class="card plan tilt" data-tilt>
+              <div class="top">
+                <h3>Enterprise</h3>
+                <span class="tag">Entegrasyon</span>
+              </div>
+              <div class="p">PostGIS + servis mimarisi + kurumsal güvenlik.</div>
+              <div class="money">Ölçekli</div>
+              <ul class="list">
+                <li>PostGIS / servis altyapısı</li>
+                <li>Log/audit & yedekleme</li>
+                <li>SSO/LDAP (opsiyon)</li>
+                <li>Kurumsal entegrasyonlar</li>
+              </ul>
+              <div class="cta" style="margin-top:14px;">
+                <a class="btn primary" href="#iletisim">İhtiyaç analizi</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sss" class="reveal">
+        <div class="sectionTitle">
+          <div>
+            <h2>SSS</h2>
+            <p class="sub">Kısa, net, iş bitiren cevaplar.</p>
+          </div>
+          <span class="tag">🧠 Teknik & Ticari</span>
+        </div>
+
+        <details>
+          <summary>Bu sayfa niye bu kadar “efektli” ama yine de hızlı?</summary>
+          <p>Hepsi saf HTML/CSS/JS. Harici kütüphane yok. CDN yok. Tek dosya. (Logo hariç.)</p>
+        </details>
+        <details>
+          <summary>Cloudflare Pages’te canlı CBS verisi olur mu?</summary>
+          <p>Evet. Arayüz statik; canlı veri WMS/WMTS/Vector Tile/API üzerinden tarayıcıya çekilir.</p>
+        </details>
+        <details>
+          <summary>Belediye intranetinde de çalışır mı?</summary>
+          <p>Evet. Yayın senaryosu intranet/kamuya açık olarak ayrıştırılır; yetkiler servis katmanında yönetilir.</p>
+        </details>
+      </section>
+
+      <section id="iletisim" class="reveal">
+        <div class="sectionTitle">
+          <div>
+            <h2>İletişim</h2>
+            <p class="sub">Form yok (tarayıcı uyarısı çıkmasın diye). Tek tıkla mail/WhatsApp/telefon.</p>
+          </div>
+          <span class="tag">📨 Hızlı dönüş</span>
+        </div>
+
+        <div class="card contact">
+          <div class="contactGrid">
+            <div class="box">
+              <b>📩 E-posta (önerilen)</b>
+              <div class="cta">
+                <a class="btn primary"
+                   href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Kurum%3A%20%0AAd%20Soyad%3A%20%0ATelefon%3A%20%0AIhtiyac%3A%20">
+                  Mail Gönder
+                </a>
+                <button class="btn" id="openDemo5" type="button">⚡ Demo</button>
+              </div>
+              <p class="small">Mail taslakla açılır. Doldurup gönderirsiniz.</p>
+            </div>
+
+            <div class="box">
+              <b>📞 Hızlı iletişim</b>
+              <div class="cta">
+                <!-- numaraları değiştir -->
+                <a class="btn" href="tel:+905400436563">Telefon</a>
+                <a class="btn"
+                   href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20i%C3%A7in%20demo%20ve%20teklif%20almak%20istiyorum."
+                   target="_blank" rel="noopener">
+                  WhatsApp
+                </a>
+              </div>
+              <p class="small">Numaranı yazınca mobilde tek tıkla çalışır.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="foot">
+            <div class="left">
+              <img src="geobox-logo.png" alt="GeoBox">
+              <span>GeoBox</span>
+            </div>
+            <span>© <span id="y"></span> GeoBox</span>
+            <span>
+              <a href="#ozellikler">Özellikler</a> · <a href="#paketler">Paketler</a> · <a href="#iletisim">İletişim</a>
+            </span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modalBackdrop" id="modal">
+    <div class="modal card shine">
+      <div class="modalHeader">
+        <b>GeoBox — Etkileşimli Demo (temsili)</b>
+        <button class="close" id="closeDemo" aria-label="Kapat">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="demoBox">
+          <div class="fakeMap" id="fakeMap">
+            <div class="pin" id="pin" style="--px:48%; --py:44%;"></div>
+          </div>
+          <p style="margin:12px 0 0; color:var(--m); font-weight:800;">
+            Bu alan gerçek WebGIS yerine “demo hissi” için temsili. İstersen bir sonraki adımda
+            Leaflet/MapLibre ile gerçek harita da ekleyebiliriz.
+          </p>
+          <div class="cta" style="margin-top:12px;">
+            <button class="btn primary" id="randomPin" type="button">📍 Konum değiştir</button>
+            <a class="btn" href="#iletisim">📩 Teklif al</a>
+          </div>
+        </div>
+
+        <div class="demoBox">
+          <h3 style="margin:0 0 10px; font-size:16px; font-weight:1000;">Bu demo neyi temsil ediyor?</h3>
+          <ul class="list">
+            <li>“Saha → Ofis → Web” akışını ilk bakışta anlatma</li>
+            <li>Hover/tilt ile premium hissiyat</li>
+            <li>Sayısal metrik animasyonları (güven ve hız algısı)</li>
+            <li>Tek dosyada maksimum etki</li>
+          </ul>
+
+          <div style="margin-top:14px; padding:14px; border:1px solid rgba(255,255,255,.10); border-radius:18px; background: rgba(0,0,0,.10);">
+            <b>Pro ipucu:</b> Bu sayfaya “gerçek harita” eklendiğinde (MapLibre/Leaflet) satış etkisi daha da artar.
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</header>
 
-<main id="top">
-  <div class="container">
-    <section class="hero" id="demo">
-      <div class="hero-grid">
-        <div class="card hero-card">
-          <span class="tag">📍 Saha → Ofis → Web | Tek veri, tek kaynak</span>
+  <script>
+    // ===== Year
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-          <h1>
-            Saha verisini <span style="color:var(--brand); font-weight:1000;">anlık</span> toplayın,<br />
-            ofiste doğrulayın, WebGIS ile yayınlayın.
-          </h1>
+    // ===== Mouse-follow glow
+    const glow = document.querySelector('.glow');
+    window.addEventListener('mousemove', (e) => {
+      glow.style.setProperty('--mx', e.clientX + 'px');
+      glow.style.setProperty('--my', e.clientY + 'px');
+    }, {passive:true});
 
-          <p class="lead">
-            <b>GeoBox</b>, QGIS + QField ekosistemiyle uyumlu bir saha-ofis senkronizasyon yaklaşımıdır.
-            Kurumlara; <b>hız</b>, <b>veri kalitesi</b> ve <b>yetkili paylaşım</b> kazandırır.
-            İster kurum içinde (intranet), ister internet üzerinden WebGIS yayın senaryolarına ölçeklenir.
-          </p>
+    // ===== Tilt effect (no library)
+    function attachTilt(el){
+      const max = 10; // degrees
+      const scale = 1.01;
 
-          <div class="cta">
-            <a class="btn primary" href="#iletisim">🚀 Demo / Teklif Talebi</a>
-            <a class="btn" href="#nasil">🧭 Nasıl Çalışır?</a>
-            <a class="btn" href="#paketler">💼 Paketler</a>
-          </div>
+      const onMove = (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
 
-          <div class="mini">
-            <span>✅ Mobil veri toplama</span>
-            <span>✅ Fotoğraf / ek dosya</span>
-            <span>✅ Kalite kontrol & onay</span>
-            <span>✅ Web harita yayın</span>
-          </div>
-        </div>
+        const rx = (y - 0.5) * -2 * max;
+        const ry = (x - 0.5) *  2 * max;
 
-        <aside class="card hero-side" aria-label="Özet panel">
-          <div class="kpi">
-            <div class="box">
-              <div class="n">Daha Hızlı</div>
-              <div class="t">Saha → ofis gecikmesini kaldır</div>
-            </div>
-            <div class="box">
-              <div class="n">Daha Net</div>
-              <div class="t">Standart şema + doğrulama</div>
-            </div>
-            <div class="box">
-              <div class="n">Daha Güvenli</div>
-              <div class="t">Rol bazlı erişim & paylaşım</div>
-            </div>
-            <div class="box">
-              <div class="n">Daha Ekonomik</div>
-              <div class="t">Açık kaynak uyumlu mimari</div>
-            </div>
-          </div>
+        el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0) scale(${scale})`;
+        el.style.setProperty('--sx', (x*100).toFixed(1) + '%');
+        el.style.setProperty('--sy', (y*100).toFixed(1) + '%');
+      };
 
-          <div class="flow" aria-label="Akış diyagramı">
-            <div class="row">
-              <span class="pill">📱 Saha</span>
-              <span class="arrow">→</span>
-              <span class="pill">🗂️ Senkron</span>
-              <span class="arrow">→</span>
-              <span class="pill">🧠 Ofis</span>
-            </div>
-            <div class="row">
-              <span class="pill">🗺️ WebGIS</span>
-              <span class="arrow">←</span>
-              <span class="pill">🧾 Rapor</span>
-              <span class="arrow">←</span>
-              <span class="pill">✅ Onay</span>
-            </div>
-            <p style="margin:10px 0 0; color:var(--muted); font-size:13px">
-              Aynı veri; sahada üretilir, ofiste doğrulanır, web’de karar desteğine dönüşür.
-            </p>
-          </div>
+      const onLeave = () => {
+        el.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)';
+      };
 
-          <a class="btn primary" href="#iletisim">📞 15 dk tanıtım görüşmesi</a>
-          <a class="btn" href="#ozellikler">✨ Tüm özellikler</a>
-        </aside>
-      </div>
-    </section>
+      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mouseleave', onLeave);
+    }
+    document.querySelectorAll('[data-tilt]').forEach(attachTilt);
 
-    <section id="ozellikler">
-      <div class="section-title">
-        <div>
-          <h2>Özellikler</h2>
-          <p class="sub">GeoBox, mevcut CBS yatırımını çöpe atmaz; sahaya inen operasyon ve web yayın katmanı ekler.</p>
-        </div>
-        <span class="tag">⚡ Hız • 🔐 Güvenlik • 🧩 Entegrasyon</span>
-      </div>
+    // ===== Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          en.target.classList.add('show');
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold:.14});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-      <div class="grid3">
-        <div class="card feat">
-          <div class="icon">📡</div>
-          <h3>Anlık saha-ofis senkronizasyonu</h3>
-          <p>Saha ekibinin ürettiği veri ofiste anında görünür. Kontrol ve geri bildirim döngüsü hızlanır.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">🗺️</div>
-          <h3>WebGIS yayın</h3>
-          <p>Katmanları web haritada yayınla. Filtreleme, sorgu ve görselleştirme ile karar desteği sağla.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">🔐</div>
-          <h3>Yetkilendirme & kontrollü paylaşım</h3>
-          <p>Kullanıcı/rol bazlı erişim ile birimler arası paylaşımı güvenle yönet.</p>
-        </div>
+    // ===== Count-up animation
+    function countUp(el, to, duration=900){
+      const start = 0;
+      const t0 = performance.now();
+      function tick(now){
+        const p = Math.min(1, (now - t0) / duration);
+        const v = Math.round(start + (to - start) * (1 - Math.pow(1 - p, 3)));
+        el.textContent = v;
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const counters = Array.from(document.querySelectorAll('[data-count]'));
+    const io2 = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          const el = en.target;
+          const to = parseInt(el.getAttribute('data-count'), 10);
+          countUp(el, to);
+          io2.unobserve(el);
+        }
+      });
+    }, {threshold:.6});
+    counters.forEach(el=>io2.observe(el));
 
-        <div class="card feat">
-          <div class="icon">📷</div>
-          <h3>Fotoğraf ve ek dosya yönetimi</h3>
-          <p>Saha fotoğrafları, tutanaklar ve ekleri konuma bağlı olarak kayıt altına al.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">🧱</div>
-          <h3>Standart veri modeli</h3>
-          <p>Şema/alan doğrulama ile veri kalitesini koru; proje teslimlerinde sürprizi azalt.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">🔌</div>
-          <h3>Servis ve entegrasyonlara uygun</h3>
-          <p>İhtiyaca göre WMS/WMTS/Vector Tile/API yayın; kurumsal sistemlerle entegrasyon için hazır yapı.</p>
-        </div>
-      </div>
-    </section>
+    // ===== Modal demo
+    const modal = document.getElementById('modal');
+    const openers = ['openDemo','openDemo2','openDemo3','openDemo4','openDemo5']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
 
-    <section id="nasil">
-      <div class="section-title">
-        <div>
-          <h2>Nasıl Çalışır?</h2>
-          <p class="sub">4 adımda: proje modeli → saha üretimi → ofis onayı → WebGIS yayın.</p>
-        </div>
-        <span class="tag">🧭 Net iş akışı</span>
-      </div>
+    function openModal(){
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    openers.forEach(b => b.addEventListener('click', openModal));
+    document.getElementById('closeDemo').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
 
-      <div class="split">
-        <div class="card steps">
-          <div class="step">
-            <div class="badge">1</div>
-            <div>
-              <b>Proje & veri modeli</b>
-              <span>Katmanlar, alanlar, form düzeni ve doğrulama kuralları belirlenir.</span>
-            </div>
-          </div>
-          <div class="step">
-            <div class="badge">2</div>
-            <div>
-              <b>Sahada veri toplama</b>
-              <span>Mobil cihaz/harici GNSS ile konumlu veri + fotoğraf/ek dosya üretilir.</span>
-            </div>
-          </div>
-          <div class="step">
-            <div class="badge">3</div>
-            <div>
-              <b>Ofiste kontrol & onay</b>
-              <span>Kalite kontrol, düzeltme ve standartlaştırma ile tek kaynak veri oluşturulur.</span>
-            </div>
-          </div>
-          <div class="step" style="margin-bottom:0">
-            <div class="badge">4</div>
-            <div>
-              <b>WebGIS yayın & paylaşım</b>
-              <span>Kurum içi ya da kamuya açık senaryolarda web harita arayüzünde sunulur.</span>
-            </div>
-          </div>
-        </div>
+    // ===== Fake map pin randomizer
+    const pin = document.getElementById('pin');
+    const fakeMap = document.getElementById('fakeMap');
+    document.getElementById('randomPin').addEventListener('click', ()=>{
+      const x = 10 + Math.random()*80;
+      const y = 12 + Math.random()*70;
+      pin.style.setProperty('--px', x.toFixed(1) + '%');
+      pin.style.setProperty('--py', y.toFixed(1) + '%');
+    });
 
-        <div class="card steps">
-          <h3 style="margin:0 0 8px; padding:18px 18px 0;">Kazanımlar</h3>
-          <div style="padding:0 18px 18px;">
-            <p style="margin:0; color:var(--muted)">
-              GeoBox, “sahadan gelen veri” ile “ofiste üretilen karar” arasındaki süreyi kısaltır.
-              Operasyonlar hızlanır, veri kalitesi artar.
-            </p>
-
-            <div class="chips">
-              <span class="chip">⏱️ Ölçüm → teslim süresi kısalır</span>
-              <span class="chip">🧾 Veri kalitesi artar</span>
-              <span class="chip">🧑‍🤝‍🧑 Birimler arası koordinasyon</span>
-              <span class="chip">📍 Konumsal karar desteği</span>
-              <span class="chip">🧯 Hata/eksik yakalama</span>
-              <span class="chip">📊 Raporlama & izlenebilirlik</span>
-            </div>
-
-            <div style="margin-top:14px; padding:14px; border:1px solid rgba(255,255,255,.10); border-radius:16px; background: rgba(0,0,0,.10)">
-              <b>Örnek:</b> Tesis bakım ekibi sahada arıza kaydeder → fotoğraf ekler → ofis iş emrini açar → web haritada durum anlık izlenir.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="kullanim">
-      <div class="section-title">
-        <div>
-          <h2>Kullanım Alanları</h2>
-          <p class="sub">GeoBox, “konumlu veri üreten” her operasyona uyarlanabilir.</p>
-        </div>
-        <span class="tag">🏛️ Belediyeler • 🏭 OSB • 📐 Mühendislik</span>
-      </div>
-
-      <div class="grid3">
-        <div class="card feat">
-          <div class="icon">🏛️</div>
-          <h3>Belediyeler</h3>
-          <p>Altyapı envanteri, numarataj, saha denetimleri, park/bakım, vatandaş odaklı web harita yayınları.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">🏭</div>
-          <h3>OSB / Büyük tesisler</h3>
-          <p>Tesis envanteri, bakım/denetim kayıtları, arıza yönetimi, operasyon katmanları ve raporlama.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">📐</div>
-          <h3>Mühendislik & Harita Ofisleri</h3>
-          <p>Saha ölçüleri, kontrol noktaları, aplikasyon, proje teslim süreçlerinde hız ve şeffaflık.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="paketler">
-      <div class="section-title">
-        <div>
-          <h2>Paketler</h2>
-          <p class="sub">İhtiyaca göre başlayın, büyüdükçe geliştirin. (Paketler örnektir; kurum ihtiyacına göre netleşir.)</p>
-        </div>
-        <span class="tag">💡 Başlangıç → Kurumsal</span>
-      </div>
-
-      <div class="card pricing">
-        <div class="price-grid">
-          <div class="card plan">
-            <div class="top">
-              <h3>Viewer</h3>
-              <span class="tag">Görüntüleme</span>
-            </div>
-            <div class="p">Web harita arayüzü + katman yayın (servis/tile üzerinden).</div>
-            <div class="money">Başlangıç</div>
-            <ul class="list">
-              <li>WebGIS arayüz</li>
-              <li>Katman filtreleme / sorgu</li>
-              <li>Temel kurulum + eğitim</li>
-            </ul>
-            <div class="cta" style="margin-top:14px">
-              <a class="btn primary" href="#iletisim">Bu paketle başla</a>
-            </div>
-          </div>
-
-          <div class="card plan">
-            <div class="ribbon">En Popüler</div>
-            <div class="top">
-              <h3>Sync</h3>
-              <span class="tag">Saha-Ofis</span>
-            </div>
-            <div class="p">Senkronizasyon + yetkilendirme + saha ekip akışı + WebGIS görüntüleme.</div>
-            <div class="money">Kurumsal</div>
-            <ul class="list">
-              <li>Saha veri toplama + ek dosyalar</li>
-              <li>Rol bazlı erişim</li>
-              <li>Kalite kontrol & onay</li>
-              <li>WebGIS görüntüleme</li>
-            </ul>
-            <div class="cta" style="margin-top:14px">
-              <a class="btn primary" href="#iletisim">Görüşme iste</a>
-            </div>
-          </div>
-
-          <div class="card plan">
-            <div class="top">
-              <h3>Enterprise</h3>
-              <span class="tag">Entegrasyon</span>
-            </div>
-            <div class="p">PostGIS + servis mimarisi + kurumsal güvenlik + entegrasyonlar.</div>
-            <div class="money">Ölçekli</div>
-            <ul class="list">
-              <li>PostGIS / servis altyapısı</li>
-              <li>Log/audit & yedekleme</li>
-              <li>SSO/LDAP (opsiyon)</li>
-              <li>e-Belediye/ERP entegrasyon</li>
-            </ul>
-            <div class="cta" style="margin-top:14px">
-              <a class="btn primary" href="#iletisim">İhtiyaç analizi</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="sss" class="faq">
-      <div class="section-title">
-        <div>
-          <h2>SSS</h2>
-          <p class="sub">En sık gelen soruların kısa yanıtları.</p>
-        </div>
-        <span class="tag">🧠 Teknik • 💼 Ticari</span>
-      </div>
-
-      <details>
-        <summary>Cloudflare Pages ile “canlı” CBS verisi yayınlanır mı?</summary>
-        <p>Evet. Arayüz statik olarak Pages’te durur. Canlı veri ise bir servis (WMS/WMTS/Vector Tile/API) üzerinden tarayıcıya çekilir.</p>
-      </details>
-      <details>
-        <summary>İntranet (kurum içi) çalışır mı?</summary>
-        <p>Evet. Kurum içi erişim senaryolarında ağ kuralları ve yetkilendirme modeline göre tasarlanır.</p>
-      </details>
-      <details>
-        <summary>Veri güvenliği nasıl sağlanır?</summary>
-        <p>Yayın senaryosuna göre: rol bazlı erişim, servis katmanında token/kimlik doğrulama, gerekiyorsa yalnız kurum içi ağda yayın.</p>
-      </details>
-      <details>
-        <summary>Kurulum ne kadar sürer?</summary>
-        <p>Demo hızlı çıkar. Kurumsal kurulumda analiz → veri modeli → pilot → yaygınlaştırma adımları izlenir.</p>
-      </details>
-    </section>
-
-    <section id="iletisim">
-      <div class="section-title">
-        <div>
-          <h2>İletişim</h2>
-          <p class="sub">Demo/teklif için bize ulaşın. </p>
-        </div>
-        <span class="tag">📨 Hızlı dönüş</span>
-      </div>
-
-      <div class="card contact">
-        <div class="contact-grid">
-          <div class="box">
-            <b>📩 E-posta (önerilen)</b>
-            <div class="cta">
-              <a class="btn primary"
-                 href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Kurum%3A%20%0AAd%20Soyad%3A%20%0ATelefon%3A%20%0AIhtiyac%3A%20">
-                Mail Gönder
-              </a>
-              <a class="btn ghost" href="#paketler">Paketleri İncele</a>
-            </div>
-            <p class="small"> </p>
-          </div>
-
-          <div class="box">
-            <b>📞 Hızlı iletişim</b>
-            <div class="cta">
-              <!-- Telefon/WhatsApp numaralarını kendi numaranla değiştir -->
-              <a class="btn" href="tel:+905400436563">Telefon</a>
-              <a class="btn"
-                 href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20i%C3%A7in%20demo%20ve%20teklif%20almak%20istiyorum."
-                 target="_blank" rel="noopener">
-                WhatsApp
-              </a>
-            </div>
-            <p class="small"> </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <div class="foot">
-          <div class="left">
-            <img src="geobox-logo.png" alt="GeoBox" />
-            <span>GeoBox</span>
-          </div>
-          <div style="font-size:13px;">© <span id="y"></span> GeoBox. Tüm hakları saklıdır.</div>
-          <div style="font-size:13px;">
-            <a href="#ozellikler">Özellikler</a> · <a href="#paketler">Paketler</a> · <a href="#iletisim">İletişim</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-</main>
-
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-</script>
+    // Bonus: click on fake map -> move pin
+    fakeMap.addEventListener('click', (e)=>{
+      const r = fakeMap.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top) / r.height) * 100;
+      pin.style.setProperty('--px', x.toFixed(1) + '%');
+      pin.style.setProperty('--py', y.toFixed(1) + '%');
+    }, {passive:true});
+  </script>
 </body>
 </html>
