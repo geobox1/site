@@ -8,28 +8,19 @@
   <title>GeoBox — Web Tabanlı CBS Platformu</title>
   <meta name="description" content="GeoBox ile belediyeler, altyapı işletmeleri ve mühendislik ekipleri için modern, hızlı ve güvenli web tabanlı CBS. Katmanlar, sorgu, analiz, saha senkronizasyonu ve daha fazlası." />
 
-  <meta property="og:title" content="GeoBox — Web Tabanlı CBS Platformu" />
-  <meta property="og:description" content="Katman yönetimi, sorgu, analiz, saha senkronizasyonu. Modern, hızlı, güvenli." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://geobox1.com" />
-
   <style>
     :root{
-      /* Temel tipografi */
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-
       --radius:18px;
       --radius2:26px;
       --max:1160px;
 
-      /* Aksan renkler */
       --a:#1bb7ff;
       --b:#6c5cff;
       --c:#21d39b;
     }
 
-    /* LIGHT (varsayılan) */
     html[data-theme="light"]{
       --bg:#f6f7ff;
       --panel:#ffffff;
@@ -41,7 +32,6 @@
       --shadow:0 18px 50px rgba(11,16,32,.10);
     }
 
-    /* DARK */
     html[data-theme="dark"]{
       --bg:#070a14;
       --panel:#0b1020;
@@ -70,31 +60,29 @@
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
 
-    /* Sticky header */
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
       background: color-mix(in oklab, var(--panel) 70%, transparent);
       border-bottom:1px solid var(--line);
     }
-
     .nav{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 0;
       gap:14px;
     }
 
-    /* LOGO: repo'daki geobox-logo.png */
+    /* ✅ LOGO BÜYÜTÜLDÜ */
     .brand{
-      display:flex; align-items:center; gap:10px;
-      min-width: 180px;
+      display:flex; align-items:center; gap:12px;
+      min-width: 220px;
     }
     .brandLogo{
-      width:36px; height:36px;
-      border-radius:12px;
+      width:52px; height:52px;                 /* büyütüldü */
+      border-radius:16px;
       border:1px solid var(--line);
       background: color-mix(in oklab, var(--panel) 85%, transparent);
-      padding:6px;
+      padding:6px;                               /* padding azaltıldı */
       display:flex; align-items:center; justify-content:center;
       box-shadow: 0 14px 40px rgba(0,0,0,.10);
       overflow:hidden;
@@ -102,13 +90,13 @@
     .brandLogo img{
       width:100%;
       height:100%;
-      object-fit:contain;
       display:block;
+      object-fit:contain;                        /* taşmadan dolu görünüm */
+      transform: scale(1.06);                    /* hafif büyütme */
     }
     .brand b{font-size:15px; letter-spacing:.2px}
-    .brand small{display:block; color:var(--muted2); font-size:11px; margin-top:1px}
+    .brand small{display:block; color:var(--muted2); font-size:11px; margin-top:2px}
 
-    /* Desktop menu */
     .menu{
       display:flex; gap:10px; flex-wrap:wrap;
       align-items:center; justify-content:center;
@@ -127,7 +115,7 @@
 
     .actions{
       display:flex; gap:10px; align-items:center; justify-content:flex-end;
-      min-width: 180px;
+      min-width: 220px;
     }
 
     .btn{
@@ -149,20 +137,18 @@
       background: color-mix(in oklab, var(--panel2) 75%, transparent);
       border-color: color-mix(in oklab, var(--line) 120%, transparent);
     }
-
     .btn.primary{
       border-color: color-mix(in oklab, var(--a) 35%, var(--line));
-      background: linear-gradient(135deg, color-mix(in oklab, var(--a) 22%, transparent),
-                                         color-mix(in oklab, var(--b) 16%, transparent));
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--a) 22%, transparent),
+        color-mix(in oklab, var(--b) 16%, transparent));
     }
-    .btn.primary:hover{
-      border-color: color-mix(in oklab, var(--a) 55%, var(--line));
-    }
-
+    .btn.primary:hover{border-color: color-mix(in oklab, var(--a) 55%, var(--line))}
     .btn.whatsapp{
       border-color: color-mix(in oklab, var(--c) 38%, var(--line));
-      background: linear-gradient(135deg, color-mix(in oklab, var(--c) 20%, transparent),
-                                         color-mix(in oklab, var(--a) 10%, transparent));
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--c) 20%, transparent),
+        color-mix(in oklab, var(--a) 10%, transparent));
     }
 
     .kbd{
@@ -175,7 +161,6 @@
       color:color-mix(in oklab, var(--text) 85%, transparent);
     }
 
-    /* Mobil menü */
     .hamburger{
       display:none;
       width:42px; height:40px;
@@ -211,21 +196,20 @@
       margin-top:10px;
       color:color-mix(in oklab, var(--text) 85%, transparent);
     }
-    .mobileMenu a:hover{
-      background: color-mix(in oklab, var(--panel2) 75%, transparent);
-    }
+    .mobileMenu a:hover{background: color-mix(in oklab, var(--panel2) 75%, transparent)}
 
-    /* Hero */
     header.hero{padding:56px 0 26px}
     .heroGrid{display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; align-items:stretch;}
 
     .card{
       border:1px solid var(--line);
       border-radius:var(--radius2);
-      background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 95%, transparent),
-                                         color-mix(in oklab, var(--panel2) 85%, transparent));
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--panel) 95%, transparent),
+        color-mix(in oklab, var(--panel2) 85%, transparent));
       box-shadow: var(--shadow);
     }
+
     .heroLeft{padding:28px}
     .tagline{
       display:inline-flex; align-items:center; gap:10px;
@@ -286,8 +270,7 @@
       overflow:hidden;
       background: linear-gradient(180deg,
         color-mix(in oklab, var(--panel) 95%, transparent),
-        color-mix(in oklab, var(--panel2) 85%, transparent)
-      );
+        color-mix(in oklab, var(--panel2) 85%, transparent));
     }
     .demoTop{
       display:flex; align-items:center; justify-content:space-between;
@@ -370,53 +353,67 @@
       gap:16px; margin-bottom:16px;
     }
     h2{margin:0; font-size:26px; letter-spacing:-.3px}
-    .sub{margin:0; color:var(--muted2); font-size:13px; max-width:70ch}
+    .sub{margin:0; color:var(--muted2); font-size:13px; max-width:78ch}
 
+    .grid2{
+      display:grid; gap:14px;
+      grid-template-columns: 1fr 1fr;
+    }
     .grid3{
       display:grid; gap:14px;
       grid-template-columns: repeat(3, 1fr);
     }
-    .feature{
-      padding:16px;
-      border-radius:var(--radius);
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 92%, transparent);
-      min-height: 170px;
-      box-shadow: var(--shadow);
-    }
-    .feature .icon{
-      width:38px; height:38px; border-radius:14px;
-      border:1px solid var(--line);
-      background: linear-gradient(135deg, rgba(27,183,255,.12), rgba(108,92,255,.10));
-      display:flex; align-items:center; justify-content:center;
-      margin-bottom:10px;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: color-mix(in oklab, var(--text) 80%, transparent);
-    }
-    .feature b{display:block; font-size:14px; margin-bottom:6px}
-    .feature p{margin:0; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px}
-    .feature ul{margin:10px 0 0; padding-left:16px; color:var(--muted2); font-size:12px}
-    .feature li{margin:4px 0}
 
-    .demoSection{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:stretch;
-    }
     .panel{
       padding:16px;
       border-radius:var(--radius2);
       border:1px solid var(--line);
       background: linear-gradient(180deg,
         color-mix(in oklab, var(--panel) 95%, transparent),
-        color-mix(in oklab, var(--panel2) 85%, transparent)
-      );
+        color-mix(in oklab, var(--panel2) 85%, transparent));
       box-shadow: var(--shadow);
     }
     .panel h3{margin:0 0 10px; font-size:16px}
     .panel p{margin:0 0 12px; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px}
+
+    /* ✅ Yeni: yöneticiye anlatım kartları */
+    .bigFeature{
+      padding:18px;
+      border-radius:var(--radius2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--panel) 95%, transparent),
+        color-mix(in oklab, var(--panel2) 85%, transparent));
+      box-shadow: var(--shadow);
+    }
+    .bigFeature .head{
+      display:flex; gap:12px; align-items:flex-start;
+      margin-bottom:10px;
+    }
+    .bfIcon{
+      width:44px; height:44px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(27,183,255,.12), rgba(108,92,255,.10));
+      display:flex; align-items:center; justify-content:center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: color-mix(in oklab, var(--text) 80%, transparent);
+      flex:0 0 auto;
+    }
+    .bigFeature b{display:block; font-size:15px; margin-top:2px}
+    .bigFeature .desc{color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px; margin:0}
+    .bfList{margin:12px 0 0; padding-left:16px; color:var(--muted2); font-size:13px}
+    .bfList li{margin:6px 0}
+    .bfNote{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
+      color:color-mix(in oklab, var(--text) 74%, transparent);
+      font-size:12px;
+    }
 
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .field{
@@ -479,21 +476,12 @@
       white-space:pre-wrap;
     }
 
-    .usecases{
+    .demoSection{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1fr 1fr;
       gap:14px;
       align-items:stretch;
     }
-    .list{display:grid; gap:10px; margin-top:10px}
-    .item{
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-    }
-    .item b{display:block; font-size:13px}
-    .item span{display:block; font-size:12px; color:var(--muted2); margin-top:3px}
 
     .cta{
       padding:26px;
@@ -519,12 +507,6 @@
       border-top:1px solid var(--line);
       background: color-mix(in oklab, var(--panel2) 35%, transparent);
     }
-    footer .fgrid{
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:14px;
-      align-items:center;
-    }
     .links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end}
     .links a{
       font-size:12px;
@@ -538,13 +520,12 @@
       background: color-mix(in oklab, var(--panel2) 65%, transparent);
     }
 
-    /* Mobil */
     @media (max-width: 980px){
       h1{font-size:36px}
       .heroGrid{grid-template-columns: 1fr}
-      .grid3{grid-template-columns: 1fr}
       .demoSection{grid-template-columns: 1fr}
-      .usecases{grid-template-columns: 1fr}
+      .grid3{grid-template-columns: 1fr}
+      .grid2{grid-template-columns: 1fr}
       .actions{min-width: unset}
       .brand{min-width: unset}
     }
@@ -561,13 +542,15 @@
       .menu{display:none}
       .hamburger{display:inline-flex}
       .actions{gap:8px; flex-wrap:wrap}
-      .btn{padding:10px 11px}
+
+      /* mobilde logo çok büyümesin */
+      .brandLogo{width:46px; height:46px}
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
+  <div class="topbar" id="topbar">
     <div class="wrap">
       <div class="nav">
         <a class="brand" href="#top" aria-label="GeoBox ana sayfa">
@@ -583,8 +566,6 @@
         <nav class="menu" aria-label="Site menüsü">
           <a href="#ozellikler">Özellikler</a>
           <a href="#demo">Canlı Demo</a>
-          <a href="#usecase">Kullanım</a>
-          <a href="#mimari">Mimari</a>
           <a href="#iletisim">İletişim</a>
         </nav>
 
@@ -598,8 +579,6 @@
       <div class="mobileMenu" id="mobileMenu" aria-label="Mobil menü">
         <a href="#ozellikler">Özellikler</a>
         <a href="#demo">Canlı Demo</a>
-        <a href="#usecase">Kullanım</a>
-        <a href="#mimari">Mimari</a>
         <a href="#iletisim">İletişim</a>
       </div>
     </div>
@@ -616,22 +595,21 @@
 
         <h1>GeoBox ile CBS’yi<br/>tek ekranda <span style="color:var(--a)">yönetin</span>.</h1>
         <p class="lead">
-          Belediyeler, altyapı işletmeleri ve mühendislik ekipleri için modern bir web tabanlı CBS:
-          <b>katmanlar</b>, <b>sorgular</b>, <b>analiz</b>, <b>rol bazlı yetkilendirme</b> ve <b>saha-ofis senkronizasyonu</b>.
-          Hızlı kurulum, düşük maliyet, yüksek etki.
+          GeoBox; belediye, altyapı işletmesi veya mühendislik firmasında “harita + veri + süreç” işini tek platformda birleştirir.
+          Yani sadece harita göstermez — <b>işi yönetir</b>.
         </p>
 
         <div class="row">
-          <a class="btn primary" href="#demo">Demo’yu dene</a>
-          <a class="btn" href="#ozellikler">Tüm yetenekler</a>
+          <a class="btn primary" href="#ozellikler">Özellikleri gör</a>
+          <a class="btn" href="#demo">Demo’yu dene</a>
           <span class="fine">Cloudflare + GitHub ile düşük maliyetli yayın</span>
         </div>
 
         <div class="heroBullets" aria-label="Öne çıkanlar">
-          <div class="pill"><i aria-hidden="true"></i><div><b>Katman & veri yönetimi</b><span>Vektör/rasters, tematik stiller, hızlı sorgu.</span></div></div>
-          <div class="pill"><i aria-hidden="true"></i><div><b>Saha-ofis senkron</b><span>Mobil ekip verisi anlık ofiste görünür.</span></div></div>
-          <div class="pill"><i aria-hidden="true"></i><div><b>Analiz & rapor</b><span>Öznitelik/konumsal analiz, çıktı alma.</span></div></div>
-          <div class="pill"><i aria-hidden="true"></i><div><b>Kurumsal güvenlik</b><span>Yetkiler, loglar ve entegrasyon.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Tek ekran yönetim</b><span>Katman, arama, rapor, iş emri.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Saha-ofis senkron</b><span>Ekip sahada girer, ofis anında görür.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Kurumsal kontrol</b><span>Yetki, kayıt geçmişi, denetim izi.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Karar destek</b><span>Veriden anlam: analiz, öncelik, rapor.</span></div></div>
         </div>
       </div>
 
@@ -672,81 +650,171 @@
     </div>
   </header>
 
+  <!-- ✅ ÖZELLİKLER (YÖNETİCİ DİLİYLE GENİŞLETİLDİ) -->
   <section id="ozellikler">
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Kurumsal CBS’nin tüm çekirdek özellikleri</h2>
-          <p class="sub">GeoBox’ı “tek ürün” yapan şey, modüllerin birbirini tamamlaması: veri → iş akışı → saha → rapor → entegrasyon.</p>
+          <h2>GeoBox ile kurulan CBS ne demek?</h2>
+          <p class="sub">
+            Basit anlatım: CBS; kurumun “sahadaki varlıklarını” (hat, vana, yol, parsel, abone, mezar, arıza, iş emri…)
+            harita üzerinde gösterir ve bu varlıklar hakkında <b>arama, sorgu, güncelleme, rapor ve süreç yönetimi</b> yaptırır.
+            GeoBox ise bunu web üzerinden, yetkili kullanıcılarla, ölçülebilir iş çıktısına dönüştürür.
+          </p>
         </div>
-        <div class="fine">Odak: hız, güvenlik, ölçeklenebilirlik</div>
+        <div class="fine">Hedef: netlik + hız + kontrol</div>
+      </div>
+
+      <div class="grid2">
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">CBS?</div>
+            <div>
+              <b>“Harita” değil, kurum hafızası</b>
+              <p class="desc">
+                Excel/klasör/kişide kalan bilgi kaybolur. CBS’de bilgi standart ve canlıdır:
+                kim ekledi, ne zaman güncelledi, geçmişte ne vardı… hepsi kayıt altındadır.
+              </p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li><b>Arama:</b> “Vana 14”, “Parsel 123”, “Arıza kaydı” gibi saniyeler içinde bulunur.</li>
+            <li><b>Görsel doğrulama:</b> Katmanlar üst üste açılır (altyapı + imar + parsel gibi).</li>
+            <li><b>Tek doğru kaynak:</b> Aynı veri herkes için aynı yerde durur.</li>
+          </ul>
+          <div class="bfNote">
+            Yönetici faydası: Personel değişse bile bilgi kurumda kalır. Sahadaki işin “şeffaf” takibi oluşur.
+          </div>
+        </div>
+
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">NEDEN</div>
+            <div>
+              <b>GeoBox’ın farkı: işi sonuçlandırır</b>
+              <p class="desc">
+                GeoBox sadece göstermez; saha verisini toplar, süreç başlatır, rapor üretir, yetki verir ve entegre olur.
+                Yani “harita ekranı” değil, <b>operasyon ekranı</b>.
+              </p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li><b>Saha→Ofis:</b> Ekip sahada ekler, ofis anında görür (foto/form dahil).</li>
+            <li><b>İş emri:</b> Arıza kaydı açılır, sorumlu atanır, kapanış raporu alınır.</li>
+            <li><b>Rapor:</b> “Bu ay kaç arıza?” “Hangi mahallede yoğun?” gibi çıktılar.</li>
+          </ul>
+          <div class="bfNote">
+            Yönetici faydası: Zaman kaybı azalır, kararlar veriye dayanır, hizmet kalitesi artar.
+          </div>
+        </div>
+      </div>
+
+      <div style="height:14px"></div>
+
+      <div class="sectionHead">
+        <div>
+          <h2>Özellik seti: herkesin anlayacağı dille</h2>
+          <p class="sub">
+            Aşağıdaki başlıklar, bir başkanın veya genel müdürün “Bu sistem bana ne kazandırır?” sorusuna cevap verir.
+          </p>
+        </div>
       </div>
 
       <div class="grid3">
-        <div class="feature">
-          <div class="icon">LAYER</div>
-          <b>Katman Yönetimi</b>
-          <p>Vektör / raster katmanlar, tematik stiller, ölçek bağımlı görünüm, hızlı filtreleme.</p>
-          <ul>
-            <li>Katman grupları & görünürlük</li>
-            <li>Stil şablonları (kurumsal)</li>
-            <li>Öznitelik tablosu + seçim</li>
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">MAP</div>
+            <div>
+              <b>Harita & Katman Yönetimi</b>
+              <p class="desc">Kurum verileri katman katman açılır; ihtiyaç duyduğun katmanı gösterir, diğerlerini kapatırsın.</p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li>Hat/ekipman/parsel/imar gibi katmanları birlikte görme</li>
+            <li>Katmana tıklayınca “kart” gibi detay ekranı (adres, tip, tarih, not…)</li>
+            <li>Filtre: “Sadece bu mahalledeki vanalar” gibi</li>
           </ul>
+          <div class="bfNote">Örnek: “Şu sokakta altyapı var mı?” sorusu 10 saniyede cevaplanır.</div>
         </div>
 
-        <div class="feature">
-          <div class="icon">QUERY</div>
-          <b>Sorgu & Filtre</b>
-          <p>Öznitelik sorguları, hızlı arama, kayıt seçimi ve sonuçla aksiyon.</p>
-          <ul>
-            <li>Dinamik filtreler</li>
-            <li>Kayıt detay paneli</li>
-            <li>Ön tanımlı sorgular</li>
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">DATA</div>
+            <div>
+              <b>Veri Girişi ve Güncelleme</b>
+              <p class="desc">Veri sadece “bakan kişide” kalmaz. Yetkili kullanıcılar doğru şekilde girer ve günceller.</p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li>Formlar: standart alanlar (tip, durum, tarih, açıklama)</li>
+            <li>Foto/ek dosya ekleme</li>
+            <li>Değişiklik geçmişi (kim, neyi, ne zaman değiştirdi)</li>
           </ul>
+          <div class="bfNote">Örnek: “Hangi ekipman ne zaman bakım gördü?” takip edilir.</div>
         </div>
 
-        <div class="feature">
-          <div class="icon">ANLZ</div>
-          <b>Analiz & Karar Destek</b>
-          <p>Konumsal analizlerden özet raporlara kadar: “veriden anlam” üretme.</p>
-          <ul>
-            <li>Tampon, kesişim, yakınlık</li>
-            <li>Tematik yoğunluk</li>
-            <li>İş zekâsı çıktıları</li>
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">FIELD</div>
+            <div>
+              <b>Saha Operasyonları</b>
+              <p class="desc">Saha ekipleri telefonda konuşmak yerine uygulama üzerinden kayıt açar; ofis anında görür.</p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li>Offline çalışma (internet yokken kayıt al, sonra gönder)</li>
+            <li>Konumla kayıt: “tam buradayım” diyerek nokta/hat/poligon</li>
+            <li>Görev/iş emri listesi</li>
           </ul>
+          <div class="bfNote">Örnek: “Arıza bildirimi → ekip yönlendirme → kapanış raporu” tek akış.</div>
         </div>
 
-        <div class="feature">
-          <div class="icon">FIELD</div>
-          <b>Saha Operasyonları</b>
-          <p>Mobil ekiplerin topladığı veri anlık olarak ofise akar. Foto/video/form desteği.</p>
-          <ul>
-            <li>Saha görevleri & kontrol listeleri</li>
-            <li>Offline çalışma, sonra senkron</li>
-            <li>Değişiklik takibi</li>
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">FLOW</div>
+            <div>
+              <b>İş Akışı & İş Emri</b>
+              <p class="desc">Kayıt açılır, sorumlu atanır, durum güncellenir, iş kapanınca raporlanır.</p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li>Durumlar: Açık / İşlemde / Beklemede / Kapalı</li>
+            <li>Sorumlu/ekip atama ve zaman takibi</li>
+            <li>Standart kapanış: foto + not + ölçüm/tespit</li>
           </ul>
+          <div class="bfNote">Örnek: “Vatandaş talebi” veya “kaçak şüphesi” süreç yönetimi.</div>
         </div>
 
-        <div class="feature">
-          <div class="icon">ROLE</div>
-          <b>Yetkilendirme</b>
-          <p>Rol bazlı erişim, log kayıtları, kurum içi güvenli kullanım için temel.</p>
-          <ul>
-            <li>Katman bazlı erişim</li>
-            <li>İşlem (CRUD) kısıtları</li>
-            <li>Audit & izleme</li>
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">REP</div>
+            <div>
+              <b>Rapor & Yönetim Paneli</b>
+              <p class="desc">Yönetici, haftalık/aylık performansı tablo ve harita ile görür.</p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li>Sayım: kaç kayıt, kaç arıza, kaç iş emri kapandı</li>
+            <li>Yoğunluk: hangi mahallede yoğun</li>
+            <li>Çıktı: PDF/Excel gibi paylaşılan rapor</li>
           </ul>
+          <div class="bfNote">Örnek: “En çok arıza çıkan bölgeler” önceliklendirilir.</div>
         </div>
 
-        <div class="feature">
-          <div class="icon">API</div>
-          <b>Entegrasyon</b>
-          <p>Mevcut sistemlerle konuşur: ERP/CRM, iş emri, SCADA/IoT, doküman yönetimi.</p>
-          <ul>
-            <li>REST/GraphQL kapıları</li>
-            <li>WMS/WFS/tiles yaklaşımı</li>
-            <li>Webhook olayları</li>
+        <div class="bigFeature">
+          <div class="head">
+            <div class="bfIcon">SEC</div>
+            <div>
+              <b>Yetki, Güvenlik ve Denetim</b>
+              <p class="desc">Herkes her şeyi görmesin: rol bazlı kontrol ve kayıt altına alma.</p>
+            </div>
+          </div>
+          <ul class="bfList">
+            <li>Rol bazlı yetki (izle / düzenle / yönet)</li>
+            <li>Katman bazlı görünürlük</li>
+            <li>Audit: kim neyi değiştirdi</li>
           </ul>
+          <div class="bfNote">Örnek: “Yanlış veri girildi” durumunda geri izlenebilirlik.</div>
         </div>
       </div>
     </div>
@@ -757,7 +825,7 @@
       <div class="sectionHead">
         <div>
           <h2>Canlı vitrin: GeoBox davranışlarını deneyin</h2>
-          <p class="sub">Aşağıdaki panel “gerçek bir CBS uygulamasının” temel işlerini simüle eder: katman, arama, filtre, ölçüm, çıktı.</p>
+          <p class="sub">Bu panel temel işleri simüle eder: katman, arama, filtre, ölçüm, çıktı.</p>
         </div>
         <div class="fine">Kısayol: <span class="kbd">/</span> ile arama</div>
       </div>
@@ -783,39 +851,14 @@
         </div>
 
         <div class="panel">
-          <h3>Mini senaryolar</h3>
+          <h3>Mini senaryo</h3>
           <p>Bir CBS’yi “gösterişli” yapan şey: tıklayınca iş üreten akışlar.</p>
 
-          <div class="list">
-            <div class="item">
-              <b>Senaryo 1 — Arıza yönetimi</b>
-              <span>Konuma göre en yakın vana + ekip yönlendirme + rapor.</span>
-              <div class="row" style="margin-top:10px;">
-                <button class="btn" data-run="fault">Çalıştır</button>
-                <span class="fine">~3 adım</span>
-              </div>
-            </div>
-
-            <div class="item">
-              <b>Senaryo 2 — Saha veri senkron</b>
-              <span>Mobil ekip fotoğraf+form gönderir → ofis ekranda anında görür.</span>
-              <div class="row" style="margin-top:10px;">
-                <button class="btn" data-run="sync">Çalıştır</button>
-                <span class="fine">offline → online</span>
-              </div>
-            </div>
-
-            <div class="item">
-              <b>Senaryo 3 — Tematik analiz</b>
-              <span>Mahalle bazında yoğunluk/öncelik haritası üret.</span>
-              <div class="row" style="margin-top:10px;">
-                <button class="btn" data-run="theme">Çalıştır</button>
-                <span class="fine">ısı haritası mantığı</span>
-              </div>
-            </div>
-          </div>
-
           <div class="row" style="margin-top:14px;">
+            <button class="btn" id="btnFly">Uç (zoom)</button>
+            <button class="btn" id="btnMeasure">Ölç</button>
+            <button class="btn" id="btnExport">Dışa aktar</button>
+            <button class="btn primary" id="btnScenario">Senaryo çalıştır</button>
             <button class="btn primary" id="btnReset">Demoyu sıfırla</button>
             <button class="btn" id="btnCopy">Log’u kopyala</button>
           </div>
@@ -833,9 +876,7 @@
       <div class="cta">
         <div>
           <b>İletişime geçelim</b>
-          <p>
-            Kurumunuza uygun modülleri birlikte seçip (ör. mezarlık / altyapı / iş emri / saha) kısa bir demo kurgulayalım.
-          </p>
+          <p>Kuruma uygun modülleri birlikte seçip kısa bir demo kurgulayalım.</p>
           <div class="fine" style="margin-top:10px;">
             Telefon: <b>0850 309 0437</b> • WhatsApp: <b>0540 043 65 63</b>
           </div>
@@ -843,13 +884,9 @@
 
         <div class="row">
           <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Merhaba%2C%0A%0AKurumumuz%20i%C3%A7in%20GeoBox%20demo%20talep%20ediyoruz.%0A%0AAd%2FSoyad%3A%0AKurum%3A%0ATelefon%3A%0AKullan%C4%B1m%20alan%C4%B1%3A%0A">E-posta</a>
-
           <a class="btn" href="tel:08503090437">Ara (0850)</a>
-
-          <a class="btn whatsapp"
-             href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+          <a class="btn whatsapp" href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
              target="_blank" rel="noopener">WhatsApp</a>
-
           <a class="btn" href="#top">Başa dön</a>
         </div>
       </div>
@@ -857,17 +894,12 @@
   </section>
 
   <footer>
-    <div class="wrap">
-      <div class="fgrid" style="display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:center;">
-        <div>
-          <div class="fine">© <span id="year"></span> GeoBox • GeoKod Geospatial</div>
-          <div class="fine">Cloudflare Pages + GitHub ile yayınlanan statik vitrin.</div>
-        </div>
-        <div class="links">
-          <a href="#ozellikler">Özellikler</a>
-          <a href="#demo">Demo</a>
-          <a href="#iletisim">İletişim</a>
-        </div>
+    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div class="fine">© <span id="year"></span> GeoBox • GeoKod Geospatial</div>
+      <div class="links">
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#demo">Demo</a>
+        <a href="#iletisim">İletişim</a>
       </div>
     </div>
   </footer>
@@ -878,16 +910,16 @@
     const logEl = $("#log");
 
     function log(msg, type="info"){
+      if(!logEl) return;
       const ts = new Date().toLocaleTimeString("tr-TR", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
       const badge = type==="ok" ? "✓" : type==="warn" ? "!" : type==="bad" ? "×" : "•";
-      if(!logEl) return;
       logEl.textContent += `[${ts}] ${badge} ${msg}\n`;
       logEl.scrollTop = logEl.scrollHeight;
     }
 
     $("#year").textContent = new Date().getFullYear();
 
-    // Tema: varsayılan LIGHT, butonla geçiş
+    // Tema
     let theme = document.documentElement.getAttribute("data-theme") || "light";
     $("#btnTheme").addEventListener("click", () => {
       theme = (theme === "light") ? "dark" : "light";
@@ -903,7 +935,57 @@
     });
     $$("#mobileMenu a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
 
-    // Demo
+    // ✅ YUMUŞAK KAYDIRMA (HIZ KONTROLLÜ)
+    // - sticky header yüksekliğini hesaba katar
+    // - prefers-reduced-motion varsa animasyon yok
+    function easeInOutCubic(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
+
+    function smoothScrollTo(targetY, duration=720){
+      const startY = window.scrollY;
+      const delta = targetY - startY;
+      const start = performance.now();
+
+      function step(now){
+        const t = Math.min(1, (now - start) / duration);
+        const eased = easeInOutCubic(t);
+        window.scrollTo(0, startY + delta * eased);
+        if(t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function getHeaderOffset(){
+      const topbar = document.getElementById("topbar");
+      return topbar ? topbar.getBoundingClientRect().height + 10 : 80;
+    }
+
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if(!a) return;
+
+      const id = a.getAttribute("href");
+      if(!id || id === "#") return;
+
+      const el = document.querySelector(id);
+      if(!el) return;
+
+      e.preventDefault();
+      mobileMenu.style.display = "none";
+
+      const offset = getHeaderOffset();
+      const y = el.getBoundingClientRect().top + window.scrollY - offset;
+
+      if(reduceMotion){
+        window.scrollTo(0, y);
+      }else{
+        // biraz daha yavaş/akıcı his için 780ms
+        smoothScrollTo(y, 780);
+      }
+    });
+
+    // Demo init
     log("GeoBox Showcase başlatıldı. Katmanlar aktif.", "ok");
     log("İpucu: / tuşu ile arama alanına odaklan.", "info");
 
@@ -999,10 +1081,10 @@
 
     async function runScenario(which){
       if(which==="fault"){
-        log("Senaryo 1 başlatıldı: Arıza yönetimi", "info");
+        log("Senaryo: Arıza yönetimi", "info");
         await sleep(450);
         layerState.work = true;
-        const t = $(`.toggle[data-layer="work"]`);
+        const t = document.querySelector(`.toggle[data-layer="work"]`);
         if(t) t.classList.add("on");
         log("İş Emri katmanı açıldı.", "ok");
         updateHUD();
@@ -1012,16 +1094,14 @@
         log("En yakın vana: VNA-014 (mesafe ~92m).", "ok");
         focusPin(62,44);
         await sleep(650);
-        log("Ekip yönlendirme: Görev oluşturuldu → mobil ekibe iletildi (simülasyon).", "ok");
+        log("Görev oluşturuldu → mobil ekibe iletildi (simülasyon).", "ok");
         $("#hudBadge").textContent = "Arıza: Yönetiliyor";
       }
     }
 
-    $$("[data-run]").forEach(b=> b.addEventListener("click", ()=> runScenario(b.dataset.run)));
-
     $("#btnReset").addEventListener("click", ()=>{
       layerState.gas=true; layerState.valve=true; layerState.parcel=true; layerState.work=false;
-      $$(".toggle").forEach(t=>{
+      document.querySelectorAll(".toggle").forEach(t=>{
         const key=t.dataset.layer;
         t.classList.toggle("on", !!layerState[key]);
       });
