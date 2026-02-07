@@ -3,28 +3,30 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f6f7ff" />
+  <meta name="theme-color" content="#f5f8ff" />
 
-  <title>GeoBox — Web Tabanlı CBS (Coğrafi Bilgi Sistemi)</title>
-  <meta name="description" content="GeoBox ile belediyeler ve şirketler için web tabanlı CBS kurun: harita, katman, sorgu, saha-ofis senkronizasyonu, iş emri ve rapor." />
+  <title>GeoBox — Web Tabanlı CBS Platformu</title>
+  <meta name="description" content="GeoBox; belediyeler, altyapı işletmeleri ve şirketler için web tabanlı CBS platformudur. Harita, katman, arama-sorgu, saha veri toplama, iş emri, rapor ve yetkilendirme." />
 
   <style>
     :root{
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       --max: 1120px;
       --r: 18px;
       --r2: 26px;
 
-      --a:#1bb7ff;
-      --b:#6c5cff;
-      --c:#21d39b;
+      /* ✅ Logo odaklı kurumsal tech palet (mavi ağırlıklı) */
+      --p:#0b7bbd;   /* primary */
+      --p2:#19a7e6;  /* cyan/tech */
+      --p3:#2457d6;  /* deep blue */
+      --ok:#21d39b;
     }
 
     html[data-theme="light"]{
-      --bg:#f7f8ff;
+      --bg:#f5f8ff;
       --panel:#ffffff;
-      --panel2:#f2f5ff;
+      --panel2:#eef4ff;
       --text:#0b1020;
       --muted:rgba(11,16,32,.70);
       --muted2:rgba(11,16,32,.58);
@@ -47,57 +49,50 @@
     html,body{height:100%}
     body{
       margin:0;
-      font-family: var(--sans);
-      color: var(--text);
+      font-family:var(--sans);
+      color:var(--text);
       line-height:1.55;
       background: var(--bg);
       overflow-x:hidden;
     }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
 
-    /* ✅ Yeni profesyonel CBS/Tech arka plan (bambaşka ve daha temiz) */
+    /* ✅ Kurumsal/tech arka plan (temiz, göz yormayan) */
     body::before{
       content:"";
       position:fixed;
       inset:0;
       z-index:-2;
       background:
-        radial-gradient(1000px 680px at 15% 10%, rgba(27,183,255,.12), transparent 60%),
-        radial-gradient(980px 700px at 85% 20%, rgba(108,92,255,.12), transparent 60%),
-        radial-gradient(1100px 760px at 55% 92%, rgba(33,211,155,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--panel2) 45%, var(--bg)) 52%, var(--bg));
+        radial-gradient(1000px 700px at 18% 10%, color-mix(in oklab, var(--p2) 18%, transparent), transparent 60%),
+        radial-gradient(1000px 720px at 82% 18%, color-mix(in oklab, var(--p3) 16%, transparent), transparent 62%),
+        radial-gradient(1200px 900px at 55% 92%, color-mix(in oklab, var(--ok) 10%, transparent), transparent 62%),
+        linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--panel2) 55%, var(--bg)) 52%, var(--bg));
     }
-
-    /* topographic + isometric grid overlay */
     body::after{
       content:"";
       position:fixed;
       inset:0;
       z-index:-1;
       pointer-events:none;
-      opacity: .55;
+      opacity:.55;
       background:
-        /* Topographic contour lines */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Cg fill='none' stroke='%2399a7ff' stroke-opacity='0.12'%3E%3Cpath d='M-20 420 C140 360, 220 520, 380 460 C520 406, 590 300, 720 340 C820 365, 860 460, 980 430'/%3E%3Cpath d='M-40 300 C120 240, 260 380, 410 330 C560 280, 630 180, 780 220 C880 245, 940 330, 1040 305'/%3E%3Cpath d='M-40 180 C150 120, 280 260, 430 205 C580 150, 670 70, 820 105 C920 130, 980 220, 1080 190'/%3E%3Cpath d='M-40 520 C120 460, 260 620, 430 560 C600 500, 690 390, 860 430 C980 468, 1040 560, 1160 530'/%3E%3C/g%3E%3C/svg%3E"),
-        /* Isometric grid */
-        repeating-linear-gradient(60deg, rgba(11,16,32,.05) 0 1px, transparent 1px 34px),
-        repeating-linear-gradient(-60deg, rgba(11,16,32,.05) 0 1px, transparent 1px 34px),
-        repeating-linear-gradient(0deg, rgba(11,16,32,.04) 0 1px, transparent 1px 46px);
-      background-size: 900px 600px, auto, auto, auto;
-      background-position: center, center, center, center;
-      filter: saturate(1.05);
+        /* Topographic contour (CBS hissi) */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='980' height='620' viewBox='0 0 980 620'%3E%3Cg fill='none' stroke='%230b7bbd' stroke-opacity='0.10'%3E%3Cpath d='M-30 420 C140 350, 260 520, 420 455 C560 398, 640 300, 780 338 C880 365, 910 460, 1040 430'/%3E%3Cpath d='M-60 310 C120 230, 280 390, 450 330 C600 275, 680 165, 840 210 C930 235, 990 340, 1120 305'/%3E%3Cpath d='M-70 190 C140 120, 300 260, 470 205 C620 152, 710 70, 870 105 C960 125, 1020 230, 1160 190'/%3E%3Cpath d='M-50 520 C120 460, 280 630, 470 560 C640 500, 740 390, 900 430 C1020 468, 1080 560, 1220 530'/%3E%3C/g%3E%3C/svg%3E"),
+        /* subtle technical grid */
+        repeating-linear-gradient(0deg, rgba(11,16,32,.05) 0 1px, transparent 1px 52px),
+        repeating-linear-gradient(90deg, rgba(11,16,32,.05) 0 1px, transparent 1px 52px);
+      background-size: 980px 620px, auto, auto;
+      background-position:center, center, center;
     }
-
     html[data-theme="dark"] body::after{
-      opacity:.42;
+      opacity:.35;
       background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Cg fill='none' stroke='%231bb7ff' stroke-opacity='0.10'%3E%3Cpath d='M-20 420 C140 360, 220 520, 380 460 C520 406, 590 300, 720 340 C820 365, 860 460, 980 430'/%3E%3Cpath d='M-40 300 C120 240, 260 380, 410 330 C560 280, 630 180, 780 220 C880 245, 940 330, 1040 305'/%3E%3Cpath d='M-40 180 C150 120, 280 260, 430 205 C580 150, 670 70, 820 105 C920 130, 980 220, 1080 190'/%3E%3Cpath d='M-40 520 C120 460, 260 620, 430 560 C600 500, 690 390, 860 430 C980 468, 1040 560, 1160 530'/%3E%3C/g%3E%3C/svg%3E"),
-        repeating-linear-gradient(60deg, rgba(255,255,255,.06) 0 1px, transparent 1px 34px),
-        repeating-linear-gradient(-60deg, rgba(255,255,255,.06) 0 1px, transparent 1px 34px),
-        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 46px);
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='980' height='620' viewBox='0 0 980 620'%3E%3Cg fill='none' stroke='%2319a7e6' stroke-opacity='0.10'%3E%3Cpath d='M-30 420 C140 350, 260 520, 420 455 C560 398, 640 300, 780 338 C880 365, 910 460, 1040 430'/%3E%3Cpath d='M-60 310 C120 230, 280 390, 450 330 C600 275, 680 165, 840 210 C930 235, 990 340, 1120 305'/%3E%3Cpath d='M-70 190 C140 120, 300 260, 470 205 C620 152, 710 70, 870 105 C960 125, 1020 230, 1160 190'/%3E%3Cpath d='M-50 520 C120 460, 280 630, 470 560 C640 500, 740 390, 900 430 C1020 468, 1080 560, 1220 530'/%3E%3C/g%3E%3C/svg%3E"),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 52px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 52px);
     }
-
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
 
     /* Topbar */
     .topbar{
@@ -106,41 +101,30 @@
       background: color-mix(in oklab, var(--panel) 78%, transparent);
       border-bottom:1px solid var(--line);
     }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 0;
-      gap:12px;
-    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0}
 
-    /* ✅ Logo revizyonu: önerdiğim ayarlar uygulanmış hali */
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 220px;
-    }
+    /* ✅ LOGO: “mükemmel oturan” yöntem (height:100%, width:auto) */
+    .brand{display:flex; align-items:center; gap:12px; min-width:220px}
     .logoBox{
-      width: 170px;  /* biraz uzattık */
-      height: 42px;  /* biraz incelttik */
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 86%, transparent);
-      box-shadow: 0 14px 40px rgba(0,0,0,.10);
+      height: 46px;                 /* sabit yükseklik */
+      padding: 8px 12px;            /* logoya nefes alanı */
+      border-radius: 16px;
+      border: 1px solid color-mix(in oklab, var(--p) 22%, var(--line));
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--p2) 16%, var(--panel)),
+        color-mix(in oklab, var(--p3) 10%, var(--panel)));
+      box-shadow: 0 18px 50px rgba(11,16,32,.10);
       display:flex; align-items:center; justify-content:center;
       overflow:hidden;
     }
     .logoBox img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
+      height: 100%;         /* ✅ kritik */
+      width: auto;          /* ✅ kritik */
       display:block;
-      padding: 4px 8px;     /* ✅ önerdiğimiz: daha az padding */
-      transform: scale(1.03); /* ✅ hafif doluluk */
+      object-fit: contain;
     }
 
-    .menu{
-      display:flex; align-items:center; gap:8px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
+    .menu{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center}
     .menu a{
       font-size:13px;
       padding:8px 10px;
@@ -148,19 +132,13 @@
       border:1px solid transparent;
       color: color-mix(in oklab, var(--text) 85%, transparent);
     }
-    .menu a:hover{
-      border-color: var(--line);
-      background: color-mix(in oklab, var(--panel2) 70%, transparent);
-    }
+    .menu a:hover{border-color:var(--line); background: color-mix(in oklab, var(--panel2) 70%, transparent)}
 
-    .actions{display:flex; align-items:center; gap:10px}
+    .actions{display:flex; gap:10px; align-items:center}
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:8px;
-      padding:10px 12px;
-      font-size:13px;
-      border-radius:14px;
-      border:1px solid var(--line);
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:10px 12px; font-size:13px;
+      border-radius:14px; border:1px solid var(--line);
       background: color-mix(in oklab, var(--panel2) 60%, transparent);
       cursor:pointer;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
@@ -168,20 +146,17 @@
     }
     .btn:hover{transform: translateY(-1px)}
     .btn.primary{
-      border-color: color-mix(in oklab, var(--a) 35%, var(--line));
+      border-color: color-mix(in oklab, var(--p2) 40%, var(--line));
       background: linear-gradient(135deg,
-        color-mix(in oklab, var(--a) 22%, transparent),
-        color-mix(in oklab, var(--b) 16%, transparent));
+        color-mix(in oklab, var(--p2) 26%, transparent),
+        color-mix(in oklab, var(--p3) 18%, transparent));
     }
     .btn.whatsapp{
-      border-color: color-mix(in oklab, var(--c) 38%, var(--line));
+      border-color: color-mix(in oklab, var(--ok) 40%, var(--line));
       background: linear-gradient(135deg,
-        color-mix(in oklab, var(--c) 20%, transparent),
-        color-mix(in oklab, var(--a) 10%, transparent));
+        color-mix(in oklab, var(--ok) 20%, transparent),
+        color-mix(in oklab, var(--p2) 10%, transparent));
     }
-
-    .hamburger{display:none}
-    .mobileMenu{display:none}
 
     /* Cards */
     .card{
@@ -194,15 +169,9 @@
     }
 
     header.hero{padding:52px 0 18px}
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    h1{margin:0 0 12px; font-size:40px; letter-spacing:-.6px; line-height:1.08}
-    .lead{margin:0 0 16px; color: color-mix(in oklab, var(--text) 80%, transparent); font-size:15px}
-    .fine{font-size:12px; color: var(--muted2)}
+    .heroGrid{display:grid; grid-template-columns: 1.05fr .95fr; gap:18px; align-items:stretch}
+    .heroLeft{padding:22px}
+    .heroRight{padding:16px}
 
     .tag{
       display:inline-flex; align-items:center; gap:10px;
@@ -216,19 +185,17 @@
     }
     .dot{
       width:8px; height:8px; border-radius:99px;
-      background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
-      box-shadow: 0 0 18px color-mix(in oklab, var(--a) 30%, transparent);
+      background: radial-gradient(circle at 30% 30%, var(--p2), var(--p3));
+      box-shadow: 0 0 18px color-mix(in oklab, var(--p2) 30%, transparent);
     }
 
-    .heroLeft{padding:22px}
-    .heroRight{padding:16px}
+    h1{margin:0 0 12px; font-size:40px; letter-spacing:-.6px; line-height:1.08}
+    .lead{margin:0 0 16px; color: color-mix(in oklab, var(--text) 80%, transparent); font-size:15px}
+    .fine{font-size:12px; color: var(--muted2)}
 
-    .quickGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:14px;
-    }
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+    .quickGrid{display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:14px}
     .quick{
       border:1px solid var(--line);
       border-radius: 16px;
@@ -241,6 +208,7 @@
     section{padding:40px 0}
     .sectionHead{display:flex; justify-content:space-between; gap:12px; align-items:flex-end; margin-bottom:14px}
     h2{margin:0; font-size:24px; letter-spacing:-.3px}
+    h3{margin:0 0 8px; font-size:16px}
     .sub{margin:0; max-width:78ch; font-size:13px; color: var(--muted2)}
 
     .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
@@ -253,28 +221,7 @@
         color-mix(in oklab, var(--panel2) 86%, transparent));
       box-shadow: var(--shadow);
     }
-    .panel h3{margin:0 0 8px; font-size:16px}
     .panel p{margin:0; font-size:13px; color: color-mix(in oklab, var(--text) 78%, transparent)}
-
-    /* How it works steps */
-    .steps{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px}
-    .step{
-      padding:14px;
-      border-radius: var(--r2);
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 62%, transparent);
-    }
-    .step .n{
-      width:34px; height:34px; border-radius:14px;
-      display:flex; align-items:center; justify-content:center;
-      border:1px solid var(--line);
-      background: linear-gradient(135deg, rgba(27,183,255,.14), rgba(108,92,255,.10));
-      font-family: var(--mono);
-      font-size:12px;
-      margin-bottom:10px;
-    }
-    .step b{display:block; font-size:13px; margin-bottom:4px}
-    .step span{display:block; font-size:12px; color: var(--muted2)}
 
     /* Demo */
     .demoFrame{
@@ -291,20 +238,15 @@
       color: var(--muted);
     }
     .dots{display:flex; gap:6px; align-items:center}
-    .dots span{
-      width:10px; height:10px; border-radius:99px;
-      background: color-mix(in oklab, var(--text) 12%, transparent);
-      border:1px solid var(--line);
-    }
+    .dots span{width:10px; height:10px; border-radius:99px; background: color-mix(in oklab, var(--text) 12%, transparent); border:1px solid var(--line)}
     .demoBody{padding:12px}
     .miniMap{
       height:280px;
       border-radius:18px;
       border:1px solid var(--line);
       background:
-        radial-gradient(520px 280px at 30% 35%, rgba(27,183,255,.16), transparent 60%),
-        radial-gradient(580px 320px at 70% 45%, rgba(108,92,255,.14), transparent 60%),
-        radial-gradient(540px 300px at 45% 78%, rgba(33,211,155,.12), transparent 60%),
+        radial-gradient(520px 280px at 30% 35%, color-mix(in oklab, var(--p2) 20%, transparent), transparent 60%),
+        radial-gradient(580px 320px at 70% 45%, color-mix(in oklab, var(--p3) 18%, transparent), transparent 60%),
         linear-gradient(180deg, color-mix(in oklab, var(--panel2) 55%, transparent),
                                color-mix(in oklab, var(--panel) 45%, transparent));
       position:relative;
@@ -315,18 +257,16 @@
       background-image:
         linear-gradient(color-mix(in oklab, var(--text) 10%, transparent) 1px, transparent 1px),
         linear-gradient(90deg, color-mix(in oklab, var(--text) 10%, transparent) 1px, transparent 1px);
-      background-size: 46px 46px;
+      background-size: 52px 52px;
       transform: rotate(8deg);
-      opacity:.35;
+      opacity:.28;
       pointer-events:none;
     }
     .pin{
-      position:absolute;
-      width:14px; height:14px;
-      border-radius:99px;
-      transform: translate(-50%,-50%);
+      position:absolute; width:14px; height:14px;
+      border-radius:99px; transform: translate(-50%,-50%);
       border:1px solid var(--line);
-      background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
+      background: radial-gradient(circle at 30% 30%, var(--p2), var(--p3));
       box-shadow: 0 12px 30px rgba(27,183,255,.18);
     }
     .mapHud{
@@ -340,19 +280,13 @@
       backdrop-filter: blur(8px);
     }
     .badge{
-      padding:2px 8px;
-      border-radius:999px;
+      padding:2px 8px; border-radius:999px;
       border:1px solid var(--line);
       background: color-mix(in oklab, var(--panel2) 70%, transparent);
       font-size:11px;
       color: color-mix(in oklab, var(--text) 80%, transparent);
     }
-
-    .demoControls{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      margin-top:12px;
-    }
-
+    .demoControls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px}
     .log{
       margin-top:12px;
       border-radius:18px;
@@ -362,19 +296,16 @@
       font-family:var(--mono);
       font-size:12px;
       color: color-mix(in oklab, var(--text) 78%, transparent);
-      height: 150px;
-      overflow:auto;
-      white-space:pre-wrap;
+      height: 140px; overflow:auto; white-space:pre-wrap;
     }
 
-    /* CTA */
     .cta{
       padding:22px;
       border-radius: var(--r2);
       border:1px solid var(--line);
       background:
-        radial-gradient(640px 320px at 20% 40%, rgba(27,183,255,.14), transparent 60%),
-        radial-gradient(680px 320px at 85% 55%, rgba(108,92,255,.12), transparent 60%),
+        radial-gradient(640px 320px at 20% 40%, color-mix(in oklab, var(--p2) 18%, transparent), transparent 60%),
+        radial-gradient(680px 320px at 85% 55%, color-mix(in oklab, var(--p3) 14%, transparent), transparent 60%),
         linear-gradient(180deg, color-mix(in oklab, var(--panel) 96%, transparent),
                                color-mix(in oklab, var(--panel2) 86%, transparent));
       box-shadow: var(--shadow);
@@ -383,28 +314,19 @@
     .cta b{font-size:18px}
     .cta p{margin:6px 0 0; font-size:13px; color: color-mix(in oklab, var(--text) 78%, transparent); max-width:72ch}
 
-    footer{
-      padding:24px 0 38px;
-      border-top:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 38%, transparent);
-    }
+    footer{padding:24px 0 38px; border-top:1px solid var(--line); background: color-mix(in oklab, var(--panel2) 38%, transparent)}
 
-    /* Responsive */
     @media (max-width: 980px){
       h1{font-size:34px}
       .heroGrid{grid-template-columns: 1fr}
       .grid3{grid-template-columns: 1fr}
-      .steps{grid-template-columns: 1fr 1fr}
       .quickGrid{grid-template-columns: 1fr}
-      .menu{display:none}
-      .hamburger{display:inline-flex}
     }
     @media (max-width: 760px){
       .wrap{padding:0 16px}
       header.hero{padding:42px 0 14px}
       section{padding:34px 0}
-      .steps{grid-template-columns: 1fr}
-      .logoBox{width: 160px; height: 40px}
+      .logoBox{height:44px; padding:7px 10px}
     }
   </style>
 </head>
@@ -419,16 +341,15 @@
           </div>
         </a>
 
-        <!-- ✅ Sadelik: 4 menü -->
         <nav class="menu" aria-label="Site menüsü">
-          <a href="#ozellikler">Özellikler</a>
-          <a href="#nasil">Nasıl Çalışır?</a>
+          <a href="#nedir">GeoBox Nedir?</a>
+          <a href="#ozellikler">Ne İşe Yarar?</a>
           <a href="#demo">Demo</a>
           <a href="#iletisim">İletişim</a>
         </nav>
 
         <div class="actions">
-          <button class="btn" id="btnTheme" title="Tema">Tema</button>
+          <button class="btn" id="btnTheme">Tema</button>
           <a class="btn primary" href="#iletisim">Demo iste</a>
         </div>
       </div>
@@ -438,24 +359,24 @@
   <header class="hero wrap" id="top">
     <div class="heroGrid">
       <div class="card heroLeft">
-        <div class="tag"><span class="dot"></span> Web Tabanlı CBS • Kurumsal • Saha • Rapor</div>
-        <h1>Harita + veri + süreç<br/>tek platformda.</h1>
+        <div class="tag"><span class="dot"></span> Kurumsal CBS • Web Tabanlı • Saha • İş Emri • Rapor</div>
+        <h1>GeoBox ile CBS’yi<br/>kur, yönet, büyüt.</h1>
         <p class="lead">
-          GeoBox, kurumların <b>Coğrafi Bilgi Sistemi (CBS)</b> ihtiyacını basit bir şekilde çözer:
-          sahadaki veriyi toplar, ofiste anında görünür kılar, iş emriyle süreci yönetir ve raporlar.
+          GeoBox; belediyeler, altyapı işletmeleri ve sahada çalışan şirketler için <b>web tabanlı CBS platformudur</b>.
+          Haritadaki veriyi “görüntü” olmaktan çıkarır; <b>işe ve yönetime</b> bağlar.
         </p>
 
-        <div class="demoControls">
-          <a class="btn primary" href="#ozellikler">Neler yapar?</a>
-          <a class="btn" href="#nasil">Nasıl çalışır?</a>
+        <div class="ctaRow">
+          <a class="btn primary" href="#nedir">GeoBox nedir?</a>
+          <a class="btn" href="#ozellikler">Ne işe yarar?</a>
           <a class="btn" href="#demo">Demo</a>
         </div>
 
         <div class="quickGrid" aria-label="Öne çıkanlar">
-          <div class="quick"><b>Net görünürlük</b><span>Altyapı/parsel/varlıkları tek ekranda görün.</span></div>
-          <div class="quick"><b>Saha→Ofis akışı</b><span>Foto+form+konum anında sisteme düşer.</span></div>
-          <div class="quick"><b>İş emri</b><span>Görev ata, takip et, kapat ve raporla.</span></div>
-          <div class="quick"><b>Yönetici raporu</b><span>Kararı “veriye dayandır”.</span></div>
+          <div class="quick"><b>Tek ekran</b><span>Katmanlar, kayıtlar ve süreçler tek yerde.</span></div>
+          <div class="quick"><b>Saha→Ofis</b><span>Konum+foto+form anında sisteme düşer.</span></div>
+          <div class="quick"><b>İş emri</b><span>Görev ata, takip et, kapat, raporla.</span></div>
+          <div class="quick"><b>Karar destek</b><span>Yoğunluk ve performans raporları.</span></div>
         </div>
 
         <div class="fine" style="margin-top:12px;">
@@ -470,12 +391,12 @@
             <div>GeoBox Showcase</div>
             <div class="fine">simülasyon</div>
           </div>
+
           <div class="demoBody">
             <div class="miniMap" id="miniMap" role="img" aria-label="Harita simülasyonu">
               <div class="gridlines"></div>
-
               <div class="mapHud">
-                <b id="hudTitle">Katmanlar</b>
+                <b>Harita</b>
                 <span class="badge" id="hudBadge">Hazır</span>
               </div>
 
@@ -484,7 +405,6 @@
               <div class="pin" style="left:45%; top:72%"></div>
             </div>
 
-            <!-- ✅ Karmaşıklık azaltıldı: 3 net buton -->
             <div class="demoControls">
               <button class="btn" id="btnFly">Yakınlaş</button>
               <button class="btn" id="btnMeasure">Ölç</button>
@@ -499,93 +419,105 @@
     </div>
   </header>
 
-  <section id="ozellikler">
+  <!-- ✅ GeoBox Nedir? -->
+  <section id="nedir">
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Özellikler (kısa, net, anlaşılır)</h2>
+          <h2>GeoBox nedir?</h2>
           <p class="sub">
-            Aşağıdakiler “teknik bilmeyen” bir yönetici için sade anlatımdır: GeoBox ne yapar ve kurumunuza ne kazandırır?
+            GeoBox, kurumunuzun konuma bağlı verilerini (altyapı, parsel, bina, ekipman, arıza, iş emri vb.)
+            <b>harita üzerinde yönetmenizi</b> sağlayan web tabanlı bir CBS platformudur.
+            Ama “harita gösteren bir ekran” değil; veriyi <b>süreç ve rapora</b> bağlayan bir yönetim sistemidir.
           </p>
         </div>
       </div>
 
       <div class="grid3">
         <div class="panel">
-          <h3>1) Katmanlar ve harita görünümü</h3>
-          <p>Altyapı hatları, ekipman, parsel/imar gibi verileri aynı ekranda katmanlar halinde gösterir. İhtiyacınıza göre açıp kapatırsınız.</p>
+          <h3>Kime uygundur?</h3>
+          <p>Belediyeler, doğalgaz/su/kanal/elektrik işletmeleri, saha operasyonu olan şirketler ve yönetim ekipleri.</p>
         </div>
         <div class="panel">
-          <h3>2) Arama ve sorgu</h3>
-          <p>“Vana 14”, “Parsel 123”, “Arıza kaydı” gibi verileri saniyeler içinde bulur; filtrelerle doğru listeyi çıkarırsınız.</p>
+          <h3>Ne kazandırır?</h3>
+          <p>Bilgi kişide kalmaz. Tek doğru veri oluşur. İşler daha hızlı kapanır. Yönetici raporla karar alır.</p>
         </div>
         <div class="panel">
-          <h3>3) Saha veri toplama</h3>
-          <p>Saha ekipleri konum + foto + form ile kayıt girer. Ofis anında görür. İnternet yoksa offline çalışıp sonra senkronlanır.</p>
-        </div>
-        <div class="panel">
-          <h3>4) İş emri ve süreç</h3>
-          <p>Kayıt açılır, ekip atanır, durum güncellenir, iş kapanış raporuyla tamamlanır. “Takipsiz iş” kalmaz.</p>
-        </div>
-        <div class="panel">
-          <h3>5) Rapor ve yönetici ekranı</h3>
-          <p>Aylık arıza sayısı, kapanan iş emri, yoğun bölgeler gibi özet raporlar alınır. Kararlar veriye dayanır.</p>
-        </div>
-        <div class="panel">
-          <h3>6) Yetki ve güvenlik</h3>
-          <p>Kim neyi görür / değiştirir netleşir. Değişiklik geçmişi kayıt altındadır. Kurumsal kontrol sağlar.</p>
+          <h3>Neden web tabanlı?</h3>
+          <p>Kurulum ve erişim kolaydır. Yetkiyle herkese uygun ekran verilir. Uzaktan erişim ve ölçekleme daha rahattır.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="nasil">
+  <!-- ✅ Ne işe yarar? -->
+  <section id="ozellikler">
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Nasıl çalışır?</h2>
-          <p class="sub">GeoBox’ı ilk defa gören birinin 30 saniyede anlayacağı akış:</p>
+          <h2>GeoBox ne işe yarar?</h2>
+          <p class="sub">Tek cümle: Haritadaki veriyi, sahadaki işi ve yöneticinin kararını aynı sisteme bağlar.</p>
         </div>
       </div>
 
-      <div class="steps">
-        <div class="step"><div class="n">01</div><b>Veri toplanır</b><span>Saha/office mevcut veriler sisteme alınır.</span></div>
-        <div class="step"><div class="n">02</div><b>Haritada görünür</b><span>Katmanlar oluşturulur, herkes aynı ekranda görür.</span></div>
-        <div class="step"><div class="n">03</div><b>İş emrine bağlanır</b><span>Arıza/denetim/görev süreçleri takip edilir.</span></div>
-        <div class="step"><div class="n">04</div><b>Raporlanır</b><span>Yönetici özetleri ve çıktılarla karar alınır.</span></div>
+      <div class="grid3">
+        <div class="panel">
+          <h3>1) Katman & varlık yönetimi</h3>
+          <p>Hat, vana, parsel, bina, mezar, abone gibi varlıkları katmanlar halinde gösterir ve düzenlersiniz.</p>
+        </div>
+        <div class="panel">
+          <h3>2) Arama & sorgu</h3>
+          <p>“Vana 14”, “Parsel 123” gibi kayıtları saniyede bulur; filtreyle doğru listeyi çıkarırsınız.</p>
+        </div>
+        <div class="panel">
+          <h3>3) Saha veri toplama</h3>
+          <p>Saha ekipleri konum + foto + form ile kayıt girer. Ofis anında görür (offline senkron da mümkün).</p>
+        </div>
+        <div class="panel">
+          <h3>4) İş emri & süreç takibi</h3>
+          <p>Kayıt açılır, ekip atanır, durum izlenir, kapanış raporu alınır. Takipsiz iş kalmaz.</p>
+        </div>
+        <div class="panel">
+          <h3>5) Rapor & karar destek</h3>
+          <p>Yoğunluk, performans, kapanan iş emri gibi özet raporlar ile yatırım ve öncelik kararları veriye dayanır.</p>
+        </div>
+        <div class="panel">
+          <h3>6) Yetki & güvenlik</h3>
+          <p>Kimin neyi göreceği/değiştireceği netleşir. Kurumsal kontrol ve izlenebilirlik sağlanır.</p>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Demo -->
   <section id="demo">
     <div class="wrap">
       <div class="sectionHead">
         <div>
           <h2>Demo</h2>
-          <p class="sub">Aşağıdaki küçük vitrin, GeoBox’ın davranışlarını simüle eder (yakınlaş, ölçüm, senaryo).</p>
+          <p class="sub">Aşağıdaki vitrin; yakınlaş, ölçüm ve “arıza→iş emri” senaryosunu simüle eder.</p>
         </div>
-        <div class="fine">İpucu: Senaryo butonu “iş emri” akışını simüle eder.</div>
       </div>
-
-      <div class="card" style="padding:18px;">
-        <div class="fine">Bu bölüm üstteki vitrinle aynı demoyu kullanır. İstersen sonraki adımda gerçek veri bağlarız.</div>
+      <div class="card" style="padding:16px;">
+        <div class="fine">Not: Bu demo vitrin amaçlıdır. İstersen sonraki adımda gerçek harita/servis/veri bağlarız.</div>
       </div>
     </div>
   </section>
 
+  <!-- İletişim -->
   <section id="iletisim">
     <div class="wrap">
       <div class="cta">
         <div>
           <b>İletişime geçelim</b>
-          <p>20–30 dakikalık kısa bir demo ile kurumunuz için en doğru kurgu ve modülleri birlikte seçelim.</p>
+          <p>20–30 dakikalık kısa bir demo ile kurumunuza uygun kurgu ve modülleri birlikte seçelim.</p>
           <div class="fine" style="margin-top:10px;">
             Telefon: <b>0850 309 0437</b> • WhatsApp: <b>0540 043 65 63</b>
           </div>
         </div>
 
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-          <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Merhaba%2C%0A%0AKurumumuz%20i%C3%A7in%20GeoBox%20demo%20talep%20ediyoruz.%0A%0AAd%2FSoyad%3A%0AKurum%3A%0ATelefon%3A%0A">E-posta</a>
+        <div class="ctaRow">
+          <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi">E-posta</a>
           <a class="btn" href="tel:08503090437">Ara</a>
           <a class="btn whatsapp" target="_blank" rel="noopener"
              href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.">WhatsApp</a>
@@ -603,7 +535,6 @@
 
   <script>
     const $ = (q, el=document) => el.querySelector(q);
-
     $("#year").textContent = new Date().getFullYear();
 
     // Theme toggle
@@ -614,13 +545,13 @@
       log(theme === "light" ? "Açık tema" : "Koyu tema", "ok");
     });
 
-    // Smooth scroll (hız kontrollü)
+    // Smooth scroll
     function easeInOutCubic(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
     function getHeaderOffset(){
       const topbar = document.getElementById("topbar");
       return topbar ? topbar.getBoundingClientRect().height + 10 : 80;
     }
-    function smoothScrollTo(targetY, duration=820){
+    function smoothScrollTo(targetY, duration=860){
       const startY = window.scrollY;
       const delta = targetY - startY;
       const start = performance.now();
@@ -640,52 +571,45 @@
       if(!el) return;
       e.preventDefault();
       const y = el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
-      smoothScrollTo(y, 860);
+      smoothScrollTo(y, 900);
     });
 
-    // Demo logic (sade)
+    // Demo
     const logEl = $("#log");
+    const badge = $("#hudBadge");
     function log(msg, type="info"){
-      const ts = new Date().toLocaleTimeString("tr-TR", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
-      const badge = type==="ok" ? "✓" : type==="warn" ? "!" : "•";
-      logEl.textContent += `[${ts}] ${badge} ${msg}\n`;
+      const ts = new Date().toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+      const b = type==="ok" ? "✓" : type==="warn" ? "!" : "•";
+      logEl.textContent += `[${ts}] ${b} ${msg}\n`;
       logEl.scrollTop = logEl.scrollHeight;
     }
-
-    const hudBadge = $("#hudBadge");
     log("GeoBox demo hazır.", "ok");
 
     $("#btnFly").addEventListener("click", () => {
       const m = $("#miniMap");
-      m.style.transition = "transform .35s ease";
-      m.style.transform = "scale(1.03)";
-      hudBadge.textContent = "Yakınlaştı";
+      m.style.transition="transform .35s ease";
+      m.style.transform="scale(1.03)";
+      badge.textContent="Yakınlaştı";
       log("Yakınlaşma (zoom) simülasyonu.", "ok");
-      setTimeout(()=> m.style.transform="scale(1)", 420);
+      setTimeout(()=>m.style.transform="scale(1)",420);
     });
-
     $("#btnMeasure").addEventListener("click", () => {
-      hudBadge.textContent = "Ölçüm: 184.6 m";
-      log("Ölçüm: 2 nokta → 184.6 m (simülasyon).", "ok");
+      badge.textContent="Ölçüm: 184.6 m";
+      log("Ölçüm: 2 nokta → 184.6 m (simülasyon).","ok");
     });
-
-    function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+    function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
     $("#btnScenario").addEventListener("click", async () => {
-      hudBadge.textContent = "Senaryo";
-      log("Senaryo: Arıza yönetimi başladı.", "ok");
-      await sleep(450);
-      log("Arıza lokasyonu alındı.", "ok");
-      await sleep(600);
-      log("En yakın vana bulundu (simülasyon).", "ok");
-      await sleep(600);
-      log("İş emri oluşturuldu ve ekibe atandı.", "ok");
-      hudBadge.textContent = "İş emri: Açık";
+      badge.textContent="İş emri";
+      log("Senaryo: Arıza yönetimi başladı.","ok");
+      await sleep(500); log("Arıza lokasyonu alındı.","ok");
+      await sleep(650); log("En yakın vana bulundu (simülasyon).","ok");
+      await sleep(650); log("İş emri oluşturuldu ve ekibe atandı.","ok");
+      badge.textContent="İş emri: Açık";
     });
-
     $("#btnReset").addEventListener("click", () => {
-      hudBadge.textContent = "Hazır";
-      logEl.textContent = "";
-      log("Demo sıfırlandı.", "ok");
+      badge.textContent="Hazır";
+      logEl.textContent="";
+      log("Demo sıfırlandı.","ok");
     });
   </script>
 </body>
