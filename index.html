@@ -8,7 +8,6 @@
   <title>GeoBox — Web Tabanlı CBS Platformu</title>
   <meta name="description" content="GeoBox ile belediyeler, altyapı işletmeleri ve mühendislik ekipleri için modern, hızlı ve güvenli web tabanlı CBS. Katmanlar, sorgu, analiz, saha senkronizasyonu ve daha fazlası." />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="GeoBox — Web Tabanlı CBS Platformu" />
   <meta property="og:description" content="Katman yönetimi, sorgu, analiz, saha senkronizasyonu. Modern, hızlı, güvenli." />
   <meta property="og:type" content="website" />
@@ -19,10 +18,14 @@
       --bg:#070a14;
       --panel:#0b1020;
       --panel2:#0f1733;
-      --text:#e9eefc;
-      --muted:#a9b4d6;
-      --line:rgba(255,255,255,.10);
+
+      /* OKUNURLUK için kontrast arttırıldı */
+      --text:#eef3ff;
+      --muted:rgba(233,243,255,.80);   /* önceki çok soluktu */
+      --muted2:rgba(233,243,255,.66);  /* yardımcı metin */
+      --line:rgba(255,255,255,.12);
       --shadow:0 18px 50px rgba(0,0,0,.35);
+
       --radius:18px;
       --radius2:26px;
       --max:1160px;
@@ -30,45 +33,63 @@
       --a:#66e3ff;
       --b:#7c6cff;
       --c:#55ffb4;
-      --warn:#ffcc66;
-      --ok:#55ffb4;
-      --bad:#ff6b7a;
 
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    /* Light theme tokenları */
+    [data-theme="light"]{
+      --bg:#f6f7ff;
+      --panel:#ffffff;
+      --panel2:#f2f4ff;
+      --text:#0b1020;
+      --muted:rgba(11,16,32,.72);
+      --muted2:rgba(11,16,32,.62);
+      --line:rgba(11,16,32,.12);
+      --shadow:0 18px 50px rgba(11,16,32,.10);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
+      color:var(--text);
+      font-family:var(--sans);
+      line-height:1.45;
       background:
         radial-gradient(1200px 800px at 15% 5%, rgba(124,108,255,.20), transparent 60%),
         radial-gradient(900px 700px at 80% 20%, rgba(102,227,255,.14), transparent 60%),
         radial-gradient(800px 600px at 60% 85%, rgba(85,255,180,.10), transparent 55%),
         linear-gradient(180deg, #050714, #060918 60%, #050714);
-      color:var(--text);
-      font-family:var(--sans);
-      line-height:1.45;
+    }
+
+    /* Light temada arkaplan */
+    [data-theme="light"] body{
+      background: linear-gradient(180deg, #f6f7ff, #f2f4ff 55%, #f6f7ff);
     }
 
     a{color:inherit; text-decoration:none}
     .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
+
+    /* Sticky header */
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
       background:rgba(7,10,20,.65);
       border-bottom:1px solid var(--line);
     }
+    [data-theme="light"] .topbar{
+      background:rgba(255,255,255,.72);
+    }
+
     .nav{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 0;
       gap:14px;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      min-width: 180px;
-    }
+
+    .brand{display:flex; align-items:center; gap:10px; min-width: 180px;}
     .logo{
       width:34px; height:34px; border-radius:10px;
       background:
@@ -80,81 +101,166 @@
       box-shadow: 0 14px 40px rgba(0,0,0,.35);
     }
     .brand b{font-size:15px; letter-spacing:.2px}
-    .brand small{display:block; color:var(--muted); font-size:11px; margin-top:1px}
+    .brand small{display:block; color:var(--muted2); font-size:11px; margin-top:1px}
+
+    /* Desktop menu */
     .menu{
-      display:flex; gap:14px; flex-wrap:wrap;
+      display:flex; gap:10px; flex-wrap:wrap;
       align-items:center; justify-content:center;
     }
     .menu a{
       font-size:13px;
-      color:rgba(233,238,252,.86);
+      color:rgba(233,243,255,.92);
       padding:8px 10px;
       border-radius:12px;
       border:1px solid transparent;
     }
     .menu a:hover{
-      border-color:rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
     }
-    .actions{display:flex; gap:10px; align-items:center; justify-content:flex-end; min-width: 180px;}
+    [data-theme="light"] .menu a{color:rgba(11,16,32,.82)}
+    [data-theme="light"] .menu a:hover{border-color:rgba(11,16,32,.14); background:rgba(11,16,32,.05)}
+
+    .actions{
+      display:flex; gap:10px; align-items:center; justify-content:flex-end; min-width: 180px;
+    }
+
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:8px;
       padding:10px 12px;
       font-size:13px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
       cursor:pointer;
       user-select:none;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
       white-space:nowrap;
+      color:inherit;
     }
-    .btn:hover{transform: translateY(-1px); border-color:rgba(255,255,255,.22); background:rgba(255,255,255,.06)}
+    .btn:hover{transform: translateY(-1px); border-color:rgba(255,255,255,.26); background:rgba(255,255,255,.08)}
     .btn.primary{
-      border-color:rgba(102,227,255,.25);
-      background: linear-gradient(135deg, rgba(102,227,255,.18), rgba(124,108,255,.14));
+      border-color:rgba(102,227,255,.30);
+      background: linear-gradient(135deg, rgba(102,227,255,.20), rgba(124,108,255,.16));
     }
-    .btn.primary:hover{border-color:rgba(102,227,255,.45)}
+    .btn.primary:hover{border-color:rgba(102,227,255,.50)}
+
+    [data-theme="light"] .btn{
+      border-color:rgba(11,16,32,.14);
+      background:rgba(11,16,32,.05);
+    }
+    [data-theme="light"] .btn:hover{
+      border-color:rgba(11,16,32,.22);
+      background:rgba(11,16,32,.07);
+    }
+    [data-theme="light"] .btn.primary{
+      border-color:rgba(11,16,32,.14);
+      background: linear-gradient(135deg, rgba(102,227,255,.20), rgba(124,108,255,.16));
+    }
+
     .kbd{
       font-family:var(--mono);
       font-size:11px;
       padding:2px 6px;
       border-radius:8px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.18);
-      color:rgba(233,238,252,.85);
+      color:rgba(233,243,255,.86);
+    }
+    [data-theme="light"] .kbd{
+      border-color:rgba(11,16,32,.14);
+      background:rgba(11,16,32,.06);
+      color:rgba(11,16,32,.78);
     }
 
-    header.hero{padding:58px 0 30px}
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:22px;
-      align-items:stretch;
+    /* ---- MOBIL MENÜ ---- */
+    .hamburger{
+      display:none;
+      width:42px; height:40px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      align-items:center; justify-content:center;
+      cursor:pointer;
     }
+    .hamburger i{
+      width:18px; height:2px; background:rgba(233,243,255,.90);
+      display:block; position:relative; border-radius:99px;
+    }
+    .hamburger i::before,.hamburger i::after{
+      content:""; position:absolute; left:0;
+      width:18px; height:2px; background:rgba(233,243,255,.90);
+      border-radius:99px;
+    }
+    .hamburger i::before{top:-6px}
+    .hamburger i::after{top:6px}
+    [data-theme="light"] .hamburger{border-color:rgba(11,16,32,.14); background:rgba(11,16,32,.05)}
+    [data-theme="light"] .hamburger i,
+    [data-theme="light"] .hamburger i::before,
+    [data-theme="light"] .hamburger i::after{
+      background:rgba(11,16,32,.78);
+    }
+
+    .mobileMenu{
+      display:none;
+      padding:12px 0 16px;
+      border-top:1px solid var(--line);
+    }
+    .mobileMenu a{
+      display:block;
+      padding:12px 10px;
+      border-radius:14px;
+      color:rgba(233,243,255,.92);
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      margin-top:10px;
+    }
+    .mobileMenu a:hover{background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18)}
+    [data-theme="light"] .mobileMenu a{
+      color:rgba(11,16,32,.82);
+      border-color:rgba(11,16,32,.10);
+      background:rgba(11,16,32,.03);
+    }
+
+    /* ---- HERO ---- */
+    header.hero{padding:56px 0 26px}
+    .heroGrid{display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; align-items:stretch;}
+
     .card{
       border:1px solid var(--line);
       border-radius:var(--radius2);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
     }
+    [data-theme="light"] .card{
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.92));
+    }
+
     .heroLeft{padding:28px}
     .tagline{
       display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.04);
-      color:rgba(233,238,252,.88);
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.05);
+      color:rgba(233,243,255,.92);
       font-size:12px;
       margin-bottom:16px;
     }
+    [data-theme="light"] .tagline{
+      border-color:rgba(11,16,32,.12);
+      background:rgba(11,16,32,.04);
+      color:rgba(11,16,32,.78);
+    }
+
     .dot{
       width:8px; height:8px; border-radius:99px;
       background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
       box-shadow: 0 0 18px rgba(102,227,255,.35);
     }
+
     h1{
       margin:0 0 12px;
       font-size:42px;
@@ -163,10 +269,13 @@
     }
     .lead{
       margin:0 0 18px;
-      color:rgba(233,238,252,.78);
+      color:rgba(233,243,255,.86); /* okunurluk arttı */
       font-size:15px;
-      max-width: 60ch;
+      max-width: 62ch;
     }
+    [data-theme="light"] .lead{color:rgba(11,16,32,.76)}
+
+    .fine{font-size:12px; color:var(--muted2)}
     .heroBullets{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -177,8 +286,12 @@
       display:flex; gap:10px; align-items:flex-start;
       padding:10px 12px;
       border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       background:rgba(0,0,0,.18);
+    }
+    [data-theme="light"] .pill{
+      background:rgba(11,16,32,.03);
+      border-color:rgba(11,16,32,.10);
     }
     .pill i{
       width:10px; height:10px; border-radius:99px;
@@ -188,21 +301,29 @@
       flex:0 0 auto;
     }
     .pill b{display:block; font-size:13px}
-    .pill span{display:block; font-size:12px; color:var(--muted); margin-top:2px}
+    .pill span{display:block; font-size:12px; color:var(--muted2); margin-top:2px}
 
     .heroRight{padding:18px}
     .demoFrame{
       border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
       overflow:hidden;
-      background: linear-gradient(180deg, rgba(15,23,51,.9), rgba(11,16,32,.9));
+      background: linear-gradient(180deg, rgba(15,23,51,.92), rgba(11,16,32,.92));
+    }
+    [data-theme="light"] .demoFrame{
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(242,244,255,1));
+      border-color:rgba(11,16,32,.10);
     }
     .demoTop{
       display:flex; align-items:center; justify-content:space-between;
       padding:10px 12px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      color:rgba(233,238,252,.76);
+      border-bottom:1px solid rgba(255,255,255,.12);
+      color:rgba(233,243,255,.86);
       font-size:12px;
+    }
+    [data-theme="light"] .demoTop{
+      color:rgba(11,16,32,.74);
+      border-bottom-color:rgba(11,16,32,.10);
     }
     .dots{display:flex; gap:6px; align-items:center}
     .dots span{
@@ -210,11 +331,13 @@
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.10);
     }
+    [data-theme="light"] .dots span{background:rgba(11,16,32,.10); border-color:rgba(11,16,32,.10)}
+
     .demoBody{padding:12px}
     .miniMap{
       height:280px;
       border-radius:18px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       background:
         radial-gradient(400px 240px at 30% 35%, rgba(102,227,255,.15), transparent 60%),
         radial-gradient(420px 260px at 70% 45%, rgba(124,108,255,.14), transparent 60%),
@@ -223,22 +346,38 @@
       position:relative;
       overflow:hidden;
     }
+    [data-theme="light"] .miniMap{
+      border-color:rgba(11,16,32,.10);
+      background:
+        radial-gradient(400px 240px at 30% 35%, rgba(102,227,255,.16), transparent 60%),
+        radial-gradient(420px 260px at 70% 45%, rgba(124,108,255,.14), transparent 60%),
+        radial-gradient(520px 320px at 45% 78%, rgba(85,255,180,.12), transparent 60%),
+        linear-gradient(180deg, rgba(11,16,32,.06), rgba(11,16,32,.02));
+    }
+
     .gridlines{
       position:absolute; inset:-40px;
       background-image:
-        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
       background-size: 44px 44px;
       transform: rotate(8deg);
-      opacity:.45;
+      opacity:.50;
       pointer-events:none;
     }
+    [data-theme="light"] .gridlines{
+      background-image:
+        linear-gradient(rgba(11,16,32,.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11,16,32,.10) 1px, transparent 1px);
+      opacity:.40;
+    }
+
     .pin{
       position:absolute;
       width:14px; height:14px;
       border-radius:99px;
       transform: translate(-50%,-50%);
-      border:1px solid rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.24);
       background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
       box-shadow: 0 12px 30px rgba(102,227,255,.18);
     }
@@ -247,41 +386,54 @@
       position:absolute;
       inset:-12px;
       border-radius:99px;
-      border:1px solid rgba(102,227,255,.20);
+      border:1px solid rgba(102,227,255,.22);
       opacity:.65;
     }
+
     .mapHud{
       position:absolute; left:10px; top:10px;
       display:flex; gap:8px; align-items:center;
       padding:8px 10px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.28);
-      color:rgba(233,238,252,.82);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.32);
+      color:rgba(233,243,255,.90);
       font-size:12px;
       backdrop-filter: blur(8px);
     }
-    .mapHud b{font-weight:600}
+    [data-theme="light"] .mapHud{
+      background:rgba(255,255,255,.72);
+      color:rgba(11,16,32,.82);
+      border-color:rgba(11,16,32,.12);
+    }
     .mapHud .badge{
       padding:2px 8px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
       font-size:11px;
-      color:rgba(233,238,252,.80);
+      color:rgba(233,243,255,.88);
+    }
+    [data-theme="light"] .mapHud .badge{
+      border-color:rgba(11,16,32,.12);
+      background:rgba(11,16,32,.05);
+      color:rgba(11,16,32,.74);
     }
 
+    /* ---- SECTIONS ---- */
     section{padding:42px 0}
     .sectionHead{
       display:flex; align-items:flex-end; justify-content:space-between;
       gap:16px; margin-bottom:16px;
     }
     h2{margin:0; font-size:26px; letter-spacing:-.3px}
-    .sub{margin:0; color:var(--muted); font-size:13px; max-width:70ch}
+    .sub{margin:0; color:var(--muted2); font-size:13px; max-width:70ch}
+
     .grid3{
       display:grid; gap:14px;
       grid-template-columns: repeat(3, 1fr);
     }
+
     .feature{
       padding:16px;
       border-radius:var(--radius);
@@ -289,6 +441,7 @@
       background: rgba(255,255,255,.03);
       min-height: 170px;
     }
+    [data-theme="light"] .feature{background:rgba(11,16,32,.03)}
     .feature .icon{
       width:38px; height:38px; border-radius:14px;
       border:1px solid rgba(255,255,255,.14);
@@ -298,11 +451,14 @@
       box-shadow: 0 12px 30px rgba(0,0,0,.25);
       font-family: var(--mono);
       font-size: 12px;
-      color: rgba(233,238,252,.82);
+      color: rgba(233,243,255,.88);
     }
+    [data-theme="light"] .feature .icon{border-color:rgba(11,16,32,.12); color:rgba(11,16,32,.74)}
     .feature b{display:block; font-size:14px; margin-bottom:6px}
-    .feature p{margin:0; color:rgba(233,238,252,.74); font-size:13px}
-    .feature ul{margin:10px 0 0; padding-left:16px; color:rgba(233,238,252,.72); font-size:12px}
+    .feature p{margin:0; color:rgba(233,243,255,.82); font-size:13px}
+    [data-theme="light"] .feature p{color:rgba(11,16,32,.72)}
+    .feature ul{margin:10px 0 0; padding-left:16px; color:rgba(233,243,255,.78); font-size:12px}
+    [data-theme="light"] .feature ul{color:rgba(11,16,32,.70)}
     .feature li{margin:4px 0}
 
     .demoSection{
@@ -315,36 +471,47 @@
       padding:16px;
       border-radius:var(--radius2);
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
     }
+    [data-theme="light"] .panel{background: linear-gradient(180deg, rgba(255,255,255,1), rgba(242,244,255,1))}
     .panel h3{margin:0 0 10px; font-size:16px}
-    .panel p{margin:0 0 12px; color:rgba(233,238,252,.74); font-size:13px}
+    .panel p{margin:0 0 12px; color:rgba(233,243,255,.84); font-size:13px}
+    [data-theme="light"] .panel p{color:rgba(11,16,32,.72)}
+
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .field{
       flex:1 1 220px;
       padding:10px 12px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.18);
-      color:rgba(233,238,252,.85);
+      color:rgba(233,243,255,.92);
       outline:none;
     }
-    .field::placeholder{color:rgba(169,180,214,.70)}
+    [data-theme="light"] .field{
+      border-color:rgba(11,16,32,.12);
+      background:rgba(11,16,32,.04);
+      color:rgba(11,16,32,.84);
+    }
+    .field::placeholder{color:rgba(233,243,255,.62)}
+    [data-theme="light"] .field::placeholder{color:rgba(11,16,32,.50)}
+
     .switches{display:grid; gap:10px; margin-top:12px}
     .switch{
       display:flex; align-items:center; justify-content:space-between;
       padding:10px 12px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.18);
     }
+    [data-theme="light"] .switch{border-color:rgba(11,16,32,.10); background:rgba(11,16,32,.03)}
     .switch b{font-size:13px}
-    .switch span{font-size:12px; color:var(--muted)}
+    .switch span{font-size:12px; color:var(--muted2)}
     .toggle{
       width:44px; height:26px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
       background:rgba(255,255,255,.06);
       position:relative;
       cursor:pointer;
@@ -356,27 +523,35 @@
       width:20px; height:20px;
       border-radius:99px;
       left:3px; top:2px;
-      background: rgba(233,238,252,.86);
+      background: rgba(233,243,255,.92);
       box-shadow: 0 10px 20px rgba(0,0,0,.25);
       transition: transform .18s ease;
     }
     .toggle.on{
       background: linear-gradient(135deg, rgba(102,227,255,.22), rgba(124,108,255,.16));
-      border-color:rgba(102,227,255,.30);
+      border-color:rgba(102,227,255,.34);
     }
     .toggle.on::after{transform: translateX(18px)}
+    [data-theme="light"] .toggle{border-color:rgba(11,16,32,.12); background:rgba(11,16,32,.04)}
+    [data-theme="light"] .toggle::after{background:rgba(11,16,32,.72)}
+
     .log{
       margin-top:12px;
       border-radius:18px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       background:rgba(0,0,0,.22);
       padding:12px;
       font-family:var(--mono);
       font-size:12px;
-      color:rgba(233,238,252,.78);
+      color:rgba(233,243,255,.86);
       height: 160px;
       overflow:auto;
       white-space:pre-wrap;
+    }
+    [data-theme="light"] .log{
+      border-color:rgba(11,16,32,.10);
+      background:rgba(11,16,32,.04);
+      color:rgba(11,16,32,.78);
     }
 
     .usecases{
@@ -385,27 +560,25 @@
       gap:14px;
       align-items:stretch;
     }
-    .list{
-      display:grid; gap:10px;
-      margin-top:10px;
-    }
+    .list{display:grid; gap:10px; margin-top:10px}
     .item{
       padding:12px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       border-radius:16px;
       background:rgba(0,0,0,.18);
     }
+    [data-theme="light"] .item{border-color:rgba(11,16,32,.10); background:rgba(11,16,32,.03)}
     .item b{display:block; font-size:13px}
-    .item span{display:block; font-size:12px; color:var(--muted); margin-top:3px}
+    .item span{display:block; font-size:12px; color:var(--muted2); margin-top:3px}
 
     .cta{
       padding:26px;
       border-radius:var(--radius2);
-      border:1px solid rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
       background:
         radial-gradient(600px 280px at 20% 40%, rgba(102,227,255,.16), transparent 60%),
         radial-gradient(640px 300px at 85% 55%, rgba(124,108,255,.14), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
       display:flex;
       gap:16px;
@@ -413,34 +586,64 @@
       justify-content:space-between;
       flex-wrap:wrap;
     }
+    [data-theme="light"] .cta{
+      border-color:rgba(11,16,32,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(242,244,255,1));
+    }
     .cta b{font-size:18px}
-    .cta p{margin:6px 0 0; color:rgba(233,238,252,.74); font-size:13px; max-width:70ch}
+    .cta p{margin:6px 0 0; color:rgba(233,243,255,.84); font-size:13px; max-width:70ch}
+    [data-theme="light"] .cta p{color:rgba(11,16,32,.72)}
 
     footer{
       padding:26px 0 42px;
-      color:rgba(233,238,252,.58);
-      border-top:1px solid rgba(255,255,255,.08);
+      border-top:1px solid rgba(255,255,255,.10);
       background: rgba(0,0,0,.12);
     }
+    [data-theme="light"] footer{background:rgba(11,16,32,.03); border-top-color:rgba(11,16,32,.10)}
     footer .fgrid{
       display:grid;
       grid-template-columns: 1fr auto;
       gap:14px;
       align-items:center;
     }
-    .fine{font-size:12px; color:rgba(169,180,214,.70)}
     .links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end}
-    .links a{font-size:12px; color:rgba(233,238,252,.68); padding:6px 8px; border-radius:12px; border:1px solid transparent}
-    .links a:hover{border-color:rgba(255,255,255,.12); background:rgba(255,255,255,.04)}
+    .links a{
+      font-size:12px;
+      color:rgba(233,243,255,.84);
+      padding:6px 8px;
+      border-radius:12px;
+      border:1px solid transparent
+    }
+    .links a:hover{border-color:rgba(255,255,255,.14); background:rgba(255,255,255,.06)}
+    [data-theme="light"] .links a{color:rgba(11,16,32,.72)}
+    [data-theme="light"] .links a:hover{border-color:rgba(11,16,32,.12); background:rgba(11,16,32,.05)}
 
+    /* ---- MOBIL DÜZEN ---- */
     @media (max-width: 980px){
+      h1{font-size:36px}
       .heroGrid{grid-template-columns: 1fr}
       .grid3{grid-template-columns: 1fr}
       .demoSection{grid-template-columns: 1fr}
       .usecases{grid-template-columns: 1fr}
-      h1{font-size:36px}
       .actions{min-width: unset}
       .brand{min-width: unset}
+    }
+
+    @media (max-width: 760px){
+      .wrap{padding:0 16px}
+      header.hero{padding:44px 0 18px}
+      section{padding:34px 0}
+      h1{font-size:32px}
+      .heroLeft{padding:20px}
+      .heroRight{padding:14px}
+      .heroBullets{grid-template-columns: 1fr}
+      .sectionHead{flex-direction:column; align-items:flex-start}
+
+      /* Mobil menü aktif */
+      .menu{display:none}
+      .hamburger{display:inline-flex}
+      .actions{gap:8px}
+      .btn{padding:10px 11px}
     }
   </style>
 </head>
@@ -468,7 +671,18 @@
         <div class="actions">
           <button class="btn" id="btnTheme" title="Tema modunu değiştir">Tema</button>
           <a class="btn primary" href="#iletisim">Demo iste</a>
+          <button class="hamburger" id="btnMenu" aria-label="Menüyü aç/kapat">
+            <i></i>
+          </button>
         </div>
+      </div>
+
+      <div class="mobileMenu" id="mobileMenu" aria-label="Mobil menü">
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#demo">Canlı Demo</a>
+        <a href="#usecase">Kullanım</a>
+        <a href="#mimari">Mimari</a>
+        <a href="#iletisim">İletişim</a>
       </div>
     </div>
   </div>
@@ -521,7 +735,7 @@
             <i aria-hidden="true"></i>
             <div>
               <b>Kurumsal güvenlik</b>
-              <span>Rol bazlı yetki, audit, entegrasyon.</span>
+              <span>Yetkiler, loglar ve entegrasyon.</span>
             </div>
           </div>
         </div>
@@ -530,9 +744,7 @@
       <div class="card heroRight">
         <div class="demoFrame">
           <div class="demoTop">
-            <div class="dots" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
+            <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
             <div>GeoBox Showcase (simülasyon)</div>
             <div class="fine">statik demo • hızlı</div>
           </div>
@@ -668,31 +880,19 @@
 
           <div class="switches" style="margin-top:14px;">
             <div class="switch">
-              <div>
-                <b>Doğalgaz Hatları</b>
-                <span>Polyline • işletme katmanı</span>
-              </div>
+              <div><b>Doğalgaz Hatları</b><span>Polyline • işletme katmanı</span></div>
               <div class="toggle on" data-layer="gas"></div>
             </div>
             <div class="switch">
-              <div>
-                <b>Vana & Ekipman</b>
-                <span>Point • bakım/saha</span>
-              </div>
+              <div><b>Vana & Ekipman</b><span>Point • bakım/saha</span></div>
               <div class="toggle on" data-layer="valve"></div>
             </div>
             <div class="switch">
-              <div>
-                <b>Parsel & İmar</b>
-                <span>Polygon • mülkiyet</span>
-              </div>
+              <div><b>Parsel & İmar</b><span>Polygon • mülkiyet</span></div>
               <div class="toggle on" data-layer="parcel"></div>
             </div>
             <div class="switch">
-              <div>
-                <b>Arıza / İş Emri</b>
-                <span>Event • operasyon</span>
-              </div>
+              <div><b>Arıza / İş Emri</b><span>Event • operasyon</span></div>
               <div class="toggle" data-layer="work"></div>
             </div>
           </div>
@@ -781,7 +981,7 @@
 
         <div class="panel">
           <h3>Vaat ettiğimiz “ölçülebilir” sonuç</h3>
-          <p>Bu kısım sunumlarda çok işe yarar: değer önerisini netleştirir.</p>
+          <p>Sunumlarda işe yarayan net çıktı: verim, hız, kontrol.</p>
           <div class="list">
             <div class="item">
               <b>Kurulum hızı</b>
@@ -810,9 +1010,7 @@
       <div class="sectionHead">
         <div>
           <h2>Mimari: düşük maliyet + yüksek performans</h2>
-          <p class="sub">
-            Vitrin sitesi Cloudflare Pages ile statik ve çok hızlı. Ürün tarafında ise servisler konteyner/VPS üzerinde ölçeklenir.
-          </p>
+          <p class="sub">Vitrin sitesi Cloudflare Pages ile statik ve çok hızlı. Ürün tarafında ise servisler konteyner/VPS üzerinde ölçeklenir.</p>
         </div>
         <div class="fine">“Önce vitrin, sonra motor” yaklaşımı</div>
       </div>
@@ -822,33 +1020,18 @@
           <div class="icon">EDGE</div>
           <b>Cloudflare Pages</b>
           <p>Global CDN, ücretsiz SSL, hızlı yayın. GitHub push → otomatik deploy.</p>
-          <ul>
-            <li>Statik içerik = ucuz & hızlı</li>
-            <li>Cache ile performans</li>
-            <li>İsteğe bağlı Workers</li>
-          </ul>
         </div>
 
         <div class="feature">
           <div class="icon">DATA</div>
           <b>PostGIS / GeoPackage</b>
           <p>Kurumsal verinin omurgası. Şablon veri modelleri ile hızlı kurulum.</p>
-          <ul>
-            <li>Veri bütünlüğü</li>
-            <li>Yetki & audit</li>
-            <li>Yedekleme stratejisi</li>
-          </ul>
         </div>
 
         <div class="feature">
           <div class="icon">TILES</div>
           <b>Harita Servisleri</b>
           <p>WMS/WFS veya vector tiles. İhtiyaca göre GeoServer/QGIS Server/pg_tileserv.</p>
-          <ul>
-            <li>Hız için vector tiles</li>
-            <li>Stil/tematik servis</li>
-            <li>API ile entegrasyon</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -890,7 +1073,6 @@
   </footer>
 
   <script>
-    // ---------- tiny helper ----------
     const $ = (q, el=document) => el.querySelector(q);
     const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
     const logEl = $("#log");
@@ -902,26 +1084,33 @@
       logEl.scrollTop = logEl.scrollHeight;
     }
 
-    // ---------- initial ----------
+    // Yıl
     $("#year").textContent = new Date().getFullYear();
+
+    // Tema
+    let theme = "dark";
+    $("#btnTheme").addEventListener("click", () => {
+      theme = (theme === "dark") ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", theme);
+      log(theme === "light" ? "Açık tema etkin." : "Koyu tema etkin.", "ok");
+    });
+
+    // Mobil menü
+    const mobileMenu = $("#mobileMenu");
+    const btnMenu = $("#btnMenu");
+    btnMenu.addEventListener("click", () => {
+      const open = mobileMenu.style.display === "block";
+      mobileMenu.style.display = open ? "none" : "block";
+    });
+    // mobil menü linkine tıklayınca kapan
+    $$("#mobileMenu a").forEach(a=>{
+      a.addEventListener("click", ()=> mobileMenu.style.display="none");
+    });
+
+    // Demo init
     log("GeoBox Showcase başlatıldı. Katmanlar aktif.", "ok");
     log("İpucu: / tuşu ile arama alanına odaklan.", "info");
 
-    // ---------- theme toggle (simple) ----------
-    let light = false;
-    $("#btnTheme").addEventListener("click", () => {
-      light = !light;
-      document.body.style.background = light
-        ? "linear-gradient(180deg, #f7f8ff, #f2f4ff 55%, #f7f8ff)"
-        : "";
-      document.body.style.color = light ? "#0b1020" : "";
-      // Quick hack for readability in light mode:
-      document.documentElement.style.setProperty("--text", light ? "#0b1020" : "#e9eefc");
-      document.documentElement.style.setProperty("--muted", light ? "rgba(11,16,32,.68)" : "#a9b4d6");
-      log(light ? "Açık tema etkin." : "Koyu tema etkin.", "ok");
-    });
-
-    // ---------- layer toggles ----------
     const layerState = { gas:true, valve:true, parcel:true, work:false };
 
     function updateHUD(){
@@ -941,7 +1130,6 @@
       });
     });
 
-    // ---------- search ----------
     const fakeIndex = [
       {id:"PRS-00123", name:"Parsel 123", layer:"parcel", note:"İmar durumu: Konut", x:28, y:38},
       {id:"VNA-014", name:"Vana 14", layer:"valve", note:"Son bakım: 2025-11", x:62, y:44},
@@ -963,26 +1151,18 @@
 
     function doSearch(){
       const q = $("#search").value.trim().toLowerCase();
-      if(!q){
-        log("Arama boş. Örn: parsel, vana, 123, iş emri", "warn");
-        return;
-      }
-      log(`Aranıyor: "${q}" ...`, "info");
+      if(!q){ log("Arama boş. Örn: parsel, vana, 123, iş emri", "warn"); return; }
 
+      log(`Aranıyor: "${q}" ...`, "info");
       const hit = fakeIndex.find(x =>
         x.id.toLowerCase().includes(q) || x.name.toLowerCase().includes(q) || x.note.toLowerCase().includes(q)
       );
 
-      if(!hit){
-        log("Sonuç bulunamadı. (Simülasyon veri seti sınırlı)", "warn");
-        return;
-      }
-
+      if(!hit){ log("Sonuç bulunamadı. (Simülasyon veri seti sınırlı)", "warn"); return; }
       if(!layerState[hit.layer]){
         log(`Sonuç bulundu ama "${hit.layer}" katmanı kapalı. Katmanı açıp tekrar deneyin.`, "warn");
         return;
       }
-
       log(`Bulundu: ${hit.id} — ${hit.name} • ${hit.note}`, "ok");
       focusPin(hit.x, hit.y);
       $("#hudBadge").textContent = `Seçim: ${hit.id}`;
@@ -991,7 +1171,6 @@
     $("#btnSearch").addEventListener("click", doSearch);
     $("#search").addEventListener("keydown", (e)=>{ if(e.key==="Enter") doSearch(); });
 
-    // Shortcut: /
     document.addEventListener("keydown", (e)=>{
       if(e.key === "/" && document.activeElement !== $("#search")){
         e.preventDefault();
@@ -999,7 +1178,6 @@
       }
     });
 
-    // ---------- hero mini actions ----------
     $("#btnFly").addEventListener("click", () => {
       const m = $("#miniMap");
       m.style.transition = "transform .35s ease";
@@ -1018,11 +1196,8 @@
       $("#hudBadge").textContent = "Çıktı: Hazır";
     });
 
-    $("#btnScenario").addEventListener("click", () => {
-      runScenario("fault");
-    });
+    $("#btnScenario").addEventListener("click", () => runScenario("fault"));
 
-    // ---------- scenarios ----------
     function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
 
     async function runScenario(which){
@@ -1067,12 +1242,9 @@
       }
     }
 
-    $$("[data-run]").forEach(b=>{
-      b.addEventListener("click", ()=> runScenario(b.dataset.run));
-    });
+    $$("[data-run]").forEach(b=> b.addEventListener("click", ()=> runScenario(b.dataset.run)));
 
     $("#btnReset").addEventListener("click", ()=>{
-      // reset layer state
       layerState.gas=true; layerState.valve=true; layerState.parcel=true; layerState.work=false;
       $$(".toggle").forEach(t=>{
         const key=t.dataset.layer;
@@ -1096,4 +1268,3 @@
   </script>
 </body>
 </html>
-
