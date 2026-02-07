@@ -5,48 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#f6f7ff" />
 
-  <title>GeoBox — Web Tabanlı CBS (Coğrafi Bilgi Sistemi) Platformu</title>
-  <meta name="description" content="GeoBox ile belediyeler, altyapı işletmeleri ve şirketler için web tabanlı CBS kurun: harita, katman, sorgu, saha-ofis senkronizasyonu, iş emri, rapor, yetkilendirme ve entegrasyon." />
-  <meta name="keywords" content="GeoBox, CBS, Coğrafi Bilgi Sistemi, WebGIS, belediye CBS, altyapı CBS, mezarlık bilgi sistemi, saha senkronizasyonu, iş emri, harita yazılımı" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="GeoBox — Web Tabanlı CBS Platformu" />
-  <meta property="og:description" content="Harita + veri + süreç yönetimi: katman, sorgu, saha senkron, iş emri, rapor, yetki ve entegrasyon." />
-  <meta property="og:type" content="website" />
-
-  <!-- SEO: FAQ schema (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"CBS (Coğrafi Bilgi Sistemi) nedir?",
-        "acceptedAnswer":{"@type":"Answer","text":"CBS; konuma bağlı verileri (parsel, yol, hat, vana, abone, mezar, arıza gibi) harita üzerinde göstermekle kalmayıp bu veriler üzerinde arama, sorgu, analiz, raporlama ve güncelleme yapılmasını sağlayan sistemdir."}
-      },
-      {
-        "@type":"Question",
-        "name":"GeoBox ile kurulan CBS ne işe yarar?",
-        "acceptedAnswer":{"@type":"Answer","text":"GeoBox; kurumun sahadaki varlıklarını tek ekranda yönetmesini sağlar. Saha ekipleri veri toplayabilir, ofis anında görür; iş emri açılır, süreç takip edilir; yöneticiler rapor alır ve kararlarını veriye dayandırır."}
-      },
-      {
-        "@type":"Question",
-        "name":"GeoBox kimler için uygundur?",
-        "acceptedAnswer":{"@type":"Answer","text":"Belediyeler, doğalgaz/su/kanal/elektrik altyapı işletmeleri, site-yönetim firmaları, harita/mühendislik ofisleri ve sahada operasyon yürüten tüm kurumlar için uygundur."}
-      }
-    ]
-  }
-  </script>
+  <title>GeoBox — Web Tabanlı CBS (Coğrafi Bilgi Sistemi)</title>
+  <meta name="description" content="GeoBox ile belediyeler ve şirketler için web tabanlı CBS kurun: harita, katman, sorgu, saha-ofis senkronizasyonu, iş emri ve rapor." />
 
   <style>
     :root{
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-
-      --radius:18px;
-      --radius2:26px;
-      --max:1160px;
+      --max: 1120px;
+      --r: 18px;
+      --r2: 26px;
 
       --a:#1bb7ff;
       --b:#6c5cff;
@@ -54,15 +22,14 @@
     }
 
     html[data-theme="light"]{
-      --bg:#f6f7ff;
+      --bg:#f7f8ff;
       --panel:#ffffff;
-      --panel2:#f2f4ff;
+      --panel2:#f2f5ff;
       --text:#0b1020;
-      --muted:rgba(11,16,32,.72);
-      --muted2:rgba(11,16,32,.62);
+      --muted:rgba(11,16,32,.70);
+      --muted2:rgba(11,16,32,.58);
       --line:rgba(11,16,32,.12);
-      --shadow:0 18px 50px rgba(11,16,32,.10);
-      --bgSoft: rgba(11,16,32,.05);
+      --shadow:0 18px 55px rgba(11,16,32,.10);
     }
 
     html[data-theme="dark"]{
@@ -71,113 +38,122 @@
       --panel2:#0f1733;
       --text:#eef3ff;
       --muted:rgba(233,243,255,.80);
-      --muted2:rgba(233,243,255,.66);
+      --muted2:rgba(233,243,255,.64);
       --line:rgba(255,255,255,.12);
-      --shadow:0 18px 50px rgba(0,0,0,.35);
-      --bgSoft: rgba(255,255,255,.06);
+      --shadow:0 18px 55px rgba(0,0,0,.36);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      color:var(--text);
-      font-family:var(--sans);
+      font-family: var(--sans);
+      color: var(--text);
       line-height:1.55;
       background: var(--bg);
       overflow-x:hidden;
     }
 
-    /* ✅ Profesyonel CBS/Tech arka plan (dikdörtgen geçiş hissini yok eder) */
+    /* ✅ Yeni profesyonel CBS/Tech arka plan (bambaşka ve daha temiz) */
     body::before{
       content:"";
       position:fixed;
       inset:0;
       z-index:-2;
       background:
-        radial-gradient(1200px 800px at 15% 5%, rgba(108,92,255,.14), transparent 60%),
-        radial-gradient(900px 700px at 80% 20%, rgba(27,183,255,.12), transparent 60%),
-        radial-gradient(900px 700px at 65% 88%, rgba(33,211,155,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--panel2) 40%, var(--bg)) 45%, var(--bg));
+        radial-gradient(1000px 680px at 15% 10%, rgba(27,183,255,.12), transparent 60%),
+        radial-gradient(980px 700px at 85% 20%, rgba(108,92,255,.12), transparent 60%),
+        radial-gradient(1100px 760px at 55% 92%, rgba(33,211,155,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--panel2) 45%, var(--bg)) 52%, var(--bg));
     }
 
-    /* Tech grid + node bağlantıları */
+    /* topographic + isometric grid overlay */
     body::after{
       content:"";
       position:fixed;
-      inset:-40px;
+      inset:0;
       z-index:-1;
       pointer-events:none;
       opacity: .55;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'%3E%3Cg fill='none' stroke='%2399a7ff' stroke-opacity='0.14'%3E%3Cpath d='M0 80 H720'/%3E%3Cpath d='M0 160 H720'/%3E%3Cpath d='M0 240 H720'/%3E%3Cpath d='M0 320 H720'/%3E%3Cpath d='M0 400 H720'/%3E%3Cpath d='M80 0 V480'/%3E%3Cpath d='M160 0 V480'/%3E%3Cpath d='M240 0 V480'/%3E%3Cpath d='M320 0 V480'/%3E%3Cpath d='M400 0 V480'/%3E%3Cpath d='M480 0 V480'/%3E%3Cpath d='M560 0 V480'/%3E%3Cpath d='M640 0 V480'/%3E%3C/g%3E%3Cg fill='%231bb7ff' fill-opacity='0.10'%3E%3Ccircle cx='120' cy='120' r='5'/%3E%3Ccircle cx='260' cy='200' r='5'/%3E%3Ccircle cx='420' cy='140' r='5'/%3E%3Ccircle cx='560' cy='260' r='5'/%3E%3Ccircle cx='620' cy='110' r='5'/%3E%3Ccircle cx='180' cy='340' r='5'/%3E%3C/g%3E%3Cg stroke='%231bb7ff' stroke-opacity='0.16' stroke-width='1.5'%3E%3Cpath d='M120 120 L260 200 L420 140 L620 110'/%3E%3Cpath d='M260 200 L560 260 L180 340'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: 720px 480px;
-      filter: blur(0px);
-      transform: rotate(-2deg);
+      background:
+        /* Topographic contour lines */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Cg fill='none' stroke='%2399a7ff' stroke-opacity='0.12'%3E%3Cpath d='M-20 420 C140 360, 220 520, 380 460 C520 406, 590 300, 720 340 C820 365, 860 460, 980 430'/%3E%3Cpath d='M-40 300 C120 240, 260 380, 410 330 C560 280, 630 180, 780 220 C880 245, 940 330, 1040 305'/%3E%3Cpath d='M-40 180 C150 120, 280 260, 430 205 C580 150, 670 70, 820 105 C920 130, 980 220, 1080 190'/%3E%3Cpath d='M-40 520 C120 460, 260 620, 430 560 C600 500, 690 390, 860 430 C980 468, 1040 560, 1160 530'/%3E%3C/g%3E%3C/svg%3E"),
+        /* Isometric grid */
+        repeating-linear-gradient(60deg, rgba(11,16,32,.05) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(-60deg, rgba(11,16,32,.05) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(0deg, rgba(11,16,32,.04) 0 1px, transparent 1px 46px);
+      background-size: 900px 600px, auto, auto, auto;
+      background-position: center, center, center, center;
+      filter: saturate(1.05);
+    }
+
+    html[data-theme="dark"] body::after{
+      opacity:.42;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Cg fill='none' stroke='%231bb7ff' stroke-opacity='0.10'%3E%3Cpath d='M-20 420 C140 360, 220 520, 380 460 C520 406, 590 300, 720 340 C820 365, 860 460, 980 430'/%3E%3Cpath d='M-40 300 C120 240, 260 380, 410 330 C560 280, 630 180, 780 220 C880 245, 940 330, 1040 305'/%3E%3Cpath d='M-40 180 C150 120, 280 260, 430 205 C580 150, 670 70, 820 105 C920 130, 980 220, 1080 190'/%3E%3Cpath d='M-40 520 C120 460, 260 620, 430 560 C600 500, 690 390, 860 430 C980 468, 1040 560, 1160 530'/%3E%3C/g%3E%3C/svg%3E"),
+        repeating-linear-gradient(60deg, rgba(255,255,255,.06) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(-60deg, rgba(255,255,255,.06) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 46px);
     }
 
     a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 22px}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
 
-    /* Sticky header */
+    /* Topbar */
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background: color-mix(in oklab, var(--panel) 72%, transparent);
+      background: color-mix(in oklab, var(--panel) 78%, transparent);
       border-bottom:1px solid var(--line);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
+      padding:12px 0;
+      gap:12px;
     }
 
-    /* ✅ Logo: yatay logoya uygun alan */
+    /* ✅ Logo revizyonu: önerdiğim ayarlar uygulanmış hali */
     .brand{
       display:flex; align-items:center; gap:12px;
-      min-width: 280px;
+      min-width: 220px;
     }
-    .brandLogo{
-      width:156px;
-      height:44px;
+    .logoBox{
+      width: 170px;  /* biraz uzattık */
+      height: 42px;  /* biraz incelttik */
       border-radius:14px;
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 82%, transparent);
+      background: color-mix(in oklab, var(--panel) 86%, transparent);
+      box-shadow: 0 14px 40px rgba(0,0,0,.10);
       display:flex; align-items:center; justify-content:center;
       overflow:hidden;
-      box-shadow: 0 14px 40px rgba(0,0,0,.10);
     }
-    .brandLogo img{
+    .logoBox img{
       width:100%;
       height:100%;
       object-fit:contain;
       display:block;
-      padding:6px 10px; /* yazılı logolarda kenar boşluğu çok kritik */
+      padding: 4px 8px;     /* ✅ önerdiğimiz: daha az padding */
+      transform: scale(1.03); /* ✅ hafif doluluk */
     }
-    .brandText b{font-size:14px; letter-spacing:.2px}
-    .brandText small{display:block; color:var(--muted2); font-size:11px; margin-top:2px}
 
     .menu{
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:center;
+      display:flex; align-items:center; gap:8px;
+      flex-wrap:wrap;
+      justify-content:center;
     }
     .menu a{
       font-size:13px;
-      color:color-mix(in oklab, var(--text) 85%, transparent);
       padding:8px 10px;
       border-radius:12px;
       border:1px solid transparent;
+      color: color-mix(in oklab, var(--text) 85%, transparent);
     }
     .menu a:hover{
-      border-color:var(--line);
-      background: color-mix(in oklab, var(--panel2) 65%, transparent);
+      border-color: var(--line);
+      background: color-mix(in oklab, var(--panel2) 70%, transparent);
     }
 
-    .actions{
-      display:flex; gap:10px; align-items:center; justify-content:flex-end;
-      min-width: 260px;
-    }
-
+    .actions{display:flex; align-items:center; gap:10px}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:8px;
@@ -185,25 +161,18 @@
       font-size:13px;
       border-radius:14px;
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
+      background: color-mix(in oklab, var(--panel2) 60%, transparent);
       cursor:pointer;
-      user-select:none;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
       white-space:nowrap;
-      color:inherit;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: color-mix(in oklab, var(--panel2) 75%, transparent);
-      border-color: color-mix(in oklab, var(--line) 120%, transparent);
-    }
+    .btn:hover{transform: translateY(-1px)}
     .btn.primary{
       border-color: color-mix(in oklab, var(--a) 35%, var(--line));
       background: linear-gradient(135deg,
         color-mix(in oklab, var(--a) 22%, transparent),
         color-mix(in oklab, var(--b) 16%, transparent));
     }
-    .btn.primary:hover{border-color: color-mix(in oklab, var(--a) 55%, var(--line))}
     .btn.whatsapp{
       border-color: color-mix(in oklab, var(--c) 38%, var(--line));
       background: linear-gradient(135deg,
@@ -211,77 +180,39 @@
         color-mix(in oklab, var(--a) 10%, transparent));
     }
 
-    .kbd{
-      font-family:var(--mono);
-      font-size:11px;
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 60%, transparent);
-      color:color-mix(in oklab, var(--text) 85%, transparent);
-    }
+    .hamburger{display:none}
+    .mobileMenu{display:none}
 
-    /* Mobile */
-    .hamburger{
-      display:none;
-      width:42px; height:40px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-      align-items:center; justify-content:center;
-      cursor:pointer;
-    }
-    .hamburger i{
-      width:18px; height:2px; background: color-mix(in oklab, var(--text) 75%, transparent);
-      display:block; position:relative; border-radius:99px;
-    }
-    .hamburger i::before,.hamburger i::after{
-      content:""; position:absolute; left:0;
-      width:18px; height:2px; background: color-mix(in oklab, var(--text) 75%, transparent);
-      border-radius:99px;
-    }
-    .hamburger i::before{top:-6px}
-    .hamburger i::after{top:6px}
-
-    .mobileMenu{
-      display:none;
-      padding:12px 0 16px;
-      border-top:1px solid var(--line);
-    }
-    .mobileMenu a{
-      display:block;
-      padding:12px 10px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-      margin-top:10px;
-      color:color-mix(in oklab, var(--text) 85%, transparent);
-    }
-
-    /* Content cards */
+    /* Cards */
     .card{
       border:1px solid var(--line);
-      border-radius:var(--radius2);
+      border-radius: var(--r2);
       background: linear-gradient(180deg,
-        color-mix(in oklab, var(--panel) 92%, transparent),
-        color-mix(in oklab, var(--panel2) 80%, transparent));
+        color-mix(in oklab, var(--panel) 96%, transparent),
+        color-mix(in oklab, var(--panel2) 86%, transparent));
       box-shadow: var(--shadow);
     }
 
-    header.hero{padding:56px 0 26px}
-    .heroGrid{display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; align-items:stretch;}
-    .heroLeft{padding:28px}
-    .heroRight{padding:18px}
+    header.hero{padding:52px 0 18px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    h1{margin:0 0 12px; font-size:40px; letter-spacing:-.6px; line-height:1.08}
+    .lead{margin:0 0 16px; color: color-mix(in oklab, var(--text) 80%, transparent); font-size:15px}
+    .fine{font-size:12px; color: var(--muted2)}
 
-    .tagline{
+    .tag{
       display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-      color:color-mix(in oklab, var(--text) 85%, transparent);
+      background: color-mix(in oklab, var(--panel2) 65%, transparent);
       font-size:12px;
-      margin-bottom:16px;
+      color: color-mix(in oklab, var(--text) 82%, transparent);
+      margin-bottom:14px;
     }
     .dot{
       width:8px; height:8px; border-radius:99px;
@@ -289,58 +220,75 @@
       box-shadow: 0 0 18px color-mix(in oklab, var(--a) 30%, transparent);
     }
 
-    h1{
-      margin:0 0 12px;
-      font-size:42px;
-      letter-spacing:-.6px;
-      line-height:1.06;
-    }
-    .lead{
-      margin:0 0 18px;
-      color:color-mix(in oklab, var(--text) 82%, transparent);
-      font-size:15px;
-      max-width: 70ch;
-    }
-    .fine{font-size:12px; color:var(--muted2)}
+    .heroLeft{padding:22px}
+    .heroRight{padding:16px}
 
-    .heroBullets{
+    .quickGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
-      margin-top:16px;
+      margin-top:14px;
     }
-    .pill{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px 12px;
-      border-radius:16px;
+    .quick{
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
+      border-radius: 16px;
+      background: color-mix(in oklab, var(--panel2) 65%, transparent);
+      padding:10px 12px;
     }
-    .pill i{
-      width:10px; height:10px; border-radius:99px;
-      margin-top:4px;
-      background: radial-gradient(circle at 30% 30%, var(--c), var(--a));
-      box-shadow: 0 0 18px color-mix(in oklab, var(--c) 30%, transparent);
-      flex:0 0 auto;
-    }
-    .pill b{display:block; font-size:13px}
-    .pill span{display:block; font-size:12px; color:var(--muted2); margin-top:2px}
+    .quick b{display:block; font-size:13px}
+    .quick span{display:block; font-size:12px; color: var(--muted2); margin-top:3px}
 
-    /* Demo frame */
+    section{padding:40px 0}
+    .sectionHead{display:flex; justify-content:space-between; gap:12px; align-items:flex-end; margin-bottom:14px}
+    h2{margin:0; font-size:24px; letter-spacing:-.3px}
+    .sub{margin:0; max-width:78ch; font-size:13px; color: var(--muted2)}
+
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
+    .panel{
+      padding:16px;
+      border-radius: var(--r2);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--panel) 96%, transparent),
+        color-mix(in oklab, var(--panel2) 86%, transparent));
+      box-shadow: var(--shadow);
+    }
+    .panel h3{margin:0 0 8px; font-size:16px}
+    .panel p{margin:0; font-size:13px; color: color-mix(in oklab, var(--text) 78%, transparent)}
+
+    /* How it works steps */
+    .steps{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px}
+    .step{
+      padding:14px;
+      border-radius: var(--r2);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 62%, transparent);
+    }
+    .step .n{
+      width:34px; height:34px; border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(27,183,255,.14), rgba(108,92,255,.10));
+      font-family: var(--mono);
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    .step b{display:block; font-size:13px; margin-bottom:4px}
+    .step span{display:block; font-size:12px; color: var(--muted2)}
+
+    /* Demo */
     .demoFrame{
       border-radius:22px;
       border:1px solid var(--line);
       overflow:hidden;
-      background: linear-gradient(180deg,
-        color-mix(in oklab, var(--panel) 92%, transparent),
-        color-mix(in oklab, var(--panel2) 80%, transparent));
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
     }
     .demoTop{
       display:flex; align-items:center; justify-content:space-between;
       padding:10px 12px;
       border-bottom:1px solid var(--line);
-      color:var(--muted);
       font-size:12px;
+      color: var(--muted);
     }
     .dots{display:flex; gap:6px; align-items:center}
     .dots span{
@@ -349,17 +297,16 @@
       border:1px solid var(--line);
     }
     .demoBody{padding:12px}
-
     .miniMap{
       height:280px;
       border-radius:18px;
       border:1px solid var(--line);
       background:
-        radial-gradient(460px 260px at 30% 35%, rgba(27,183,255,.16), transparent 60%),
-        radial-gradient(520px 320px at 70% 45%, rgba(108,92,255,.14), transparent 60%),
-        radial-gradient(520px 320px at 45% 78%, rgba(33,211,155,.12), transparent 60%),
-        linear-gradient(180deg, color-mix(in oklab, var(--panel2) 50%, transparent),
-                               color-mix(in oklab, var(--panel) 40%, transparent));
+        radial-gradient(520px 280px at 30% 35%, rgba(27,183,255,.16), transparent 60%),
+        radial-gradient(580px 320px at 70% 45%, rgba(108,92,255,.14), transparent 60%),
+        radial-gradient(540px 300px at 45% 78%, rgba(33,211,155,.12), transparent 60%),
+        linear-gradient(180deg, color-mix(in oklab, var(--panel2) 55%, transparent),
+                               color-mix(in oklab, var(--panel) 45%, transparent));
       position:relative;
       overflow:hidden;
     }
@@ -368,9 +315,9 @@
       background-image:
         linear-gradient(color-mix(in oklab, var(--text) 10%, transparent) 1px, transparent 1px),
         linear-gradient(90deg, color-mix(in oklab, var(--text) 10%, transparent) 1px, transparent 1px);
-      background-size: 44px 44px;
+      background-size: 46px 46px;
       transform: rotate(8deg);
-      opacity:.40;
+      opacity:.35;
       pointer-events:none;
     }
     .pin{
@@ -382,240 +329,82 @@
       background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
       box-shadow: 0 12px 30px rgba(27,183,255,.18);
     }
-    .pin::after{
-      content:"";
-      position:absolute;
-      inset:-12px;
-      border-radius:99px;
-      border:1px solid rgba(27,183,255,.20);
-      opacity:.65;
-    }
     .mapHud{
       position:absolute; left:10px; top:10px;
       display:flex; gap:8px; align-items:center;
       padding:8px 10px;
       border-radius:14px;
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 85%, transparent);
-      color:color-mix(in oklab, var(--text) 85%, transparent);
+      background: color-mix(in oklab, var(--panel) 88%, transparent);
       font-size:12px;
       backdrop-filter: blur(8px);
     }
-    .mapHud .badge{
+    .badge{
       padding:2px 8px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 60%, transparent);
+      background: color-mix(in oklab, var(--panel2) 70%, transparent);
       font-size:11px;
-      color:color-mix(in oklab, var(--text) 80%, transparent);
-    }
-
-    section{padding:46px 0}
-    .sectionHead{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:16px; margin-bottom:16px;
-    }
-    h2{margin:0; font-size:26px; letter-spacing:-.3px}
-    h3{margin:0; font-size:18px; letter-spacing:-.2px}
-    .sub{margin:0; color:var(--muted2); font-size:13px; max-width:82ch}
-
-    .grid2{display:grid; gap:14px; grid-template-columns: 1fr 1fr;}
-    .grid3{display:grid; gap:14px; grid-template-columns: repeat(3, 1fr);}
-
-    .bigFeature{
-      padding:18px;
-      border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background: linear-gradient(180deg,
-        color-mix(in oklab, var(--panel) 94%, transparent),
-        color-mix(in oklab, var(--panel2) 82%, transparent));
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .bigFeature::after{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(420px 220px at 10% 20%, rgba(27,183,255,.10), transparent 60%),
-                  radial-gradient(420px 220px at 90% 65%, rgba(108,92,255,.08), transparent 60%);
-      pointer-events:none;
-    }
-    .bigFeature .head{
-      display:flex; gap:12px; align-items:flex-start;
-      margin-bottom:10px;
-      position:relative;
-      z-index:1;
-    }
-    .bfIcon{
-      width:44px; height:44px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background: linear-gradient(135deg, rgba(27,183,255,.14), rgba(108,92,255,.10));
-      display:flex; align-items:center; justify-content:center;
-      font-family: var(--mono);
-      font-size: 12px;
       color: color-mix(in oklab, var(--text) 80%, transparent);
-      flex:0 0 auto;
-      position:relative;
-      z-index:1;
     }
-    .bigFeature b{display:block; font-size:15px; margin-top:2px; position:relative; z-index:1;}
-    .bigFeature .desc{color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px; margin:0; position:relative; z-index:1;}
-    .bfList{margin:12px 0 0; padding-left:16px; color:var(--muted2); font-size:13px; position:relative; z-index:1;}
-    .bfList li{margin:7px 0}
-    .bfNote{
+
+    .demoControls{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
       margin-top:12px;
-      padding:10px 12px;
-      border-radius:16px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-      color:color-mix(in oklab, var(--text) 74%, transparent);
-      font-size:12px;
-      position:relative; z-index:1;
     }
-
-    .panel{
-      padding:16px;
-      border-radius:var(--radius2);
-      border:1px solid var(--line);
-      background: linear-gradient(180deg,
-        color-mix(in oklab, var(--panel) 94%, transparent),
-        color-mix(in oklab, var(--panel2) 82%, transparent));
-      box-shadow: var(--shadow);
-    }
-    .panel p{margin:8px 0 12px; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px}
-
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .field{
-      flex:1 1 220px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-      color:color-mix(in oklab, var(--text) 85%, transparent);
-      outline:none;
-    }
-    .field::placeholder{color:var(--muted2)}
-
-    .switches{display:grid; gap:10px; margin-top:12px}
-    .switch{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 55%, transparent);
-    }
-    .switch b{font-size:13px}
-    .switch span{font-size:12px; color:var(--muted2)}
-    .toggle{
-      width:44px; height:26px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 80%, transparent);
-      position:relative;
-      cursor:pointer;
-      flex:0 0 auto;
-    }
-    .toggle::after{
-      content:"";
-      position:absolute;
-      width:20px; height:20px;
-      border-radius:99px;
-      left:3px; top:2px;
-      background: color-mix(in oklab, var(--text) 80%, transparent);
-      box-shadow: 0 10px 20px rgba(0,0,0,.18);
-      transition: transform .18s ease;
-    }
-    .toggle.on{
-      background: linear-gradient(135deg, rgba(27,183,255,.22), rgba(108,92,255,.16));
-      border-color: color-mix(in oklab, var(--a) 30%, var(--line));
-    }
-    .toggle.on::after{transform: translateX(18px)}
 
     .log{
       margin-top:12px;
       border-radius:18px;
       border:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      background: color-mix(in oklab, var(--panel) 90%, transparent);
       padding:12px;
       font-family:var(--mono);
       font-size:12px;
-      color:color-mix(in oklab, var(--text) 80%, transparent);
-      height: 170px;
+      color: color-mix(in oklab, var(--text) 78%, transparent);
+      height: 150px;
       overflow:auto;
       white-space:pre-wrap;
     }
 
-    .demoSection{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:stretch;
-    }
-
+    /* CTA */
     .cta{
-      padding:26px;
-      border-radius:var(--radius2);
+      padding:22px;
+      border-radius: var(--r2);
       border:1px solid var(--line);
       background:
-        radial-gradient(620px 300px at 20% 40%, rgba(27,183,255,.14), transparent 60%),
+        radial-gradient(640px 320px at 20% 40%, rgba(27,183,255,.14), transparent 60%),
         radial-gradient(680px 320px at 85% 55%, rgba(108,92,255,.12), transparent 60%),
-        linear-gradient(180deg, color-mix(in oklab, var(--panel) 94%, transparent),
-                               color-mix(in oklab, var(--panel2) 82%, transparent));
+        linear-gradient(180deg, color-mix(in oklab, var(--panel) 96%, transparent),
+                               color-mix(in oklab, var(--panel2) 86%, transparent));
       box-shadow: var(--shadow);
-      display:flex;
-      gap:16px;
-      align-items:center;
-      justify-content:space-between;
-      flex-wrap:wrap;
+      display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap;
     }
     .cta b{font-size:18px}
-    .cta p{margin:6px 0 0; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px; max-width:72ch}
+    .cta p{margin:6px 0 0; font-size:13px; color: color-mix(in oklab, var(--text) 78%, transparent); max-width:72ch}
 
     footer{
-      padding:26px 0 42px;
+      padding:24px 0 38px;
       border-top:1px solid var(--line);
-      background: color-mix(in oklab, var(--panel2) 35%, transparent);
-    }
-    .links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end}
-    .links a{
-      font-size:12px;
-      color:color-mix(in oklab, var(--text) 70%, transparent);
-      padding:6px 8px;
-      border-radius:12px;
-      border:1px solid transparent
-    }
-    .links a:hover{
-      border-color:var(--line);
-      background: color-mix(in oklab, var(--panel2) 65%, transparent);
+      background: color-mix(in oklab, var(--panel2) 38%, transparent);
     }
 
+    /* Responsive */
     @media (max-width: 980px){
-      h1{font-size:36px}
+      h1{font-size:34px}
       .heroGrid{grid-template-columns: 1fr}
-      .demoSection{grid-template-columns: 1fr}
       .grid3{grid-template-columns: 1fr}
-      .grid2{grid-template-columns: 1fr}
-      .actions{min-width: unset}
-      .brand{min-width: unset}
+      .steps{grid-template-columns: 1fr 1fr}
+      .quickGrid{grid-template-columns: 1fr}
+      .menu{display:none}
+      .hamburger{display:inline-flex}
     }
     @media (max-width: 760px){
       .wrap{padding:0 16px}
-      header.hero{padding:44px 0 18px}
-      section{padding:36px 0}
-      h1{font-size:32px}
-      .heroLeft{padding:20px}
-      .heroRight{padding:14px}
-      .heroBullets{grid-template-columns: 1fr}
-      .sectionHead{flex-direction:column; align-items:flex-start}
-
-      .menu{display:none}
-      .hamburger{display:inline-flex}
-      .actions{gap:8px; flex-wrap:wrap}
-
-      .brandLogo{width:138px; height:40px}
-      .brandText{display:none}
+      header.hero{padding:42px 0 14px}
+      section{padding:34px 0}
+      .steps{grid-template-columns: 1fr}
+      .logoBox{width: 160px; height: 40px}
     }
   </style>
 </head>
@@ -625,36 +414,23 @@
     <div class="wrap">
       <div class="nav">
         <a class="brand" href="#top" aria-label="GeoBox ana sayfa">
-          <div class="brandLogo" aria-hidden="true">
-            <img src="geobox-logo.png" alt="GeoBox Logo" />
-          </div>
-          <div class="brandText">
-            <b>Web Tabanlı CBS Platformu</b>
-            <small>Harita + veri + süreç yönetimi</small>
+          <div class="logoBox">
+            <img src="geobox-logo.png" alt="GeoBox Logo">
           </div>
         </a>
 
+        <!-- ✅ Sadelik: 4 menü -->
         <nav class="menu" aria-label="Site menüsü">
           <a href="#ozellikler">Özellikler</a>
-          <a href="#demo">Canlı Demo</a>
-          <a href="#senaryolar">Kullanım Senaryoları</a>
-          <a href="#mimari">Mimari</a>
+          <a href="#nasil">Nasıl Çalışır?</a>
+          <a href="#demo">Demo</a>
           <a href="#iletisim">İletişim</a>
         </nav>
 
         <div class="actions">
-          <button class="btn" id="btnTheme" title="Tema modunu değiştir">Tema</button>
+          <button class="btn" id="btnTheme" title="Tema">Tema</button>
           <a class="btn primary" href="#iletisim">Demo iste</a>
-          <button class="hamburger" id="btnMenu" aria-label="Menüyü aç/kapat"><i></i></button>
         </div>
-      </div>
-
-      <div class="mobileMenu" id="mobileMenu" aria-label="Mobil menü">
-        <a href="#ozellikler">Özellikler</a>
-        <a href="#demo">Canlı Demo</a>
-        <a href="#senaryolar">Kullanım Senaryoları</a>
-        <a href="#mimari">Mimari</a>
-        <a href="#iletisim">İletişim</a>
       </div>
     </div>
   </div>
@@ -662,49 +438,45 @@
   <header class="hero wrap" id="top">
     <div class="heroGrid">
       <div class="card heroLeft">
-        <div class="tagline">
-          <span class="dot" aria-hidden="true"></span>
-          <span>Kurumsal CBS • Saha senkron • İş emri • Rapor • Yetkilendirme</span>
-          <span class="kbd">v1</span>
-        </div>
-
-        <h1>GeoBox ile <span style="color:var(--a)">CBS’yi</span><br/>tek ekranda yönetin.</h1>
-
+        <div class="tag"><span class="dot"></span> Web Tabanlı CBS • Kurumsal • Saha • Rapor</div>
+        <h1>Harita + veri + süreç<br/>tek platformda.</h1>
         <p class="lead">
-          GeoBox; kurumunuzun sahadaki varlıklarını (altyapı hatları, vanalar, aboneler, parseller, mezarlıklar, arızalar, iş emirleri…)
-          harita üzerinde gösterir ve bu verileri <b>işe dönüştürür</b>:
-          arama, sorgu, güncelleme, süreç, rapor, yetki ve entegrasyon.
+          GeoBox, kurumların <b>Coğrafi Bilgi Sistemi (CBS)</b> ihtiyacını basit bir şekilde çözer:
+          sahadaki veriyi toplar, ofiste anında görünür kılar, iş emriyle süreci yönetir ve raporlar.
         </p>
 
-        <div class="row">
-          <a class="btn primary" href="#ozellikler">Özellikleri gör</a>
-          <a class="btn" href="#demo">Demo’yu dene</a>
-          <a class="btn" href="#senaryolar">Senaryolar</a>
-          <span class="fine">Cloudflare + GitHub ile düşük maliyetli yayın</span>
+        <div class="demoControls">
+          <a class="btn primary" href="#ozellikler">Neler yapar?</a>
+          <a class="btn" href="#nasil">Nasıl çalışır?</a>
+          <a class="btn" href="#demo">Demo</a>
         </div>
 
-        <div class="heroBullets" aria-label="Öne çıkanlar">
-          <div class="pill"><i aria-hidden="true"></i><div><b>Tek doğru veri kaynağı</b><span>Bilgi kişide değil kurumda kalır.</span></div></div>
-          <div class="pill"><i aria-hidden="true"></i><div><b>Saha→Ofis anlık akış</b><span>Foto+form+konum anında görünür.</span></div></div>
-          <div class="pill"><i aria-hidden="true"></i><div><b>İş emri ve süreç</b><span>Başlat, ata, takip et, kapat, raporla.</span></div></div>
-          <div class="pill"><i aria-hidden="true"></i><div><b>Yönetici raporları</b><span>Veriye dayalı karar ve öncelik.</span></div></div>
+        <div class="quickGrid" aria-label="Öne çıkanlar">
+          <div class="quick"><b>Net görünürlük</b><span>Altyapı/parsel/varlıkları tek ekranda görün.</span></div>
+          <div class="quick"><b>Saha→Ofis akışı</b><span>Foto+form+konum anında sisteme düşer.</span></div>
+          <div class="quick"><b>İş emri</b><span>Görev ata, takip et, kapat ve raporla.</span></div>
+          <div class="quick"><b>Yönetici raporu</b><span>Kararı “veriye dayandır”.</span></div>
+        </div>
+
+        <div class="fine" style="margin-top:12px;">
+          Cloudflare + GitHub ile düşük maliyetli, hızlı yayın altyapısı.
         </div>
       </div>
 
       <div class="card heroRight">
         <div class="demoFrame">
           <div class="demoTop">
-            <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
-            <div>GeoBox Showcase (simülasyon)</div>
-            <div class="fine">etkileşimli</div>
+            <div class="dots"><span></span><span></span><span></span></div>
+            <div>GeoBox Showcase</div>
+            <div class="fine">simülasyon</div>
           </div>
-
           <div class="demoBody">
             <div class="miniMap" id="miniMap" role="img" aria-label="Harita simülasyonu">
               <div class="gridlines"></div>
+
               <div class="mapHud">
-                <b id="hudTitle">Katmanlar: Açık</b>
-                <span class="badge" id="hudBadge">Sorgu: Hazır</span>
+                <b id="hudTitle">Katmanlar</b>
+                <span class="badge" id="hudBadge">Hazır</span>
               </div>
 
               <div class="pin" style="left:28%; top:38%"></div>
@@ -712,403 +484,126 @@
               <div class="pin" style="left:45%; top:72%"></div>
             </div>
 
-            <!-- ✅ Önceki sürümdeki butonlar: TAM -->
-            <div class="row" style="margin-top:12px;">
-              <button class="btn" id="btnFly">Uç (zoom)</button>
+            <!-- ✅ Karmaşıklık azaltıldı: 3 net buton -->
+            <div class="demoControls">
+              <button class="btn" id="btnFly">Yakınlaş</button>
               <button class="btn" id="btnMeasure">Ölç</button>
-              <button class="btn" id="btnExport">Dışa aktar</button>
-              <button class="btn primary" id="btnScenario">Senaryo çalıştır</button>
-              <button class="btn primary" id="btnReset">Demo sıfırla</button>
-              <button class="btn" id="btnCopy">Log’u kopyala</button>
+              <button class="btn primary" id="btnScenario">Senaryo</button>
+              <button class="btn" id="btnReset">Sıfırla</button>
             </div>
 
-            <div class="fine" style="margin-top:10px;">
-              Not: Bu vitrin simülasyon. Gerçekte MapLibre/Leaflet + servisler ile canlı çalışır.
-            </div>
+            <div class="log" id="log"></div>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ✅ ÖZELLİKLER: uzun + anlaşılır + SEO uyumlu -->
   <section id="ozellikler">
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>GeoBox CBS özellikleri</h2>
+          <h2>Özellikler (kısa, net, anlaşılır)</h2>
           <p class="sub">
-            Bu bölüm “teknik bilmeyen” bir yönetici için yazıldı. Amaç: GeoBox ile kurulan web tabanlı CBS’nin ne olduğunu
-            net şekilde anlatmak ve kurumunuza sağlayacağı faydaları görünür kılmak.
+            Aşağıdakiler “teknik bilmeyen” bir yönetici için sade anlatımdır: GeoBox ne yapar ve kurumunuza ne kazandırır?
           </p>
         </div>
-        <div class="fine">Anahtar kelimeler: CBS • WebGIS • Saha • İş Emri • Rapor</div>
       </div>
-
-      <div class="grid2">
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">CBS</div>
-            <div>
-              <b>CBS nedir? (En kısa ve net anlatım)</b>
-              <p class="desc">
-                CBS (Coğrafi Bilgi Sistemi), konuma bağlı verileri harita üzerinde yönetmenizi sağlar.
-                Yani “harita ekranı” değil; harita üzerinde <b>arama, sorgu, güncelleme, rapor</b> yapabildiğiniz
-                bir <b>kurum yönetim ekranıdır</b>.
-              </p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li><b>Varlıklar:</b> Hat, vana, parsel, yol, bina, abone, mezar, arıza, iş emri…</li>
-            <li><b>İşler:</b> Bul (arama), filtrele (sorgu), düzelt (güncelle), önceliklendir (analiz), raporla.</li>
-            <li><b>Sonuç:</b> Bilgi dağınık olmaz; kurum hafızası oluşur.</li>
-          </ul>
-          <div class="bfNote">Yönetici faydası: “Kimde hangi dosya vardı?” sorusu biter. Tek doğru kaynak oluşur.</div>
-        </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">BOX</div>
-            <div>
-              <b>GeoBox ile ne değişir?</b>
-              <p class="desc">
-                GeoBox, CBS’yi “operasyon”a bağlar: saha veri toplar, ofis görür; iş emri başlar, kapanır; rapor çıkar.
-                Yani haritanız <b>iş üreten</b> bir sisteme dönüşür.
-              </p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li><b>Saha→Ofis:</b> Foto+form+konum kayıtları anlık aktarılır.</li>
-            <li><b>Süreç:</b> Arıza/şikayet/denetim kayıtları iş akışına bağlanır.</li>
-            <li><b>Yönetim:</b> KPI/performans/yoğunluk raporlarıyla karar destek sağlanır.</li>
-          </ul>
-          <div class="bfNote">Yönetici faydası: Daha hızlı hizmet, daha düşük maliyet, daha şeffaf süreç.</div>
-        </div>
-      </div>
-
-      <div style="height:14px"></div>
 
       <div class="grid3">
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">MAP</div>
-            <div>
-              <b>Harita & Katman Yönetimi</b>
-              <p class="desc">İhtiyacınız olan verileri katman katman açın. Birbirinin üstüne bindirerek “görerek doğrulayın”.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Katman grupları: Altyapı, imar, mülkiyet, çevre, saha…</li>
-            <li>Katmana tıklayınca detay: tip, durum, tarih, sorumlu, not, ek dosyalar</li>
-            <li>Filtre: “Sadece bu mahalledeki vanalar / bu yıl bakım görmeyen ekipmanlar”</li>
-          </ul>
-          <div class="bfNote">Örnek: “Bu sokakta hangi altyapılar var?” sorusu 10 saniyede cevaplanır.</div>
+        <div class="panel">
+          <h3>1) Katmanlar ve harita görünümü</h3>
+          <p>Altyapı hatları, ekipman, parsel/imar gibi verileri aynı ekranda katmanlar halinde gösterir. İhtiyacınıza göre açıp kapatırsınız.</p>
         </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">FIND</div>
-            <div>
-              <b>Arama & Sorgu</b>
-              <p class="desc">Kayıtları dosya karıştırmadan bulun. “Adı/numarası/özelliği” ile saniyeler içinde ulaşın.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Hızlı arama: “Vana 14”, “Parsel 123”, “Abone 100245”</li>
-            <li>Akıllı filtre: mahalle, tarih aralığı, durum, tip, sorumlu ekip</li>
-            <li>Seçim listesinden toplu işlem (rapora dahil etme, görev atama gibi)</li>
-          </ul>
-          <div class="bfNote">Örnek: “Son 30 günde açılan arızalar” tek tıkla listelenir.</div>
+        <div class="panel">
+          <h3>2) Arama ve sorgu</h3>
+          <p>“Vana 14”, “Parsel 123”, “Arıza kaydı” gibi verileri saniyeler içinde bulur; filtrelerle doğru listeyi çıkarırsınız.</p>
         </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">EDIT</div>
-            <div>
-              <b>Veri Girişi & Güncelleme</b>
-              <p class="desc">Veri standart form ile girilir. Böylece sahada/ofiste herkes aynı dili konuşur.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Form alanları: tip, durum, tarih, açıklama, ekip, öncelik</li>
-            <li>Fotoğraf/ek dosya: tutanak, keşif, ölçü notu, görüntü</li>
-            <li>Geçmiş kayıt: kim değiştirdi, ne değişti (audit izi)</li>
-          </ul>
-          <div class="bfNote">Örnek: “Yanlış veri girilmiş” ise geriye dönük izlenebilir ve düzeltilir.</div>
+        <div class="panel">
+          <h3>3) Saha veri toplama</h3>
+          <p>Saha ekipleri konum + foto + form ile kayıt girer. Ofis anında görür. İnternet yoksa offline çalışıp sonra senkronlanır.</p>
         </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">FIELD</div>
-            <div>
-              <b>Saha Operasyonları</b>
-              <p class="desc">Saha ekibi, telefonda anlatmak yerine konumu işaretler, kaydı açar, foto ekler ve gönderir.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Offline kayıt: internet yokken veri topla, sonra senkronla</li>
-            <li>Konuma dayalı kayıt: nokta/hat/poligon çizimi</li>
-            <li>Denetim ve bakım checklist’i (standart kontrol listeleri)</li>
-          </ul>
-          <div class="bfNote">Örnek: Kaçak arama, bakım turu, saha denetimi gibi işlerde verim artar.</div>
+        <div class="panel">
+          <h3>4) İş emri ve süreç</h3>
+          <p>Kayıt açılır, ekip atanır, durum güncellenir, iş kapanış raporuyla tamamlanır. “Takipsiz iş” kalmaz.</p>
         </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">FLOW</div>
-            <div>
-              <b>İş Emri & Süreç Yönetimi</b>
-              <p class="desc">Kayıt açılır, sorumlu atanır, durum takip edilir, kapanış raporu ile iş tamamlanır.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Durumlar: Açık → İşlemde → Beklemede → Kapalı</li>
-            <li>SLA/ zaman takibi: “kaç saatte çözüldü?”</li>
-            <li>Kapanış: foto + açıklama + ölçüm/tespit</li>
-          </ul>
-          <div class="bfNote">Örnek: Vatandaş talebi veya arıza bildirimi net süreçle kapanır.</div>
+        <div class="panel">
+          <h3>5) Rapor ve yönetici ekranı</h3>
+          <p>Aylık arıza sayısı, kapanan iş emri, yoğun bölgeler gibi özet raporlar alınır. Kararlar veriye dayanır.</p>
         </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">REP</div>
-            <div>
-              <b>Raporlama & Karar Destek</b>
-              <p class="desc">Yöneticiler için “özet tablo + harita” en güçlü kombinasyondur. GeoBox bunu sağlar.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>KPI: aylık arıza sayısı, kapanan iş emri, ekip performansı</li>
-            <li>Yoğunluk haritası: sorunların toplandığı bölgeler</li>
-            <li>PDF/Excel çıktısı: meclis/sunum/dosyalama için</li>
-          </ul>
-          <div class="bfNote">Örnek: “Hangi mahalleye önce yatırım?” sorusu veriye bağlanır.</div>
-        </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">SEC</div>
-            <div>
-              <b>Yetki & Güvenlik</b>
-              <p class="desc">Herkes her şeyi görmesin. Kurumsal sistemin temeli rol bazlı yetkilendirmedir.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Rol: izleyici / editör / yönetici</li>
-            <li>Katman bazlı görünürlük ve işlem izni</li>
-            <li>Log ve denetim izi (audit)</li>
-          </ul>
-          <div class="bfNote">Örnek: Operasyon güvenliği artar, veri bütünlüğü korunur.</div>
-        </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">API</div>
-            <div>
-              <b>Entegrasyon & Kurumsal Uyum</b>
-              <p class="desc">GeoBox tek başına değil, kurumun diğer yazılımlarıyla birlikte çalışacak şekilde konumlanır.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>İş emri / CRM / ERP ile veri alışverişi</li>
-            <li>WMS/WFS/Tile yaklaşımı (harita servisleri)</li>
-            <li>Webhook/olay tetikleme: “kayıt açıldı → bildirim gönder”</li>
-          </ul>
-          <div class="bfNote">Örnek: Çağrı merkezi kaydı otomatik iş emrine dönüşebilir.</div>
-        </div>
-
-        <div class="bigFeature">
-          <div class="head">
-            <div class="bfIcon">FAST</div>
-            <div>
-              <b>Hızlı Kurulum & Ölçeklenebilirlik</b>
-              <p class="desc">Aynı altyapıyla farklı kurumlara hızlı kurulum yapılabilir: modüler yaklaşım.</p>
-            </div>
-          </div>
-          <ul class="bfList">
-            <li>Şablon veri modelleri (mezarlık, altyapı, imar vb.)</li>
-            <li>Kurum ihtiyaçlarına göre modül seçimi</li>
-            <li>Kullanıcı sayısı arttıkça ölçekleme</li>
-          </ul>
-          <div class="bfNote">Örnek: Pilot proje ile başlayıp kurum geneline yayabilirsiniz.</div>
+        <div class="panel">
+          <h3>6) Yetki ve güvenlik</h3>
+          <p>Kim neyi görür / değiştirir netleşir. Değişiklik geçmişi kayıt altındadır. Kurumsal kontrol sağlar.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ✅ Senaryolar: yöneticiye “hikaye” anlatır -->
-  <section id="senaryolar">
+  <section id="nasil">
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Kullanım senaryoları</h2>
-          <p class="sub">
-            GeoBox’ın değerini en iyi “senaryo” anlatır. Aşağıdaki örnekler, başkan/müdür/sahip için net resim verir.
-          </p>
+          <h2>Nasıl çalışır?</h2>
+          <p class="sub">GeoBox’ı ilk defa gören birinin 30 saniyede anlayacağı akış:</p>
         </div>
       </div>
 
-      <div class="grid3">
-        <div class="panel">
-          <h3>Senaryo 1 — Arıza yönetimi</h3>
-          <p>
-            Arıza kaydı açılır → konum haritada işaretlenir → en yakın ekipman (vana vb.) görülür → ekip atanır →
-            süreç takip edilir → kapanış raporu alınır.
-          </p>
-          <div class="fine"><b>Sonuç:</b> Daha hızlı müdahale, daha az telefon trafiği, net kapanış kayıtları.</div>
-        </div>
-
-        <div class="panel">
-          <h3>Senaryo 2 — Saha denetimi</h3>
-          <p>
-            Saha ekibi kontrol listesiyle gezer → foto ve not ekler → uygunsuzluk iş emrine dönüşür →
-            müdür panelden takip eder.
-          </p>
-          <div class="fine"><b>Sonuç:</b> Denetim standartlaşır, raporlaması kolaylaşır, izlenebilirlik artar.</div>
-        </div>
-
-        <div class="panel">
-          <h3>Senaryo 3 — Yatırım önceliği</h3>
-          <p>
-            Arıza yoğunluğu, bakım geçmişi ve hizmet şikayetleri haritada bir arada görülür →
-            “öncelikli bölge” belirlenir → yatırım planına girer.
-          </p>
-          <div class="fine"><b>Sonuç:</b> Kararlar hissiyatla değil veriye dayanarak alınır.</div>
-        </div>
+      <div class="steps">
+        <div class="step"><div class="n">01</div><b>Veri toplanır</b><span>Saha/office mevcut veriler sisteme alınır.</span></div>
+        <div class="step"><div class="n">02</div><b>Haritada görünür</b><span>Katmanlar oluşturulur, herkes aynı ekranda görür.</span></div>
+        <div class="step"><div class="n">03</div><b>İş emrine bağlanır</b><span>Arıza/denetim/görev süreçleri takip edilir.</span></div>
+        <div class="step"><div class="n">04</div><b>Raporlanır</b><span>Yönetici özetleri ve çıktılarla karar alınır.</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Demo -->
   <section id="demo">
     <div class="wrap">
       <div class="sectionHead">
         <div>
-          <h2>Canlı vitrin: GeoBox davranışlarını deneyin</h2>
-          <p class="sub">Temel işleri simüle eder: katman, arama, filtre, ölçüm, çıktı, senaryo.</p>
+          <h2>Demo</h2>
+          <p class="sub">Aşağıdaki küçük vitrin, GeoBox’ın davranışlarını simüle eder (yakınlaş, ölçüm, senaryo).</p>
         </div>
-        <div class="fine">Kısayol: <span class="kbd">/</span> ile arama</div>
+        <div class="fine">İpucu: Senaryo butonu “iş emri” akışını simüle eder.</div>
       </div>
 
-      <div class="demoSection">
-        <div class="panel">
-          <h3>Hızlı arama & öznitelik filtre</h3>
-          <p>Örn: “parsel 123”, “vana”, “abone”, “arıza”. (Simülasyon)</p>
-
-          <div class="row">
-            <input class="field" id="search" placeholder="Ara: parsel, vana, hat, abone..." autocomplete="off" />
-            <button class="btn primary" id="btnSearch">Ara</button>
-          </div>
-
-          <div class="switches" style="margin-top:14px;">
-            <div class="switch"><div><b>Doğalgaz Hatları</b><span>Polyline • işletme</span></div><div class="toggle on" data-layer="gas"></div></div>
-            <div class="switch"><div><b>Vana & Ekipman</b><span>Point • bakım</span></div><div class="toggle on" data-layer="valve"></div></div>
-            <div class="switch"><div><b>Parsel & İmar</b><span>Polygon • mülkiyet</span></div><div class="toggle on" data-layer="parcel"></div></div>
-            <div class="switch"><div><b>Arıza / İş Emri</b><span>Event • operasyon</span></div><div class="toggle" data-layer="work"></div></div>
-          </div>
-
-          <div class="log" id="log" aria-label="İşlem günlüğü"></div>
-        </div>
-
-        <div class="panel">
-          <h3>Demo kontrolleri</h3>
-          <p>Bu paneldeki butonlar, gerçek CBS uygulamalarındaki tipik aksiyonları temsil eder.</p>
-
-          <div class="row" style="margin-top:14px;">
-            <button class="btn" id="btnFly2">Uç (zoom)</button>
-            <button class="btn" id="btnMeasure2">Ölç</button>
-            <button class="btn" id="btnExport2">Dışa aktar</button>
-            <button class="btn primary" id="btnScenario2">Senaryo çalıştır</button>
-          </div>
-
-          <div class="row" style="margin-top:10px;">
-            <button class="btn primary" id="btnReset2">Demoyu sıfırla</button>
-            <button class="btn" id="btnCopy2">Log’u kopyala</button>
-          </div>
-
-          <div class="fine" style="margin-top:10px;">
-            İstersen bir sonraki adımda bu demoya gerçek harita + gerçek veri bağlarız.
-          </div>
-        </div>
+      <div class="card" style="padding:18px;">
+        <div class="fine">Bu bölüm üstteki vitrinle aynı demoyu kullanır. İstersen sonraki adımda gerçek veri bağlarız.</div>
       </div>
     </div>
   </section>
 
-  <!-- Mimari -->
-  <section id="mimari">
-    <div class="wrap">
-      <div class="sectionHead">
-        <div>
-          <h2>Mimari: kurumlara uygun kurulum yaklaşımı</h2>
-          <p class="sub">
-            GeoBox’ı “tek bir kurum” için de kurabiliriz, “aynı ürünü birden fazla kurumda” çoğaltılabilir şekilde de konumlandırabiliriz.
-            Bu bölüm, teknik detaya boğmadan mimari mantığı anlatır.
-          </p>
-        </div>
-      </div>
-
-      <div class="grid3">
-        <div class="panel">
-          <h3>1) Veri (DB) katmanı</h3>
-          <p>Kurumsal veriniz tek yerde tutulur. Versiyonlama, veri bütünlüğü ve yedekleme planı oluşturulur.</p>
-          <div class="fine"><b>Örnek:</b> Altyapı hatları, ekipman, abone, parsel, iş emri tabloları.</div>
-        </div>
-        <div class="panel">
-          <h3>2) Servis katmanı</h3>
-          <p>Harita servisleri ve API kapıları burada çalışır. Entegrasyonlar bu katman üzerinden yapılır.</p>
-          <div class="fine"><b>Örnek:</b> WMS/WFS/Tile + REST API.</div>
-        </div>
-        <div class="panel">
-          <h3>3) Uygulama (Web/Mobil)</h3>
-          <p>Kullanıcıların gördüğü ekranlar: harita, form, iş emri, rapor, yetki yönetimi.</p>
-          <div class="fine"><b>Örnek:</b> Ofis paneli + saha uygulaması + yönetici raporu.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- İletişim -->
   <section id="iletisim">
     <div class="wrap">
       <div class="cta">
         <div>
           <b>İletişime geçelim</b>
-          <p>
-            Kurumunuza uygun modülleri birlikte seçelim (altyapı / mezarlık / iş emri / saha).
-            20–30 dakikalık kısa bir demo ile “tam olarak ne alacağınızı” netleştirelim.
-          </p>
+          <p>20–30 dakikalık kısa bir demo ile kurumunuz için en doğru kurgu ve modülleri birlikte seçelim.</p>
           <div class="fine" style="margin-top:10px;">
             Telefon: <b>0850 309 0437</b> • WhatsApp: <b>0540 043 65 63</b>
           </div>
         </div>
 
-        <div class="row">
-          <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Merhaba%2C%0A%0AKurumumuz%20i%C3%A7in%20GeoBox%20demo%20talep%20ediyoruz.%0A%0AAd%2FSoyad%3A%0AKurum%3A%0ATelefon%3A%0AKullan%C4%B1m%20alan%C4%B1%3A%0A">E-posta</a>
-          <a class="btn" href="tel:08503090437">Ara (0850)</a>
-          <a class="btn whatsapp" href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
-             target="_blank" rel="noopener">WhatsApp</a>
-          <a class="btn" href="#top">Başa dön</a>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Merhaba%2C%0A%0AKurumumuz%20i%C3%A7in%20GeoBox%20demo%20talep%20ediyoruz.%0A%0AAd%2FSoyad%3A%0AKurum%3A%0ATelefon%3A%0A">E-posta</a>
+          <a class="btn" href="tel:08503090437">Ara</a>
+          <a class="btn whatsapp" target="_blank" rel="noopener"
+             href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.">WhatsApp</a>
         </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+    <div class="wrap" style="display:flex; justify-content:space-between; gap:12px; align-items:center; padding:22px 0;">
       <div class="fine">© <span id="year"></span> GeoBox • GeoKod Geospatial</div>
-      <div class="links">
-        <a href="#ozellikler">Özellikler</a>
-        <a href="#demo">Demo</a>
-        <a href="#iletisim">İletişim</a>
-      </div>
+      <div class="fine"><a href="#top">Başa dön</a></div>
     </div>
   </footer>
 
   <script>
     const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
 
-    // Year
     $("#year").textContent = new Date().getFullYear();
 
     // Theme toggle
@@ -1116,25 +611,15 @@
     $("#btnTheme").addEventListener("click", () => {
       theme = (theme === "light") ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", theme);
-      log(theme === "light" ? "Açık tema etkin." : "Koyu tema etkin.", "ok");
+      log(theme === "light" ? "Açık tema" : "Koyu tema", "ok");
     });
 
-    // Mobile menu
-    const mobileMenu = $("#mobileMenu");
-    $("#btnMenu").addEventListener("click", () => {
-      const open = mobileMenu.style.display === "block";
-      mobileMenu.style.display = open ? "none" : "block";
-    });
-    $$("#mobileMenu a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
-
-    // ✅ Smooth scroll with controlled speed (simülasyonlu his)
+    // Smooth scroll (hız kontrollü)
     function easeInOutCubic(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; }
     function getHeaderOffset(){
       const topbar = document.getElementById("topbar");
       return topbar ? topbar.getBoundingClientRect().height + 10 : 80;
     }
-    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     function smoothScrollTo(targetY, duration=820){
       const startY = window.scrollY;
       const delta = targetY - startY;
@@ -1146,7 +631,6 @@
       }
       requestAnimationFrame(step);
     }
-
     document.addEventListener("click", (e) => {
       const a = e.target.closest('a[href^="#"]');
       if(!a) return;
@@ -1154,164 +638,55 @@
       if(!id || id === "#") return;
       const el = document.querySelector(id);
       if(!el) return;
-
       e.preventDefault();
-      mobileMenu.style.display = "none";
-
       const y = el.getBoundingClientRect().top + window.scrollY - getHeaderOffset();
-      if(reduceMotion) window.scrollTo(0, y);
-      else smoothScrollTo(y, 860);
+      smoothScrollTo(y, 860);
     });
 
-    // Demo logger
+    // Demo logic (sade)
     const logEl = $("#log");
     function log(msg, type="info"){
-      if(!logEl) return;
       const ts = new Date().toLocaleTimeString("tr-TR", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
-      const badge = type==="ok" ? "✓" : type==="warn" ? "!" : type==="bad" ? "×" : "•";
+      const badge = type==="ok" ? "✓" : type==="warn" ? "!" : "•";
       logEl.textContent += `[${ts}] ${badge} ${msg}\n`;
       logEl.scrollTop = logEl.scrollHeight;
     }
 
-    // Demo init
-    log("GeoBox Showcase başlatıldı. Katmanlar aktif.", "ok");
-    log("İpucu: / tuşu ile arama alanına odaklan.", "info");
+    const hudBadge = $("#hudBadge");
+    log("GeoBox demo hazır.", "ok");
 
-    const layerState = { gas:true, valve:true, parcel:true, work:false };
-
-    function updateHUD(){
-      const onCount = Object.values(layerState).filter(Boolean).length;
-      $("#hudTitle").textContent = `Katmanlar: ${onCount} açık`;
-      $("#hudBadge").textContent = layerState.work ? "İş Emri: Açık" : "Sorgu: Hazır";
-    }
-    updateHUD();
-
-    $$(".toggle").forEach(t => {
-      t.addEventListener("click", () => {
-        const key = t.dataset.layer;
-        layerState[key] = !layerState[key];
-        t.classList.toggle("on", layerState[key]);
-        log(`${key} katmanı ${layerState[key] ? "açıldı" : "kapatıldı"}.`, "ok");
-        updateHUD();
-      });
-    });
-
-    const fakeIndex = [
-      {id:"PRS-00123", name:"Parsel 123", layer:"parcel", note:"İmar durumu: Konut", x:28, y:38},
-      {id:"VNA-014", name:"Vana 14", layer:"valve", note:"Son bakım: 2025-11", x:62, y:44},
-      {id:"HAT-A12", name:"Hat A12", layer:"gas", note:"Çap: 90mm PE", x:45, y:72},
-      {id:"WRK-88", name:"İş Emri 88", layer:"work", note:"Arıza bildirimi", x:52, y:58},
-    ];
-
-    function focusPin(x, y){
-      const map = $("#miniMap");
-      const p = document.createElement("div");
-      p.className = "pin";
-      p.style.left = x + "%";
-      p.style.top = y + "%";
-      p.style.opacity = "0.95";
-      map.appendChild(p);
-      setTimeout(()=>{ p.style.transition="opacity .35s ease"; p.style.opacity="0"; }, 900);
-      setTimeout(()=>{ p.remove(); }, 1400);
-    }
-
-    function doSearch(){
-      const q = $("#search").value.trim().toLowerCase();
-      if(!q){ log("Arama boş. Örn: parsel, vana, 123, iş emri", "warn"); return; }
-
-      log(`Aranıyor: "${q}" ...`, "info");
-      const hit = fakeIndex.find(x =>
-        x.id.toLowerCase().includes(q) || x.name.toLowerCase().includes(q) || x.note.toLowerCase().includes(q)
-      );
-
-      if(!hit){ log("Sonuç bulunamadı. (Simülasyon veri seti sınırlı)", "warn"); return; }
-      if(!layerState[hit.layer]){
-        log(`Sonuç bulundu ama "${hit.layer}" katmanı kapalı. Katmanı açıp tekrar deneyin.`, "warn");
-        return;
-      }
-
-      log(`Bulundu: ${hit.id} — ${hit.name} • ${hit.note}`, "ok");
-      focusPin(hit.x, hit.y);
-      $("#hudBadge").textContent = `Seçim: ${hit.id}`;
-    }
-
-    // Bind buttons (hero + demo panel duplicates)
-    function bind(id, fn){ const el = document.getElementById(id); if(el) el.addEventListener("click", fn); }
-
-    bind("btnSearch", doSearch);
-    $("#search").addEventListener("keydown", (e)=>{ if(e.key==="Enter") doSearch(); });
-
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "/" && document.activeElement !== $("#search")){
-        e.preventDefault();
-        $("#search").focus();
-      }
-    });
-
-    function fly(){
+    $("#btnFly").addEventListener("click", () => {
       const m = $("#miniMap");
       m.style.transition = "transform .35s ease";
       m.style.transform = "scale(1.03)";
-      log("Harita zoom simülasyonu (fly-to).", "ok");
-      setTimeout(()=> m.style.transform="scale(1)", 400);
-    }
-    function measure(){
-      log("Ölçüm modu: 2 nokta seçildi → 184.6 m (simülasyon).", "ok");
-      $("#hudBadge").textContent = "Ölçüm: 184.6 m";
-    }
-    function exportData(){
-      log("Dışa aktar: Seçimler CSV/GeoJSON olarak indirilebilir (simülasyon).", "ok");
-      $("#hudBadge").textContent = "Çıktı: Hazır";
-    }
+      hudBadge.textContent = "Yakınlaştı";
+      log("Yakınlaşma (zoom) simülasyonu.", "ok");
+      setTimeout(()=> m.style.transform="scale(1)", 420);
+    });
+
+    $("#btnMeasure").addEventListener("click", () => {
+      hudBadge.textContent = "Ölçüm: 184.6 m";
+      log("Ölçüm: 2 nokta → 184.6 m (simülasyon).", "ok");
+    });
 
     function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
-
-    async function scenario(){
-      log("Senaryo: Arıza yönetimi", "info");
+    $("#btnScenario").addEventListener("click", async () => {
+      hudBadge.textContent = "Senaryo";
+      log("Senaryo: Arıza yönetimi başladı.", "ok");
       await sleep(450);
-      layerState.work = true;
-      const t = document.querySelector(`.toggle[data-layer="work"]`);
-      if(t) t.classList.add("on");
-      log("İş Emri katmanı açıldı.", "ok");
-      updateHUD();
-      await sleep(500);
-      log("Arıza lokasyonu alındı → en yakın vana hesaplanıyor...", "info");
-      await sleep(650);
-      log("En yakın vana: VNA-014 (mesafe ~92m).", "ok");
-      focusPin(62,44);
-      await sleep(650);
-      log("Görev oluşturuldu → mobil ekibe iletildi (simülasyon).", "ok");
-      $("#hudBadge").textContent = "Arıza: Yönetiliyor";
-    }
+      log("Arıza lokasyonu alındı.", "ok");
+      await sleep(600);
+      log("En yakın vana bulundu (simülasyon).", "ok");
+      await sleep(600);
+      log("İş emri oluşturuldu ve ekibe atandı.", "ok");
+      hudBadge.textContent = "İş emri: Açık";
+    });
 
-    function resetDemo(){
-      layerState.gas=true; layerState.valve=true; layerState.parcel=true; layerState.work=false;
-      document.querySelectorAll(".toggle").forEach(t=>{
-        const key=t.dataset.layer;
-        t.classList.toggle("on", !!layerState[key]);
-      });
-      $("#hudBadge").textContent = "Sorgu: Hazır";
-      $("#search").value="";
-      logEl.textContent="";
+    $("#btnReset").addEventListener("click", () => {
+      hudBadge.textContent = "Hazır";
+      logEl.textContent = "";
       log("Demo sıfırlandı.", "ok");
-      updateHUD();
-    }
-
-    async function copyLog(){
-      try{
-        await navigator.clipboard.writeText(logEl.textContent || "");
-        log("Log panosu kopyalandı.", "ok");
-      }catch{
-        log("Kopyalama başarısız. Tarayıcı izinleri engellemiş olabilir.", "warn");
-      }
-    }
-
-    bind("btnFly", fly); bind("btnFly2", fly);
-    bind("btnMeasure", measure); bind("btnMeasure2", measure);
-    bind("btnExport", exportData); bind("btnExport2", exportData);
-    bind("btnScenario", scenario); bind("btnScenario2", scenario);
-    bind("btnReset", resetDemo); bind("btnReset2", resetDemo);
-    bind("btnCopy", copyLog); bind("btnCopy2", copyLog);
+    });
   </script>
 </body>
 </html>
