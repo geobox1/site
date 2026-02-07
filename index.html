@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#f6f7ff" />
 
   <title>GeoBox — Web Tabanlı CBS Platformu</title>
   <meta name="description" content="GeoBox ile belediyeler, altyapı işletmeleri ve mühendislik ekipleri için modern, hızlı ve güvenli web tabanlı CBS. Katmanlar, sorgu, analiz, saha senkronizasyonu ve daha fazlası." />
@@ -15,31 +15,22 @@
 
   <style>
     :root{
-      --bg:#070a14;
-      --panel:#0b1020;
-      --panel2:#0f1733;
-
-      /* OKUNURLUK için kontrast arttırıldı */
-      --text:#eef3ff;
-      --muted:rgba(233,243,255,.80);   /* önceki çok soluktu */
-      --muted2:rgba(233,243,255,.66);  /* yardımcı metin */
-      --line:rgba(255,255,255,.12);
-      --shadow:0 18px 50px rgba(0,0,0,.35);
+      /* Temel tipografi */
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 
       --radius:18px;
       --radius2:26px;
       --max:1160px;
 
-      --a:#66e3ff;
-      --b:#7c6cff;
-      --c:#55ffb4;
-
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      /* Aksan renkler */
+      --a:#1bb7ff;
+      --b:#6c5cff;
+      --c:#21d39b;
     }
 
-    /* Light theme tokenları */
-    [data-theme="light"]{
+    /* LIGHT (varsayılan) */
+    html[data-theme="light"]{
       --bg:#f6f7ff;
       --panel:#ffffff;
       --panel2:#f2f4ff;
@@ -50,6 +41,18 @@
       --shadow:0 18px 50px rgba(11,16,32,.10);
     }
 
+    /* DARK */
+    html[data-theme="dark"]{
+      --bg:#070a14;
+      --panel:#0b1020;
+      --panel2:#0f1733;
+      --text:#eef3ff;
+      --muted:rgba(233,243,255,.80);
+      --muted2:rgba(233,243,255,.66);
+      --line:rgba(255,255,255,.12);
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -58,15 +61,10 @@
       font-family:var(--sans);
       line-height:1.45;
       background:
-        radial-gradient(1200px 800px at 15% 5%, rgba(124,108,255,.20), transparent 60%),
-        radial-gradient(900px 700px at 80% 20%, rgba(102,227,255,.14), transparent 60%),
-        radial-gradient(800px 600px at 60% 85%, rgba(85,255,180,.10), transparent 55%),
-        linear-gradient(180deg, #050714, #060918 60%, #050714);
-    }
-
-    /* Light temada arkaplan */
-    [data-theme="light"] body{
-      background: linear-gradient(180deg, #f6f7ff, #f2f4ff 55%, #f6f7ff);
+        radial-gradient(1200px 800px at 15% 5%, rgba(108,92,255,.12), transparent 60%),
+        radial-gradient(900px 700px at 80% 20%, rgba(27,183,255,.10), transparent 60%),
+        radial-gradient(800px 600px at 60% 85%, rgba(33,211,155,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--panel2) 55%, var(--bg));
     }
 
     a{color:inherit; text-decoration:none}
@@ -76,11 +74,8 @@
     .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background:rgba(7,10,20,.65);
+      background: color-mix(in oklab, var(--panel) 70%, transparent);
       border-bottom:1px solid var(--line);
-    }
-    [data-theme="light"] .topbar{
-      background:rgba(255,255,255,.72);
     }
 
     .nav{
@@ -89,16 +84,26 @@
       gap:14px;
     }
 
-    .brand{display:flex; align-items:center; gap:10px; min-width: 180px;}
-    .logo{
-      width:34px; height:34px; border-radius:10px;
-      background:
-        radial-gradient(12px 12px at 30% 30%, rgba(102,227,255,.95), transparent 60%),
-        radial-gradient(14px 14px at 70% 35%, rgba(124,108,255,.95), transparent 60%),
-        radial-gradient(14px 14px at 55% 75%, rgba(85,255,180,.95), transparent 60%),
-        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.02));
-      border:1px solid rgba(255,255,255,.18);
-      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    /* LOGO: repo'daki geobox-logo.png */
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width: 180px;
+    }
+    .brandLogo{
+      width:36px; height:36px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      padding:6px;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 14px 40px rgba(0,0,0,.10);
+      overflow:hidden;
+    }
+    .brandLogo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
     }
     .brand b{font-size:15px; letter-spacing:.2px}
     .brand small{display:block; color:var(--muted2); font-size:11px; margin-top:1px}
@@ -110,20 +115,19 @@
     }
     .menu a{
       font-size:13px;
-      color:rgba(233,243,255,.92);
+      color:color-mix(in oklab, var(--text) 85%, transparent);
       padding:8px 10px;
       border-radius:12px;
       border:1px solid transparent;
     }
     .menu a:hover{
-      border-color:rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);
+      border-color:var(--line);
+      background: color-mix(in oklab, var(--panel2) 65%, transparent);
     }
-    [data-theme="light"] .menu a{color:rgba(11,16,32,.82)}
-    [data-theme="light"] .menu a:hover{border-color:rgba(11,16,32,.14); background:rgba(11,16,32,.05)}
 
     .actions{
-      display:flex; gap:10px; align-items:center; justify-content:flex-end; min-width: 180px;
+      display:flex; gap:10px; align-items:center; justify-content:flex-end;
+      min-width: 180px;
     }
 
     .btn{
@@ -132,32 +136,33 @@
       padding:10px 12px;
       font-size:13px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
       cursor:pointer;
       user-select:none;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
       white-space:nowrap;
       color:inherit;
     }
-    .btn:hover{transform: translateY(-1px); border-color:rgba(255,255,255,.26); background:rgba(255,255,255,.08)}
-    .btn.primary{
-      border-color:rgba(102,227,255,.30);
-      background: linear-gradient(135deg, rgba(102,227,255,.20), rgba(124,108,255,.16));
+    .btn:hover{
+      transform: translateY(-1px);
+      background: color-mix(in oklab, var(--panel2) 75%, transparent);
+      border-color: color-mix(in oklab, var(--line) 120%, transparent);
     }
-    .btn.primary:hover{border-color:rgba(102,227,255,.50)}
 
-    [data-theme="light"] .btn{
-      border-color:rgba(11,16,32,.14);
-      background:rgba(11,16,32,.05);
+    .btn.primary{
+      border-color: color-mix(in oklab, var(--a) 35%, var(--line));
+      background: linear-gradient(135deg, color-mix(in oklab, var(--a) 22%, transparent),
+                                         color-mix(in oklab, var(--b) 16%, transparent));
     }
-    [data-theme="light"] .btn:hover{
-      border-color:rgba(11,16,32,.22);
-      background:rgba(11,16,32,.07);
+    .btn.primary:hover{
+      border-color: color-mix(in oklab, var(--a) 55%, var(--line));
     }
-    [data-theme="light"] .btn.primary{
-      border-color:rgba(11,16,32,.14);
-      background: linear-gradient(135deg, rgba(102,227,255,.20), rgba(124,108,255,.16));
+
+    .btn.whatsapp{
+      border-color: color-mix(in oklab, var(--c) 38%, var(--line));
+      background: linear-gradient(135deg, color-mix(in oklab, var(--c) 20%, transparent),
+                                         color-mix(in oklab, var(--a) 10%, transparent));
     }
 
     .kbd{
@@ -165,43 +170,32 @@
       font-size:11px;
       padding:2px 6px;
       border-radius:8px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.18);
-      color:rgba(233,243,255,.86);
-    }
-    [data-theme="light"] .kbd{
-      border-color:rgba(11,16,32,.14);
-      background:rgba(11,16,32,.06);
-      color:rgba(11,16,32,.78);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 60%, transparent);
+      color:color-mix(in oklab, var(--text) 85%, transparent);
     }
 
-    /* ---- MOBIL MENÜ ---- */
+    /* Mobil menü */
     .hamburger{
       display:none;
       width:42px; height:40px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
       align-items:center; justify-content:center;
       cursor:pointer;
     }
     .hamburger i{
-      width:18px; height:2px; background:rgba(233,243,255,.90);
+      width:18px; height:2px; background: color-mix(in oklab, var(--text) 75%, transparent);
       display:block; position:relative; border-radius:99px;
     }
     .hamburger i::before,.hamburger i::after{
       content:""; position:absolute; left:0;
-      width:18px; height:2px; background:rgba(233,243,255,.90);
+      width:18px; height:2px; background: color-mix(in oklab, var(--text) 75%, transparent);
       border-radius:99px;
     }
     .hamburger i::before{top:-6px}
     .hamburger i::after{top:6px}
-    [data-theme="light"] .hamburger{border-color:rgba(11,16,32,.14); background:rgba(11,16,32,.05)}
-    [data-theme="light"] .hamburger i,
-    [data-theme="light"] .hamburger i::before,
-    [data-theme="light"] .hamburger i::after{
-      background:rgba(11,16,32,.78);
-    }
 
     .mobileMenu{
       display:none;
@@ -212,55 +206,42 @@
       display:block;
       padding:12px 10px;
       border-radius:14px;
-      color:rgba(233,243,255,.92);
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
       margin-top:10px;
+      color:color-mix(in oklab, var(--text) 85%, transparent);
     }
-    .mobileMenu a:hover{background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.18)}
-    [data-theme="light"] .mobileMenu a{
-      color:rgba(11,16,32,.82);
-      border-color:rgba(11,16,32,.10);
-      background:rgba(11,16,32,.03);
+    .mobileMenu a:hover{
+      background: color-mix(in oklab, var(--panel2) 75%, transparent);
     }
 
-    /* ---- HERO ---- */
+    /* Hero */
     header.hero{padding:56px 0 26px}
     .heroGrid{display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; align-items:stretch;}
 
     .card{
       border:1px solid var(--line);
       border-radius:var(--radius2);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 95%, transparent),
+                                         color-mix(in oklab, var(--panel2) 85%, transparent));
       box-shadow: var(--shadow);
     }
-    [data-theme="light"] .card{
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.92));
-    }
-
     .heroLeft{padding:28px}
     .tagline{
       display:inline-flex; align-items:center; gap:10px;
       padding:8px 12px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.05);
-      color:rgba(233,243,255,.92);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
+      color:color-mix(in oklab, var(--text) 85%, transparent);
       font-size:12px;
       margin-bottom:16px;
     }
-    [data-theme="light"] .tagline{
-      border-color:rgba(11,16,32,.12);
-      background:rgba(11,16,32,.04);
-      color:rgba(11,16,32,.78);
-    }
-
     .dot{
       width:8px; height:8px; border-radius:99px;
       background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
-      box-shadow: 0 0 18px rgba(102,227,255,.35);
+      box-shadow: 0 0 18px color-mix(in oklab, var(--a) 30%, transparent);
     }
-
     h1{
       margin:0 0 12px;
       font-size:42px;
@@ -269,13 +250,12 @@
     }
     .lead{
       margin:0 0 18px;
-      color:rgba(233,243,255,.86); /* okunurluk arttı */
+      color:color-mix(in oklab, var(--text) 80%, transparent);
       font-size:15px;
       max-width: 62ch;
     }
-    [data-theme="light"] .lead{color:rgba(11,16,32,.76)}
-
     .fine{font-size:12px; color:var(--muted2)}
+
     .heroBullets{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -286,18 +266,14 @@
       display:flex; gap:10px; align-items:flex-start;
       padding:10px 12px;
       border-radius:16px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-    }
-    [data-theme="light"] .pill{
-      background:rgba(11,16,32,.03);
-      border-color:rgba(11,16,32,.10);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
     }
     .pill i{
       width:10px; height:10px; border-radius:99px;
       margin-top:4px;
       background: radial-gradient(circle at 30% 30%, var(--c), var(--a));
-      box-shadow: 0 0 18px rgba(85,255,180,.22);
+      box-shadow: 0 0 18px color-mix(in oklab, var(--c) 30%, transparent);
       flex:0 0 auto;
     }
     .pill b{display:block; font-size:13px}
@@ -306,121 +282,88 @@
     .heroRight{padding:18px}
     .demoFrame{
       border-radius:22px;
-      border:1px solid rgba(255,255,255,.14);
+      border:1px solid var(--line);
       overflow:hidden;
-      background: linear-gradient(180deg, rgba(15,23,51,.92), rgba(11,16,32,.92));
-    }
-    [data-theme="light"] .demoFrame{
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(242,244,255,1));
-      border-color:rgba(11,16,32,.10);
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--panel) 95%, transparent),
+        color-mix(in oklab, var(--panel2) 85%, transparent)
+      );
     }
     .demoTop{
       display:flex; align-items:center; justify-content:space-between;
       padding:10px 12px;
-      border-bottom:1px solid rgba(255,255,255,.12);
-      color:rgba(233,243,255,.86);
+      border-bottom:1px solid var(--line);
+      color:var(--muted);
       font-size:12px;
-    }
-    [data-theme="light"] .demoTop{
-      color:rgba(11,16,32,.74);
-      border-bottom-color:rgba(11,16,32,.10);
     }
     .dots{display:flex; gap:6px; align-items:center}
     .dots span{
       width:10px; height:10px; border-radius:99px;
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.10);
+      background: color-mix(in oklab, var(--text) 12%, transparent);
+      border:1px solid var(--line);
     }
-    [data-theme="light"] .dots span{background:rgba(11,16,32,.10); border-color:rgba(11,16,32,.10)}
-
     .demoBody{padding:12px}
+
     .miniMap{
       height:280px;
       border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid var(--line);
       background:
-        radial-gradient(400px 240px at 30% 35%, rgba(102,227,255,.15), transparent 60%),
-        radial-gradient(420px 260px at 70% 45%, rgba(124,108,255,.14), transparent 60%),
-        radial-gradient(520px 320px at 45% 78%, rgba(85,255,180,.10), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.32), rgba(0,0,0,.18));
+        radial-gradient(400px 240px at 30% 35%, rgba(27,183,255,.16), transparent 60%),
+        radial-gradient(420px 260px at 70% 45%, rgba(108,92,255,.14), transparent 60%),
+        radial-gradient(520px 320px at 45% 78%, rgba(33,211,155,.12), transparent 60%),
+        linear-gradient(180deg, color-mix(in oklab, var(--panel2) 50%, transparent),
+                               color-mix(in oklab, var(--panel) 40%, transparent));
       position:relative;
       overflow:hidden;
     }
-    [data-theme="light"] .miniMap{
-      border-color:rgba(11,16,32,.10);
-      background:
-        radial-gradient(400px 240px at 30% 35%, rgba(102,227,255,.16), transparent 60%),
-        radial-gradient(420px 260px at 70% 45%, rgba(124,108,255,.14), transparent 60%),
-        radial-gradient(520px 320px at 45% 78%, rgba(85,255,180,.12), transparent 60%),
-        linear-gradient(180deg, rgba(11,16,32,.06), rgba(11,16,32,.02));
-    }
-
     .gridlines{
       position:absolute; inset:-40px;
       background-image:
-        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+        linear-gradient(color-mix(in oklab, var(--text) 10%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in oklab, var(--text) 10%, transparent) 1px, transparent 1px);
       background-size: 44px 44px;
       transform: rotate(8deg);
-      opacity:.50;
+      opacity:.40;
       pointer-events:none;
     }
-    [data-theme="light"] .gridlines{
-      background-image:
-        linear-gradient(rgba(11,16,32,.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(11,16,32,.10) 1px, transparent 1px);
-      opacity:.40;
-    }
-
     .pin{
       position:absolute;
       width:14px; height:14px;
       border-radius:99px;
       transform: translate(-50%,-50%);
-      border:1px solid rgba(255,255,255,.24);
+      border:1px solid var(--line);
       background: radial-gradient(circle at 30% 30%, var(--a), var(--b));
-      box-shadow: 0 12px 30px rgba(102,227,255,.18);
+      box-shadow: 0 12px 30px rgba(27,183,255,.18);
     }
     .pin::after{
       content:"";
       position:absolute;
       inset:-12px;
       border-radius:99px;
-      border:1px solid rgba(102,227,255,.22);
+      border:1px solid rgba(27,183,255,.20);
       opacity:.65;
     }
-
     .mapHud{
       position:absolute; left:10px; top:10px;
       display:flex; gap:8px; align-items:center;
       padding:8px 10px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.32);
-      color:rgba(233,243,255,.90);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
+      color:color-mix(in oklab, var(--text) 85%, transparent);
       font-size:12px;
       backdrop-filter: blur(8px);
-    }
-    [data-theme="light"] .mapHud{
-      background:rgba(255,255,255,.72);
-      color:rgba(11,16,32,.82);
-      border-color:rgba(11,16,32,.12);
     }
     .mapHud .badge{
       padding:2px 8px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 60%, transparent);
       font-size:11px;
-      color:rgba(233,243,255,.88);
-    }
-    [data-theme="light"] .mapHud .badge{
-      border-color:rgba(11,16,32,.12);
-      background:rgba(11,16,32,.05);
-      color:rgba(11,16,32,.74);
+      color:color-mix(in oklab, var(--text) 80%, transparent);
     }
 
-    /* ---- SECTIONS ---- */
     section{padding:42px 0}
     .sectionHead{
       display:flex; align-items:flex-end; justify-content:space-between;
@@ -433,32 +376,27 @@
       display:grid; gap:14px;
       grid-template-columns: repeat(3, 1fr);
     }
-
     .feature{
       padding:16px;
       border-radius:var(--radius);
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      background: color-mix(in oklab, var(--panel) 92%, transparent);
       min-height: 170px;
+      box-shadow: var(--shadow);
     }
-    [data-theme="light"] .feature{background:rgba(11,16,32,.03)}
     .feature .icon{
       width:38px; height:38px; border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(135deg, rgba(102,227,255,.14), rgba(124,108,255,.10));
+      border:1px solid var(--line);
+      background: linear-gradient(135deg, rgba(27,183,255,.12), rgba(108,92,255,.10));
       display:flex; align-items:center; justify-content:center;
       margin-bottom:10px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.25);
       font-family: var(--mono);
       font-size: 12px;
-      color: rgba(233,243,255,.88);
+      color: color-mix(in oklab, var(--text) 80%, transparent);
     }
-    [data-theme="light"] .feature .icon{border-color:rgba(11,16,32,.12); color:rgba(11,16,32,.74)}
     .feature b{display:block; font-size:14px; margin-bottom:6px}
-    .feature p{margin:0; color:rgba(233,243,255,.82); font-size:13px}
-    [data-theme="light"] .feature p{color:rgba(11,16,32,.72)}
-    .feature ul{margin:10px 0 0; padding-left:16px; color:rgba(233,243,255,.78); font-size:12px}
-    [data-theme="light"] .feature ul{color:rgba(11,16,32,.70)}
+    .feature p{margin:0; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px}
+    .feature ul{margin:10px 0 0; padding-left:16px; color:var(--muted2); font-size:12px}
     .feature li{margin:4px 0}
 
     .demoSection{
@@ -471,48 +409,42 @@
       padding:16px;
       border-radius:var(--radius2);
       border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background: linear-gradient(180deg,
+        color-mix(in oklab, var(--panel) 95%, transparent),
+        color-mix(in oklab, var(--panel2) 85%, transparent)
+      );
       box-shadow: var(--shadow);
     }
-    [data-theme="light"] .panel{background: linear-gradient(180deg, rgba(255,255,255,1), rgba(242,244,255,1))}
     .panel h3{margin:0 0 10px; font-size:16px}
-    .panel p{margin:0 0 12px; color:rgba(233,243,255,.84); font-size:13px}
-    [data-theme="light"] .panel p{color:rgba(11,16,32,.72)}
+    .panel p{margin:0 0 12px; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px}
 
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
     .field{
       flex:1 1 220px;
       padding:10px 12px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.18);
-      color:rgba(233,243,255,.92);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
+      color:color-mix(in oklab, var(--text) 85%, transparent);
       outline:none;
     }
-    [data-theme="light"] .field{
-      border-color:rgba(11,16,32,.12);
-      background:rgba(11,16,32,.04);
-      color:rgba(11,16,32,.84);
-    }
-    .field::placeholder{color:rgba(233,243,255,.62)}
-    [data-theme="light"] .field::placeholder{color:rgba(11,16,32,.50)}
+    .field::placeholder{color:var(--muted2)}
 
     .switches{display:grid; gap:10px; margin-top:12px}
     .switch{
       display:flex; align-items:center; justify-content:space-between;
       padding:10px 12px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
     }
-    [data-theme="light"] .switch{border-color:rgba(11,16,32,.10); background:rgba(11,16,32,.03)}
     .switch b{font-size:13px}
     .switch span{font-size:12px; color:var(--muted2)}
     .toggle{
       width:44px; height:26px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 80%, transparent);
       position:relative;
       cursor:pointer;
       flex:0 0 auto;
@@ -523,35 +455,28 @@
       width:20px; height:20px;
       border-radius:99px;
       left:3px; top:2px;
-      background: rgba(233,243,255,.92);
-      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+      background: color-mix(in oklab, var(--text) 80%, transparent);
+      box-shadow: 0 10px 20px rgba(0,0,0,.18);
       transition: transform .18s ease;
     }
     .toggle.on{
-      background: linear-gradient(135deg, rgba(102,227,255,.22), rgba(124,108,255,.16));
-      border-color:rgba(102,227,255,.34);
+      background: linear-gradient(135deg, rgba(27,183,255,.22), rgba(108,92,255,.16));
+      border-color: color-mix(in oklab, var(--a) 30%, var(--line));
     }
     .toggle.on::after{transform: translateX(18px)}
-    [data-theme="light"] .toggle{border-color:rgba(11,16,32,.12); background:rgba(11,16,32,.04)}
-    [data-theme="light"] .toggle::after{background:rgba(11,16,32,.72)}
 
     .log{
       margin-top:12px;
       border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.22);
+      border:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel) 85%, transparent);
       padding:12px;
       font-family:var(--mono);
       font-size:12px;
-      color:rgba(233,243,255,.86);
+      color:color-mix(in oklab, var(--text) 80%, transparent);
       height: 160px;
       overflow:auto;
       white-space:pre-wrap;
-    }
-    [data-theme="light"] .log{
-      border-color:rgba(11,16,32,.10);
-      background:rgba(11,16,32,.04);
-      color:rgba(11,16,32,.78);
     }
 
     .usecases{
@@ -563,22 +488,22 @@
     .list{display:grid; gap:10px; margin-top:10px}
     .item{
       padding:12px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid var(--line);
       border-radius:16px;
-      background:rgba(0,0,0,.18);
+      background: color-mix(in oklab, var(--panel2) 55%, transparent);
     }
-    [data-theme="light"] .item{border-color:rgba(11,16,32,.10); background:rgba(11,16,32,.03)}
     .item b{display:block; font-size:13px}
     .item span{display:block; font-size:12px; color:var(--muted2); margin-top:3px}
 
     .cta{
       padding:26px;
       border-radius:var(--radius2);
-      border:1px solid rgba(255,255,255,.16);
+      border:1px solid var(--line);
       background:
-        radial-gradient(600px 280px at 20% 40%, rgba(102,227,255,.16), transparent 60%),
-        radial-gradient(640px 300px at 85% 55%, rgba(124,108,255,.14), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+        radial-gradient(600px 280px at 20% 40%, rgba(27,183,255,.14), transparent 60%),
+        radial-gradient(640px 300px at 85% 55%, rgba(108,92,255,.12), transparent 60%),
+        linear-gradient(180deg, color-mix(in oklab, var(--panel) 95%, transparent),
+                               color-mix(in oklab, var(--panel2) 85%, transparent));
       box-shadow: var(--shadow);
       display:flex;
       gap:16px;
@@ -586,20 +511,14 @@
       justify-content:space-between;
       flex-wrap:wrap;
     }
-    [data-theme="light"] .cta{
-      border-color:rgba(11,16,32,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(242,244,255,1));
-    }
     .cta b{font-size:18px}
-    .cta p{margin:6px 0 0; color:rgba(233,243,255,.84); font-size:13px; max-width:70ch}
-    [data-theme="light"] .cta p{color:rgba(11,16,32,.72)}
+    .cta p{margin:6px 0 0; color:color-mix(in oklab, var(--text) 78%, transparent); font-size:13px; max-width:70ch}
 
     footer{
       padding:26px 0 42px;
-      border-top:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.12);
+      border-top:1px solid var(--line);
+      background: color-mix(in oklab, var(--panel2) 35%, transparent);
     }
-    [data-theme="light"] footer{background:rgba(11,16,32,.03); border-top-color:rgba(11,16,32,.10)}
     footer .fgrid{
       display:grid;
       grid-template-columns: 1fr auto;
@@ -609,16 +528,17 @@
     .links{display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end}
     .links a{
       font-size:12px;
-      color:rgba(233,243,255,.84);
+      color:color-mix(in oklab, var(--text) 70%, transparent);
       padding:6px 8px;
       border-radius:12px;
       border:1px solid transparent
     }
-    .links a:hover{border-color:rgba(255,255,255,.14); background:rgba(255,255,255,.06)}
-    [data-theme="light"] .links a{color:rgba(11,16,32,.72)}
-    [data-theme="light"] .links a:hover{border-color:rgba(11,16,32,.12); background:rgba(11,16,32,.05)}
+    .links a:hover{
+      border-color:var(--line);
+      background: color-mix(in oklab, var(--panel2) 65%, transparent);
+    }
 
-    /* ---- MOBIL DÜZEN ---- */
+    /* Mobil */
     @media (max-width: 980px){
       h1{font-size:36px}
       .heroGrid{grid-template-columns: 1fr}
@@ -628,7 +548,6 @@
       .actions{min-width: unset}
       .brand{min-width: unset}
     }
-
     @media (max-width: 760px){
       .wrap{padding:0 16px}
       header.hero{padding:44px 0 18px}
@@ -639,10 +558,9 @@
       .heroBullets{grid-template-columns: 1fr}
       .sectionHead{flex-direction:column; align-items:flex-start}
 
-      /* Mobil menü aktif */
       .menu{display:none}
       .hamburger{display:inline-flex}
-      .actions{gap:8px}
+      .actions{gap:8px; flex-wrap:wrap}
       .btn{padding:10px 11px}
     }
   </style>
@@ -653,7 +571,9 @@
     <div class="wrap">
       <div class="nav">
         <a class="brand" href="#top" aria-label="GeoBox ana sayfa">
-          <div class="logo" aria-hidden="true"></div>
+          <div class="brandLogo" aria-hidden="true">
+            <img src="geobox-logo.png" alt="GeoBox Logo" />
+          </div>
           <div>
             <b>GeoBox</b>
             <small>Web Tabanlı CBS Platformu</small>
@@ -671,9 +591,7 @@
         <div class="actions">
           <button class="btn" id="btnTheme" title="Tema modunu değiştir">Tema</button>
           <a class="btn primary" href="#iletisim">Demo iste</a>
-          <button class="hamburger" id="btnMenu" aria-label="Menüyü aç/kapat">
-            <i></i>
-          </button>
+          <button class="hamburger" id="btnMenu" aria-label="Menüyü aç/kapat"><i></i></button>
         </div>
       </div>
 
@@ -696,7 +614,7 @@
           <span class="kbd">v1</span>
         </div>
 
-        <h1>GeoBox ile CBS’yi<br/>tek ekranda <span style="color:rgba(102,227,255,.95)">yönetin</span>.</h1>
+        <h1>GeoBox ile CBS’yi<br/>tek ekranda <span style="color:var(--a)">yönetin</span>.</h1>
         <p class="lead">
           Belediyeler, altyapı işletmeleri ve mühendislik ekipleri için modern bir web tabanlı CBS:
           <b>katmanlar</b>, <b>sorgular</b>, <b>analiz</b>, <b>rol bazlı yetkilendirme</b> ve <b>saha-ofis senkronizasyonu</b>.
@@ -706,38 +624,14 @@
         <div class="row">
           <a class="btn primary" href="#demo">Demo’yu dene</a>
           <a class="btn" href="#ozellikler">Tüm yetenekler</a>
-          <span class="fine">Cloudflare + GitHub ile ultra düşük maliyetli yayın</span>
+          <span class="fine">Cloudflare + GitHub ile düşük maliyetli yayın</span>
         </div>
 
         <div class="heroBullets" aria-label="Öne çıkanlar">
-          <div class="pill">
-            <i aria-hidden="true"></i>
-            <div>
-              <b>Katman & veri yönetimi</b>
-              <span>Vektör/rasters, tematik stiller, hızlı sorgu.</span>
-            </div>
-          </div>
-          <div class="pill">
-            <i aria-hidden="true"></i>
-            <div>
-              <b>Saha-ofis senkron</b>
-              <span>Mobil ekip verisi anlık ofiste görünür.</span>
-            </div>
-          </div>
-          <div class="pill">
-            <i aria-hidden="true"></i>
-            <div>
-              <b>Analiz & rapor</b>
-              <span>Öznitelik/konumsal analiz, çıktı alma.</span>
-            </div>
-          </div>
-          <div class="pill">
-            <i aria-hidden="true"></i>
-            <div>
-              <b>Kurumsal güvenlik</b>
-              <span>Yetkiler, loglar ve entegrasyon.</span>
-            </div>
-          </div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Katman & veri yönetimi</b><span>Vektör/rasters, tematik stiller, hızlı sorgu.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Saha-ofis senkron</b><span>Mobil ekip verisi anlık ofiste görünür.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Analiz & rapor</b><span>Öznitelik/konumsal analiz, çıktı alma.</span></div></div>
+          <div class="pill"><i aria-hidden="true"></i><div><b>Kurumsal güvenlik</b><span>Yetkiler, loglar ve entegrasyon.</span></div></div>
         </div>
       </div>
 
@@ -879,22 +773,10 @@
           </div>
 
           <div class="switches" style="margin-top:14px;">
-            <div class="switch">
-              <div><b>Doğalgaz Hatları</b><span>Polyline • işletme katmanı</span></div>
-              <div class="toggle on" data-layer="gas"></div>
-            </div>
-            <div class="switch">
-              <div><b>Vana & Ekipman</b><span>Point • bakım/saha</span></div>
-              <div class="toggle on" data-layer="valve"></div>
-            </div>
-            <div class="switch">
-              <div><b>Parsel & İmar</b><span>Polygon • mülkiyet</span></div>
-              <div class="toggle on" data-layer="parcel"></div>
-            </div>
-            <div class="switch">
-              <div><b>Arıza / İş Emri</b><span>Event • operasyon</span></div>
-              <div class="toggle" data-layer="work"></div>
-            </div>
+            <div class="switch"><div><b>Doğalgaz Hatları</b><span>Polyline • işletme katmanı</span></div><div class="toggle on" data-layer="gas"></div></div>
+            <div class="switch"><div><b>Vana & Ekipman</b><span>Point • bakım/saha</span></div><div class="toggle on" data-layer="valve"></div></div>
+            <div class="switch"><div><b>Parsel & İmar</b><span>Polygon • mülkiyet</span></div><div class="toggle on" data-layer="parcel"></div></div>
+            <div class="switch"><div><b>Arıza / İş Emri</b><span>Event • operasyon</span></div><div class="toggle" data-layer="work"></div></div>
           </div>
 
           <div class="log" id="log" aria-label="İşlem günlüğü"></div>
@@ -946,109 +828,28 @@
     </div>
   </section>
 
-  <section id="usecase">
-    <div class="wrap">
-      <div class="sectionHead">
-        <div>
-          <h2>Kime ne fayda sağlıyor?</h2>
-          <p class="sub">GeoBox, “harita gösteren site” değil; kurumun işini hızlandıran CBS iş platformu.</p>
-        </div>
-        <div class="fine">Ölçek: küçük belediyeden büyük işletmeye</div>
-      </div>
-
-      <div class="usecases">
-        <div class="panel">
-          <h3>Tipik kullanım alanları</h3>
-          <div class="list">
-            <div class="item">
-              <b>Belediye CBS</b>
-              <span>İmar, numarataj, altyapı envanteri, mezarlık bilgi sistemi, vatandaş talepleri.</span>
-            </div>
-            <div class="item">
-              <b>Doğalgaz / Altyapı İşletmeleri</b>
-              <span>Hat & vana envanteri, arıza/kaçak süreçleri, saha ekipleri, raporlama.</span>
-            </div>
-            <div class="item">
-              <b>Harita & Mühendislik Büroları</b>
-              <span>Proje/veri teslimi, müşteri portalı, saha-ofis senkron, hızlı çıktı.</span>
-            </div>
-            <div class="item">
-              <b>Endüstriyel Tesisler</b>
-              <span>Asset yönetimi, bakım planı, güvenlik, IoT/SCADA entegrasyonu.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3>Vaat ettiğimiz “ölçülebilir” sonuç</h3>
-          <p>Sunumlarda işe yarayan net çıktı: verim, hız, kontrol.</p>
-          <div class="list">
-            <div class="item">
-              <b>Kurulum hızı</b>
-              <span>Hazır şablonlarla (ör. mezarlık, altyapı) canlıya geçiş günlere iner.</span>
-            </div>
-            <div class="item">
-              <b>Operasyonel verim</b>
-              <span>Saha-ofis veri akışı ile tekrar ölçüm/telefon trafiği azalır.</span>
-            </div>
-            <div class="item">
-              <b>Karar kalitesi</b>
-              <span>Analiz + rapor ile “veri var ama kullanamıyoruz” problemi biter.</span>
-            </div>
-            <div class="item">
-              <b>Güvenlik ve kontrol</b>
-              <span>Yetkiler, loglar ve entegrasyon kapıları kurumsal standardı sağlar.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="mimari">
-    <div class="wrap">
-      <div class="sectionHead">
-        <div>
-          <h2>Mimari: düşük maliyet + yüksek performans</h2>
-          <p class="sub">Vitrin sitesi Cloudflare Pages ile statik ve çok hızlı. Ürün tarafında ise servisler konteyner/VPS üzerinde ölçeklenir.</p>
-        </div>
-        <div class="fine">“Önce vitrin, sonra motor” yaklaşımı</div>
-      </div>
-
-      <div class="grid3">
-        <div class="feature">
-          <div class="icon">EDGE</div>
-          <b>Cloudflare Pages</b>
-          <p>Global CDN, ücretsiz SSL, hızlı yayın. GitHub push → otomatik deploy.</p>
-        </div>
-
-        <div class="feature">
-          <div class="icon">DATA</div>
-          <b>PostGIS / GeoPackage</b>
-          <p>Kurumsal verinin omurgası. Şablon veri modelleri ile hızlı kurulum.</p>
-        </div>
-
-        <div class="feature">
-          <div class="icon">TILES</div>
-          <b>Harita Servisleri</b>
-          <p>WMS/WFS veya vector tiles. İhtiyaca göre GeoServer/QGIS Server/pg_tileserv.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="iletisim">
     <div class="wrap">
       <div class="cta">
         <div>
-          <b>Gerçek bir GeoBox demosu ister misiniz?</b>
+          <b>İletişime geçelim</b>
           <p>
-            Kurumunuza uygun modülleri (ör. mezarlık/al altyapı/iş emri/saha) birlikte seçip
-            1–2 örnek veri setiyle canlı demo kurgulayalım.
+            Kurumunuza uygun modülleri birlikte seçip (ör. mezarlık / altyapı / iş emri / saha) kısa bir demo kurgulayalım.
           </p>
+          <div class="fine" style="margin-top:10px;">
+            Telefon: <b>0850 309 0437</b> • WhatsApp: <b>0540 043 65 63</b>
+          </div>
         </div>
+
         <div class="row">
-          <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Merhaba%2C%0A%0AKurumumuz%20i%C3%A7in%20GeoBox%20demo%20talep%20ediyoruz.%0A%0AAd%2FSoyad%3A%0AKurum%3A%0ATelefon%3A%0AKullan%C4%B1m%20alan%C4%B1%3A%0A">E-posta ile demo iste</a>
+          <a class="btn primary" href="mailto:info@geokodyazilim.com?subject=GeoBox%20Demo%20Talebi&body=Merhaba%2C%0A%0AKurumumuz%20i%C3%A7in%20GeoBox%20demo%20talep%20ediyoruz.%0A%0AAd%2FSoyad%3A%0AKurum%3A%0ATelefon%3A%0AKullan%C4%B1m%20alan%C4%B1%3A%0A">E-posta</a>
+
+          <a class="btn" href="tel:08503090437">Ara (0850)</a>
+
+          <a class="btn whatsapp"
+             href="https://wa.me/905400436563?text=Merhaba%2C%20GeoBox%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+             target="_blank" rel="noopener">WhatsApp</a>
+
           <a class="btn" href="#top">Başa dön</a>
         </div>
       </div>
@@ -1057,16 +858,15 @@
 
   <footer>
     <div class="wrap">
-      <div class="fgrid">
+      <div class="fgrid" style="display:grid; grid-template-columns: 1fr auto; gap:14px; align-items:center;">
         <div>
           <div class="fine">© <span id="year"></span> GeoBox • GeoKod Geospatial</div>
-          <div class="fine">Bu sayfa: Cloudflare Pages + GitHub ile statik olarak yayınlanır.</div>
+          <div class="fine">Cloudflare Pages + GitHub ile yayınlanan statik vitrin.</div>
         </div>
         <div class="links">
           <a href="#ozellikler">Özellikler</a>
           <a href="#demo">Demo</a>
-          <a href="#mimari">Mimari</a>
-          <a href="mailto:info@geokodyazilim.com">İletişim</a>
+          <a href="#iletisim">İletişim</a>
         </div>
       </div>
     </div>
@@ -1080,34 +880,30 @@
     function log(msg, type="info"){
       const ts = new Date().toLocaleTimeString("tr-TR", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
       const badge = type==="ok" ? "✓" : type==="warn" ? "!" : type==="bad" ? "×" : "•";
+      if(!logEl) return;
       logEl.textContent += `[${ts}] ${badge} ${msg}\n`;
       logEl.scrollTop = logEl.scrollHeight;
     }
 
-    // Yıl
     $("#year").textContent = new Date().getFullYear();
 
-    // Tema
-    let theme = "dark";
+    // Tema: varsayılan LIGHT, butonla geçiş
+    let theme = document.documentElement.getAttribute("data-theme") || "light";
     $("#btnTheme").addEventListener("click", () => {
-      theme = (theme === "dark") ? "light" : "dark";
+      theme = (theme === "light") ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", theme);
       log(theme === "light" ? "Açık tema etkin." : "Koyu tema etkin.", "ok");
     });
 
     // Mobil menü
     const mobileMenu = $("#mobileMenu");
-    const btnMenu = $("#btnMenu");
-    btnMenu.addEventListener("click", () => {
+    $("#btnMenu").addEventListener("click", () => {
       const open = mobileMenu.style.display === "block";
       mobileMenu.style.display = open ? "none" : "block";
     });
-    // mobil menü linkine tıklayınca kapan
-    $$("#mobileMenu a").forEach(a=>{
-      a.addEventListener("click", ()=> mobileMenu.style.display="none");
-    });
+    $$("#mobileMenu a").forEach(a => a.addEventListener("click", () => mobileMenu.style.display="none"));
 
-    // Demo init
+    // Demo
     log("GeoBox Showcase başlatıldı. Katmanlar aktif.", "ok");
     log("İpucu: / tuşu ile arama alanına odaklan.", "info");
 
@@ -1163,6 +959,7 @@
         log(`Sonuç bulundu ama "${hit.layer}" katmanı kapalı. Katmanı açıp tekrar deneyin.`, "warn");
         return;
       }
+
       log(`Bulundu: ${hit.id} — ${hit.name} • ${hit.note}`, "ok");
       focusPin(hit.x, hit.y);
       $("#hudBadge").textContent = `Seçim: ${hit.id}`;
@@ -1217,28 +1014,6 @@
         await sleep(650);
         log("Ekip yönlendirme: Görev oluşturuldu → mobil ekibe iletildi (simülasyon).", "ok");
         $("#hudBadge").textContent = "Arıza: Yönetiliyor";
-      }
-
-      if(which==="sync"){
-        log("Senaryo 2 başlatıldı: Saha veri senkron", "info");
-        await sleep(450);
-        log("Mobil ekip offline kayıt açtı: Foto + form (simülasyon).", "ok");
-        await sleep(650);
-        log("Bağlantı geldi → delta senkron başlıyor...", "info");
-        await sleep(750);
-        log("Ofis ekranı güncellendi: 1 yeni kayıt, 1 foto, 1 not.", "ok");
-        $("#hudBadge").textContent = "Senkron: Tamam";
-      }
-
-      if(which==="theme"){
-        log("Senaryo 3 başlatıldı: Tematik analiz", "info");
-        await sleep(500);
-        log("Mahalle bazında yoğunluk hesaplanıyor...", "info");
-        await sleep(800);
-        log("Öncelik skorları üretildi: A(0.82), B(0.67), C(0.54) (simülasyon).", "ok");
-        await sleep(650);
-        log("Çıktı: PDF rapor + tematik katman hazır.", "ok");
-        $("#hudBadge").textContent = "Analiz: Hazır";
       }
     }
 
